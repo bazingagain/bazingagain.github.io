@@ -1,0 +1,65 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>Java垃圾回收机制 | bazingagain</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/7.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Java垃圾回收机制</h1><a id="logo" href="/.">bazingagain</a><p class="description">行者常至、为者常成</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Java垃圾回收机制</h1><div class="post-meta">Sep 9, 2017</div><div class="post-content"><h2 id="1-什么是Java中的“垃圾对象”？"><a href="#1-什么是Java中的“垃圾对象”？" class="headerlink" title="1.什么是Java中的“垃圾对象”？"></a>1.什么是Java中的“垃圾对象”？</h2><p> 垃圾回收，首先我们得明白什么是Java中的“垃圾”。那些用完的对象，不再使用的常量，不再使用的类等等，都是Java中应该回收的“垃圾”</p>
+<h2 id="2-这些“垃圾对象”存放在哪里呢？"><a href="#2-这些“垃圾对象”存放在哪里呢？" class="headerlink" title="2.这些“垃圾对象”存放在哪里呢？"></a>2.这些“垃圾对象”存放在哪里呢？</h2><p>回收它，首先要知道的是这些Garbage存放在哪里呢？</p>
+<p>Java虚拟机分为很多区，如方法栈、Java堆、方法区等。随着程序运行，不用的对象、常量、类等就变成了Garbage，占用着宝贵的内存。</p>
+<h2 id="3-怎样判断它是不是“垃圾”？"><a href="#3-怎样判断它是不是“垃圾”？" class="headerlink" title="3.怎样判断它是不是“垃圾”？"></a>3.怎样判断它是不是“垃圾”？</h2><p>我们知道了Garbage存放在哪里，下一步便是判断哪些对象是垃圾，哪些不是，我们不能误删有用对象是吧。</p>
+<p>判断是否是垃圾对象，有两种方法：</p>
+<p>1.引用计数法</p>
+<blockquote>
+<p>在Java中，我们都是通过引用来找到对象的，引用计数法的原理就是，<strong>对象中添加一个引用计数器</strong>，每当一个引用指向我这个对象，我这个对象的引用计数器就加1，当没有引用指向这个对象时，引用计数器的值就为0，那它就是“垃圾”对象了。是不是很简单，但它的缺点是，两个对象相互引用（循环引用），则垃圾对象就无法被回收</p>
+</blockquote>
+<p>2.可达性分析</p>
+<blockquote>
+<p>可达性分析指通过一系列的<strong>“GC root”</strong>的对象来作为查找的起点，从这些点往下搜，当对象能被搜到时，从“GC root”到该对象的搜索路径便是一条<strong>“引用链”</strong>，而当一个对象无法从“GC root”向下搜到时（即没有任何引用链），说明该对象不可达，标记为“垃圾”对象。</p>
+</blockquote>
+<p>GC root对象包括：</p>
+<blockquote>
+<p>(1)虚拟机栈中的引用的对象<br><br>(2)方法区中类静态变量(static)引用的对象 <br><br>(3)方法区中常量(static final)引用的对象 <br><br>(4)本地方法栈JNI(Native 方法)中引用的对象</p>
+</blockquote>
+<h2 id="4-该回收“垃圾了”，采用什么垃圾收集算法呢？"><a href="#4-该回收“垃圾了”，采用什么垃圾收集算法呢？" class="headerlink" title="4.该回收“垃圾了”，采用什么垃圾收集算法呢？"></a>4.该回收“垃圾了”，采用什么垃圾收集算法呢？</h2><p>Java虚拟机中常用的垃圾收集算法有以下几种：</p>
+<ul>
+<li><strong>标记-清除法（Mark-Sweep）</strong></li>
+</ul>
+<p>看名字就知道，该算法分为“标记”、“清除”两个阶段，首先标记处所有需要清除的对象，然后统一回收。这种算法会产生大量非连续的内存碎片，而当分配大对象找不到足够的连续内存时，则会触发另一次垃圾回收。</p>
+<ul>
+<li><strong>复制算法（Copying）</strong></li>
+</ul>
+<p>复制算法将内存分为许多容量大小相等的两块，每次只使用其中一块，当一块内存用完时，就讲该块中存活的对象复制到另一块中去，然后将将该块一次性清理。优点是不用考虑内存碎片问题（可移动堆顶指针按需分配），缺点是将内存缩小了一半，代价太高。</p>
+<ul>
+<li><strong>标记-整理法（Mark-Compact）</strong></li>
+</ul>
+<p>标记整理法的“标记”阶段和标记清除法一样，但是后面的阶段中，标记整理法则是将所有存活的对象移向一边，然后清理掉边界以外的内存。</p>
+<ul>
+<li><strong>分代收集算法（Generational Collection）</strong></li>
+</ul>
+<p>Java堆分为新生代和老年代，不同的代，对象的生存周期不同，因此不同的代应该采用不同的回收算法，这样能提高回收的效率，新生代中对象大量生成大量死去，只有少量存活，选用“复制”算法比较好；老年代中对象存活时间长，必须采用“标记-清除”或“标记-整理”算法。</p>
+<h2 id="5-什么时候回收？"><a href="#5-什么时候回收？" class="headerlink" title="5.什么时候回收？"></a>5.什么时候回收？</h2><p>在分析回收对象的引用过程中，如果程序仍在运行，则引用关系一直在变，如果开始一个对象标记为可回收，然后执行GC，在执行GC过程中，假如又有引用指向了这个对象，则之后GC回收掉了“非垃圾”对象，这就产生了“不一致”现象，所有在GC的时候，必须停止所有的Java执行线程。</p>
+<p>在选择GC的时间间隔时，既不能太长（可用内存减少），也不能太短（频繁GC，会增大运行负荷），所以，选择合适的时间点来GC，是非常重要的。而这些GC执行点便称为<strong>“安全点”（SafePoint）</strong>，只有程序运行到“安全点”时，系统才能GC。</p>
+<p>“安全点”似乎解决了什么时候回收的问题，但我们仔细想一想，那些阻塞的线程呢？它们得不到CPU时间，不能进入“安全点”，怎么办？这时，就需要<strong>“安全区域”（SafeRegion）</strong>来解决，“安全区域”指一段代码中，引用关系不会发生变化，在这段区域GC都是安全的。当线程执行到Safe Region时，线程标识自己在SafeRegion中，此时GC，则不用管该线程是否阻塞，而当线程要离开SafeRegion时，则系统要检查GC是否完成，如果完成则线程继续执行，如果没有，则必须等到可离开SafeRegion信号（如完成GC Root枚举）才能离开。</p>
+<h2 id="6-选用什么样的垃圾收集器？"><a href="#6-选用什么样的垃圾收集器？" class="headerlink" title="6.选用什么样的垃圾收集器？"></a>6.选用什么样的垃圾收集器？</h2><p>这么多“垃圾”，我该怎么回收啊？就像真实的垃圾场样，一台运输机搬运，搬到猴年马月啊，我们多弄几台运输机办与，垃圾一下子就搬完了。这就像Java的垃圾回收器一样，一台运输机搬运，对应的便是单线程的收集器，许多台运输机搬运，对应的便是多线程的收集器。那你就会想，肯定用多线程的呀，一下子就搬完了，还要单线程干嘛？</p>
+<p>确实，单线程的收集器Serial是Java比较老的垃圾收集器了，它的单线程并不仅指用一个线程去收集，而在于它在回收垃圾时，其它工作线程必须停止。想想，如果你妈在扫垃圾，她一边扫，你一边丢，这打扫的完吗！</p>
+<p>所以，经过长时间的发展，现在的收集器已经有很多了，不同的垃圾收集器适合不同的处理情况，配合使用则能提高Java内存回收的效率。</p>
+<p>集中常见的垃圾收集器：</p>
+<p>Serial——单线程、新生代收集器</p>
+<p>ParNew——多线程、新生代收集器</p>
+<p>Parallel Scanvenge——多线程、新生代收集器、（吞吐量可控，即GC时间与用户时间的占比）、自适应调节（自动调节吞吐量）</p>
+<p>Serial Old——单线程、老年代</p>
+<p>Parallel Old——多线程、老年代</p>
+<p>CMS——以获取最短回收停顿时间为目标，步骤：(1)初始标记（2）并发标记（3）重新标记（4）并发清除</p>
+<p>G1——以获取最短回收停顿时间为目标，将Java堆划分为Region，记录Region的垃圾回收价值大小，优先回收价值较大者</p>
+<h2 id="7-Java堆中的内存分配和回收策略"><a href="#7-Java堆中的内存分配和回收策略" class="headerlink" title="7.Java堆中的内存分配和回收策略"></a>7.Java堆中的内存分配和回收策略</h2><p>我们要回收“垃圾”，肯定得先分配对象，使用完了才成为“垃圾”是吧。</p>
+<ol>
+<li><p><strong>一般，对象在Eden区中分配，当Eden区空间不足时，就会触发Minor GC。</strong></p>
+</li>
+<li><p><strong>大对象（需大量连续内存的Java对象）直接进入老年代。</strong></p>
+</li>
+<li><p><strong>长期存活的对象将进入老年代（对象有一个Age计数器，若对象在Eden出生，则第一次Minor GC后仍存活，并能被Survivor容纳的话，则移至Survivor区，对象Age设为1，对象在Survivor区中每过一次Minor GC，年龄加1，当Age达到一定程度[默认15–可设置]，就移至老年代），老年代的回收则是Full GC。</strong></p>
+</li>
+<li><p><strong>如果Survivor空间中的相同年龄的所有对象大小总和大于Survivor空间的一半，年龄大于或等于该年龄的对象则直接进入老年代。</strong></p>
+</li>
+</ol>
+<h2 id="8-finalize-方法"><a href="#8-finalize-方法" class="headerlink" title="8.finalize()方法"></a>8.finalize()方法</h2><p>在Java中，一个对象要被真正回收，至少要经过两次标记过程：第一次可达性分析中，无引用链相连，则标记并进行筛选，筛选的条件是是否有必要执行finalize()方法，当对象没有覆盖finalize()方法，或finalize()方法已被虚拟机执行，则都是为“没有必要执行”（即直接回收）。</p>
+<p>如果该对象有必要执行finalize()方法，则该对象会放置在一个<strong><em>F-Queue队</em></strong>列中，之后虚拟机会自动建立一个低优先级的Finalizer线程去触发（执行）finalize()方法，之后，GC会对F-Queue进行第二次标记。</p>
+<p>要注意的是：</p>
+<p>任何一个对象的finalize()方法都只会被系统调用一次。如果对象在第一次finalize()方法中“逃脱”了，该对象在第二次GC时，它的finalize()方法不会执行，将被立即回收。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://book.douban.com/subject/24722612/" target="_blank" rel="external">1.《深入理解Java虚拟机》</a></p>
+</div><iframe src="/donate/?AliPayQR=/img/AliPayQR.jpeg&amp;WeChatQR=/img/WeChatQR.jpeg&amp;GitHub=null&amp;BTCQR=null&amp;BTCKEY=null&amp;PayPal=null" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;" frameborder="0" scrolling="no"></iframe><div class="tags"><a href="/tags/Java/">Java</a></div><div class="post-nav"><a href="/2017/09/02/first/" class="next">first</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://yoursite.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Test测试/">Test测试</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/other/">other</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/测试/" style="font-size: 15px;">测试</a> <a href="/tags/hello/" style="font-size: 15px;">hello</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/java-garbage-collection/">Java垃圾回收机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/02/first/">first</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/02/hello-world/">Hello World</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2017 <a href="/." rel="nofollow">bazingagain.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
