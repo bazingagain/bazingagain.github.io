@@ -14,7 +14,6 @@
 <p>从代码中可以看出，sqlsession每次查询的时候，首先依据MappedStatement, Parameter, RowBounds, BoundSql创建一个CacheKey对象，查询的时候首先以CacheKey为键，从localCache中查询是否有该key对应的value，有则直接取出结果返回，没有则取数据库中查询，将查询到的结果放入localCache中。</p>
 <p>可以看出，在MyBatis中，对应同一个SqlSession的查询，只要两次查询的<code>statementId, parameter, rowBounds, boundSql</code>一致，那么就认为这两次查询是语义一致的（即传给JDBC的sql相同，参数也相同），只要缓存中有结果，便直接返回。</p>
 <p>另外一级缓存是Session级别的缓存，对于SqlSession中的缓存Map是没有设置过期时间的，对于数据变化频繁的情况，缓存中的数据长期不更新，可能存在数据不一致的情况，但是MyBatis中的update,commit等语句执行时，会清除掉cache，所有一般不会出现该问题。</p>
-<p>测试一下：</p>
 <h4 id="MyBatis的二级缓存"><a href="#MyBatis的二级缓存" class="headerlink" title="MyBatis的二级缓存"></a>MyBatis的二级缓存</h4><ol>
 <li>如何开启MyBatis的二级缓存？<br>首先在MyBatis的配置文件中设置<code>cacheEnable</code>为<code>true</code><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"> <span class="tag">&lt;<span class="name">settings</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">"cacheEnable"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">settings</span>&gt;</span></div></pre></td></tr></table></figure>
 </li>
