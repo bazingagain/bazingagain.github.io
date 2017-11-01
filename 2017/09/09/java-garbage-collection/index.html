@@ -1,4 +1,351 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>Java垃圾回收机制 | bazingagain</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/7.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Java垃圾回收机制</h1><a id="logo" href="/.">bazingagain</a><p class="description">行者常至、为者常成</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Java垃圾回收机制</h1><div class="post-meta">Sep 9, 2017<span> | </span><span class="category"><a href="/categories/Java基础/">Java基础</a></span></div><div class="post-content"><h2 id="1-什么是Java中的“垃圾对象”？"><a href="#1-什么是Java中的“垃圾对象”？" class="headerlink" title="1.什么是Java中的“垃圾对象”？"></a>1.什么是Java中的“垃圾对象”？</h2><p> 垃圾回收，首先我们得明白什么是Java中的“垃圾”。那些用完的对象，不再使用的常量，不再使用的类等等，都是Java中应该回收的“垃圾”</p>
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="1.什么是Java中的“垃圾对象”？ 垃圾回收，首先我们得明白什么是Java中的“垃圾”。那些用完的对象，不再使用的常量，不再使用的类等等，都是Java中应该回收的“垃圾” 2.这些“垃圾对象”存放在哪里呢？回收它，首先要知道的是这些Garbage存放在哪里呢？ Java虚拟机分为很多区，如方法栈、Java堆、方法区等。随着程序运行，不用的对象、常量、类等就变成了Garbage，占用着宝贵的内存。">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java垃圾回收机制">
+<meta property="og:url" content="http://yoursite.com/2017/09/09/java-garbage-collection/index.html">
+<meta property="og:site_name" content="bazingagain">
+<meta property="og:description" content="1.什么是Java中的“垃圾对象”？ 垃圾回收，首先我们得明白什么是Java中的“垃圾”。那些用完的对象，不再使用的常量，不再使用的类等等，都是Java中应该回收的“垃圾” 2.这些“垃圾对象”存放在哪里呢？回收它，首先要知道的是这些Garbage存放在哪里呢？ Java虚拟机分为很多区，如方法栈、Java堆、方法区等。随着程序运行，不用的对象、常量、类等就变成了Garbage，占用着宝贵的内存。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-09-09T09:39:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java垃圾回收机制">
+<meta name="twitter:description" content="1.什么是Java中的“垃圾对象”？ 垃圾回收，首先我们得明白什么是Java中的“垃圾”。那些用完的对象，不再使用的常量，不再使用的类等等，都是Java中应该回收的“垃圾” 2.这些“垃圾对象”存放在哪里呢？回收它，首先要知道的是这些Garbage存放在哪里呢？ Java虚拟机分为很多区，如方法栈、Java堆、方法区等。随着程序运行，不用的对象、常量、类等就变成了Garbage，占用着宝贵的内存。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/09/09/java-garbage-collection/"/>
+
+
+
+
+
+  <title> Java垃圾回收机制 | bazingagain </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">bazingagain</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">行者常至、为者常成</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/09/java-garbage-collection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xiaolei Peng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="bazingagain">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java垃圾回收机制
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-09T16:26:14+08:00">
+                2017-09-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java基础/" itemprop="url" rel="index">
+                    <span itemprop="name">Java基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-什么是Java中的“垃圾对象”？"><a href="#1-什么是Java中的“垃圾对象”？" class="headerlink" title="1.什么是Java中的“垃圾对象”？"></a>1.什么是Java中的“垃圾对象”？</h2><p> 垃圾回收，首先我们得明白什么是Java中的“垃圾”。那些用完的对象，不再使用的常量，不再使用的类等等，都是Java中应该回收的“垃圾”</p>
 <h2 id="2-这些“垃圾对象”存放在哪里呢？"><a href="#2-这些“垃圾对象”存放在哪里呢？" class="headerlink" title="2.这些“垃圾对象”存放在哪里呢？"></a>2.这些“垃圾对象”存放在哪里呢？</h2><p>回收它，首先要知道的是这些Garbage存放在哪里呢？</p>
 <p>Java虚拟机分为很多区，如方法栈、Java堆、方法区等。随着程序运行，不用的对象、常量、类等就变成了Garbage，占用着宝贵的内存。</p>
 <h2 id="3-怎样判断它是不是“垃圾”？"><a href="#3-怎样判断它是不是“垃圾”？" class="headerlink" title="3.怎样判断它是不是“垃圾”？"></a>3.怎样判断它是不是“垃圾”？</h2><p>我们知道了Garbage存放在哪里，下一步便是判断哪些对象是垃圾，哪些不是，我们不能误删有用对象是吧。</p>
@@ -63,4 +410,356 @@
 <p>要注意的是：</p>
 <p>任何一个对象的<code>finalize()</code>方法都只会被系统调用一次。如果对象在第一次<code>finalize()</code>方法中“逃脱”了，该对象在第二次GC时，它的<code>finalize()</code>方法不会执行，将被立即回收。</p>
 <h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://book.douban.com/subject/24722612/" target="_blank" rel="external">1.《深入理解Java虚拟机》</a></p>
-</div><iframe src="/donate/?AliPayQR=/img/AliPayQR.jpeg&amp;WeChatQR=/img/WeChatQR.jpeg&amp;GitHub=null&amp;BTCQR=null&amp;BTCKEY=null&amp;PayPal=null" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;" frameborder="0" scrolling="no"></iframe><div class="tags"><a href="/tags/Java/">Java</a></div><div class="post-nav"><a href="/2017/09/29/mybatis-first-md/" class="pre">MyBatis学习第一篇 - Mybatis入门</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://yoursite.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java基础/">Java基础</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/MyBatis/" style="font-size: 15px;">MyBatis</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/10/31/mybatis-code-analysis-framework/">MyBatis学习第五篇 - MyBatis源码剖析之整体框架</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/29/mybatis-code-analysis-cache/">MyBatis学习第四篇 - MyBatis源码剖析之缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/26/mybatis-code-analysis-datasource/">MyBatis学习第三篇 - MyBatis源码剖析之数据库连接</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/22/spring-mybatis/">MyBatis学习第二篇 - MyBatis-Spring整合</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/16/philosopher/">哲学家进餐的并发问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/29/mybatis-first-md/">MyBatis学习第一篇 - Mybatis入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/java-garbage-collection/">Java垃圾回收机制</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="https://github.com/bazingagain" title="bazingagain's github" target="_blank">bazingagain's github</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2017 <a href="/." rel="nofollow">bazingagain.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/29/mybatis-first-md/" rel="prev" title="MyBatis学习第一篇 - Mybatis入门">
+                MyBatis学习第一篇 - Mybatis入门 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Xiaolei Peng" />
+          <p class="site-author-name" itemprop="name">Xiaolei Peng</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">Kategorien</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">Tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-什么是Java中的“垃圾对象”？"><span class="nav-number">1.</span> <span class="nav-text">1.什么是Java中的“垃圾对象”？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-这些“垃圾对象”存放在哪里呢？"><span class="nav-number">2.</span> <span class="nav-text">2.这些“垃圾对象”存放在哪里呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-怎样判断它是不是“垃圾”？"><span class="nav-number">3.</span> <span class="nav-text">3.怎样判断它是不是“垃圾”？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-该回收“垃圾了”，采用什么垃圾收集算法呢？"><span class="nav-number">4.</span> <span class="nav-text">4.该回收“垃圾了”，采用什么垃圾收集算法呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-什么时候回收？"><span class="nav-number">5.</span> <span class="nav-text">5.什么时候回收？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-选用什么样的垃圾收集器？"><span class="nav-number">6.</span> <span class="nav-text">6.选用什么样的垃圾收集器？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-Java堆中的内存分配和回收策略"><span class="nav-number">7.</span> <span class="nav-text">7.Java堆中的内存分配和回收策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-finalize-方法"><span class="nav-number">8.</span> <span class="nav-text">8.finalize()方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">9.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiaolei Peng</span>
+</div>
+
+
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
