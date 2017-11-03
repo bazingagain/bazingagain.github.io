@@ -101,7 +101,7 @@
 <meta property="og:site_name" content="bazingagain">
 <meta property="og:description" content="背景知识：词向量： One-Hot Representation  用词典的大小表示向量的维度，向量的分量只有一个1（对应该词出现的位置），其它全为0，采用稀疏存储，给每个词分配一个唯一Hash值，适合最大熵，SVM，CRF等算法存在的问题：1.维度灾难： 随着维度的增加，计算量呈指数增加2.词汇鸿沟：不能描绘词与词之间的相似性  Distributed Representation  用普通向量">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-03T11:46:21.000Z">
+<meta property="og:updated_time" content="2017-11-03T11:50:05.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自然语言处理-语言模型">
 <meta name="twitter:description" content="背景知识：词向量： One-Hot Representation  用词典的大小表示向量的维度，向量的分量只有一个1（对应该词出现的位置），其它全为0，采用稀疏存储，给每个词分配一个唯一Hash值，适合最大熵，SVM，CRF等算法存在的问题：1.维度灾难： 随着维度的增加，计算量呈指数增加2.词汇鸿沟：不能描绘词与词之间的相似性  Distributed Representation  用普通向量">
@@ -426,7 +426,7 @@
 </ul>
 <p>用普通向量表示一个词，如[0.14, 0.15, -0.22, 0.34, …]，维度一般比较适中，避免出现维度灾难问题，每个词代表向量空间中的一个点，计算两点之间的欧氏距离，即可得到两者的相似性</p>
 <h3 id="语言模型："><a href="#语言模型：" class="headerlink" title="语言模型："></a>语言模型：</h3><p>语言模型是计算一个句子是自然语言的概论的模型：P(w1, w2, w3, …)，w1, w2…为句子T中的词。<br>计算规则：P(s) = P(w1, w2, w3..) = P(w1)P(w2|w1)P(w3|w1w2)…P(wk|w1w2..wk-1)。<br>可以看到，越到后面，参数越多，计算量越大，为简化计算该句子的概论，产生了如下计算方法模型：</p>
-<h4 id="N-Gram模型"><a href="#N-Gram模型" class="headerlink" title="N-Gram模型"></a>N-Gram模型</h4><p>即n-1阶马尔科夫模型，该模型假设：当前词出现的概率仅与前n-1个词有关，则该句子出现的概论公式表示为:<br>    P(s) = P(w1, w2, w3..) = \Pi_{i=1}^kP(W<em>1|W</em>{i-n+1},…,W_{i-1})<br> n=1，则为unigram；n=2，则为bigram；n=3，则为trigram 模型。该模型的参数就是，词表大小为1000，则n-gram模型的参数数量为，n越大，预测的结果也就越准确，但计算量也越大，一般采用bigram。例如在bigram中，P()</p>
+<h4 id="N-Gram模型"><a href="#N-Gram模型" class="headerlink" title="N-Gram模型"></a>N-Gram模型</h4><p>即n-1阶马尔科夫模型，该模型假设：当前词出现的概率仅与前n-1个词有关，则该句子出现的概论公式表示为:<br>    P(s) = P(w1, w2, w3..) = $$\Pi_{i=1}^kP(W<em>1|W</em>{i-n+1},…,W_{i-1})$$<br> n=1，则为unigram；n=2，则为bigram；n=3，则为trigram 模型。该模型的参数就是，词表大小为1000，则n-gram模型的参数数量为，n越大，预测的结果也就越准确，但计算量也越大，一般采用bigram。例如在bigram中，P()</p>
 <p>存在的问题：<br>1.n不能太大<br>2.词之间的相似度无法计算，同一content下总出现A1,A2两个词，但n-gram模型不能描述这两个词之间的相似性<br>3.n元组（n个词的组合）在语料库中没有，则计算的条件概率为0，则该句话的概论为0，即数据稀疏现象，显然不对，解决办法：平滑法、回退法（用n-1元组的概论替换n元组的概论）</p>
 <blockquote>
 <p>n-gram的数据平滑（解决数据稀疏 Data Sparseness）：<br>对概论为0的n元对进行概论估计，包括：</p>
