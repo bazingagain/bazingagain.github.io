@@ -110,7 +110,7 @@
 <meta property="og:image" content="https://bazingagain.github.io/images/ml/bayes/Snip20171121_13.png">
 <meta property="og:image" content="https://bazingagain.github.io/images/ml/bayes/Snip20171121_11.png">
 <meta property="og:image" content="https://bazingagain.github.io/images/ml/bayes/Snip20171121_12.png">
-<meta property="og:updated_time" content="2017-11-21T15:26:21.291Z">
+<meta property="og:updated_time" content="2017-11-28T05:22:28.064Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习之贝叶斯分类算法">
 <meta name="twitter:description" content="贝叶斯是谁？贝叶斯(Thomas Bayes,1701—1761)是一位英国数学家，生平主要研究概率论，首先将归纳推理法用于概率论基础理论，创立了贝叶斯统计理论，其对统计学领域影响甚大，在概率论统计学形成了“频率学派”和“贝叶斯学派”的争论。  贝叶斯理论要理解贝叶斯理论，首先要了解条件概率、全概率、先验概率、后验概率等概念。 条件概率条件概率指在事件B发生的情况下，事件A发生的概论，即P(A|B">
@@ -462,8 +462,8 @@
 <p>要注意的是，<code>p1Denom = 2.0</code> 的原因是因为这里 将各个单词是否出现定义为特征，每个特征有两种情况：出现、不出现，所以Sj = 2，<br>根据 李航的 《统计机器学习》的贝叶斯的参数估计中4.10的公式可知，这里得出 <code>p1Denom = Sj * λ = 2*1 = 2</code>,<br>这里我看网上都没有对拉普拉斯平滑讲清楚，要特别注意</p>
 <p>分类模型：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">classifyNB</span><span class="params">(vec2Classify, p0Vec, p1Vec, pClass1)</span>:</span></div><div class="line">    p1 = sum(vec2Classify * p1Vec) + log(pClass1)  <span class="comment"># 即公式</span></div><div class="line">    print(log(pClass1))</div><div class="line">    p0 = sum(vec2Classify * p0Vec) + log(<span class="number">1.0</span> - pClass1)</div><div class="line">    <span class="keyword">if</span> p1 &gt; p0:</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span></div></pre></td></tr></table></figure></p>
 <p>测试：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">testingNB</span><span class="params">()</span>:</span></div><div class="line">    <span class="comment">#训练阶段</span></div><div class="line">    listOPosts, listClasses = loadDataSet()</div><div class="line">    myVocabList = createVocabList(listOPosts)</div><div class="line">    trainMat = []</div><div class="line">    <span class="keyword">for</span> postinDoc <span class="keyword">in</span> listOPosts:</div><div class="line">        trainMat.append(bagOfWords2VecMN(myVocabList, postinDoc))</div><div class="line">    p0V, p1V, pAb = trainNB0(array(trainMat), array(listClasses))</div><div class="line">    <span class="comment">#测试阶段</span></div><div class="line">    testEntry = [<span class="string">'love'</span>, <span class="string">'my'</span>, <span class="string">'dalmation'</span>]</div><div class="line">    thisDoc = array(bagOfWords2VecMN(myVocabList, testEntry))</div><div class="line">    print(testEntry, <span class="string">'classified as: '</span>, classifyNB(thisDoc, p0V, p1V, pAb))</div><div class="line">    testEntry = [<span class="string">'stupid'</span>, <span class="string">'garbage'</span>]</div><div class="line">    thisDoc = array(bagOfWords2VecMN(myVocabList, testEntry))</div><div class="line">    print(testEntry, <span class="string">'classified as: '</span>, classifyNB(thisDoc, p0V, p1V, pAb))</div></pre></td></tr></table></figure></p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><hr>
-<p><a href="https://item.jd.com/10975302.html" target="_blank" rel="external">1.李航.《统计学习方法》</a><br><a href="https://item.jd.com/11242112.html" target="_blank" rel="external">2.Peter Harrington.《机器学习实战》</a><br><a href="http://www.ruanyifeng.com/blog/2011/08/bayesian_inference_part_one.html" target="_blank" rel="external">3.贝叶斯推断及其互联网应用（一）：定理简介</a><br><a href="https://baike.baidu.com/item/%E8%B4%9D%E5%8F%B6%E6%96%AF" target="_blank" rel="external">4.百度百科：贝叶斯</a><br><a href="https://baike.baidu.com/item/%E6%9D%A1%E4%BB%B6%E6%A6%82%E7%8E%87/4475278?fr=aladdin" target="_blank" rel="external">5.百度百科：条件概率</a><br><a href="http://blog.csdn.net/tanhongguang1/article/details/45016421" target="_blank" rel="external">6.机器学习笔记：朴素贝叶斯方法（Naive Bayes）原理和实现</a></p>
+<hr>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://item.jd.com/10975302.html" target="_blank" rel="external">1.李航.《统计学习方法》</a><br><a href="https://item.jd.com/11242112.html" target="_blank" rel="external">2.Peter Harrington.《机器学习实战》</a><br><a href="http://www.ruanyifeng.com/blog/2011/08/bayesian_inference_part_one.html" target="_blank" rel="external">3.贝叶斯推断及其互联网应用（一）：定理简介</a><br><a href="https://baike.baidu.com/item/%E8%B4%9D%E5%8F%B6%E6%96%AF" target="_blank" rel="external">4.百度百科：贝叶斯</a><br><a href="https://baike.baidu.com/item/%E6%9D%A1%E4%BB%B6%E6%A6%82%E7%8E%87/4475278?fr=aladdin" target="_blank" rel="external">5.百度百科：条件概率</a><br><a href="http://blog.csdn.net/tanhongguang1/article/details/45016421" target="_blank" rel="external">6.机器学习笔记：朴素贝叶斯方法（Naive Bayes）原理和实现</a></p>
 
       
     </div>
@@ -554,6 +554,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2017/11/28/ml-kmeans-cluster/" rel="prev" title="ml-kmeans-cluster">
+                ml-kmeans-cluster <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -624,7 +628,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -646,7 +650,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

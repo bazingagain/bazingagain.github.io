@@ -1,0 +1,997 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|consolas:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Machine Learning,KMeans," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="K-Means 算法介绍k-Means算法是一种简单的聚类算法，对于n个点，将其聚类到k个簇中。引用维基百科k-Means的算法描述：  对于输入的观察集(x1, x2…,xn)，其中每个观测都是一个 d-维实向量，k-平均聚类要把这n个观测划分到k个集合中(k≤n),使得组内平方和 （WCSS within-cluster sum of squares）最小。换句话说，它的目标是找到使得下式满足">
+<meta name="keywords" content="Machine Learning,KMeans">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ml-kmeans-cluster">
+<meta property="og:url" content="http://bazingagain.com/2017/11/28/ml-kmeans-cluster/index.html">
+<meta property="og:site_name" content="bazingagain">
+<meta property="og:description" content="K-Means 算法介绍k-Means算法是一种简单的聚类算法，对于n个点，将其聚类到k个簇中。引用维基百科k-Means的算法描述：  对于输入的观察集(x1, x2…,xn)，其中每个观测都是一个 d-维实向量，k-平均聚类要把这n个观测划分到k个集合中(k≤n),使得组内平方和 （WCSS within-cluster sum of squares）最小。换句话说，它的目标是找到使得下式满足">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://bazingagain.github.io/images/ml/kmeans/kmeansformat.png">
+<meta property="og:image" content="https://bazingagain.github.io/images/ml/kmeans/kmeans.png">
+<meta property="og:image" content="https://bazingagain.github.io/images/ml/kmeans/bikmeans.png">
+<meta property="og:updated_time" content="2017-11-28T06:46:07.561Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ml-kmeans-cluster">
+<meta name="twitter:description" content="K-Means 算法介绍k-Means算法是一种简单的聚类算法，对于n个点，将其聚类到k个簇中。引用维基百科k-Means的算法描述：  对于输入的观察集(x1, x2…,xn)，其中每个观测都是一个 d-维实向量，k-平均聚类要把这n个观测划分到k个集合中(k≤n),使得组内平方和 （WCSS within-cluster sum of squares）最小。换句话说，它的目标是找到使得下式满足">
+<meta name="twitter:image" content="https://bazingagain.github.io/images/ml/kmeans/kmeansformat.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://bazingagain.com/2017/11/28/ml-kmeans-cluster/"/>
+
+
+
+
+
+  <title> ml-kmeans-cluster | bazingagain </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">bazingagain</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">行者常至、为者常成</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://bazingagain.com/2017/11/28/ml-kmeans-cluster/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xiaolei Peng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="bazingagain">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ml-kmeans-cluster
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-28T11:14:57+08:00">
+                2017-11-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/11/28/ml-kmeans-cluster/" class="leancloud_visitors" data-flag-title="ml-kmeans-cluster">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>访问次数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1,344
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="K-Means-算法介绍"><a href="#K-Means-算法介绍" class="headerlink" title="K-Means 算法介绍"></a>K-Means 算法介绍</h3><p>k-Means算法是一种简单的聚类算法，对于n个点，将其聚类到k个簇中。<br>引用维基百科k-Means的算法描述：</p>
+<blockquote>
+<p>对于输入的观察集(x1, x2…,xn)，其中每个观测都是一个 d-维实向量，k-平均聚类要把这n个观测划分到k个集合中(k≤n),使得组内平方和 （WCSS within-cluster sum of squares）最小。换句话说，它的目标是找到使得下式满足的聚类 $S_{\i}$，</p>
+</blockquote>
+<p><img src="https://bazingagain.github.io/images/ml/kmeans/kmeansformat.png" alt="">)</p>
+<hr>
+<h3 id="K-Means算法的过程"><a href="#K-Means算法的过程" class="headerlink" title="K-Means算法的过程"></a>K-Means算法的过程</h3><p>k-Means 算法一般采取如下步骤进行数据聚类：</p>
+<ul>
+<li>(1)随机创建k个点作为质心</li>
+<li>(2)对每个点，计算其到每个质心的距离，将其分配到距离其最近的质心（簇） </li>
+<li>(3)对每个簇，计算簇中所有点的均值并将均值作为质心</li>
+<li>(4)重复2~3步，知道新的质心与原质心相等结束</li>
+</ul>
+<hr>
+<h3 id="K-Means算法的优缺点"><a href="#K-Means算法的优缺点" class="headerlink" title="K-Means算法的优缺点"></a>K-Means算法的优缺点</h3><p>优点：<br>    算法简单，容易实现<br>    时间复杂度接近于线性，适合大数据处理</p>
+<p>缺点：<br>    k-Means算法收敛到局部最小，而非全局最小（即可能并非最好结果）<br>    k是事先给定的，而如何指定k则没有标准</p>
+<hr>
+<h3 id="K-Means算法的实现"><a href="#K-Means算法的实现" class="headerlink" title="K-Means算法的实现"></a>K-Means算法的实现</h3><p>这里参考《机器学习》第10章K-Means的算法实现如下</p>
+<h4 id="通用K-Means算法"><a href="#通用K-Means算法" class="headerlink" title="通用K-Means算法"></a>通用K-Means算法</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">loadDataSet</span><span class="params">(fileName)</span>:</span>  <span class="comment"># general function to parse tab -delimited floats</span></div><div class="line">    dataMat = []  <span class="comment"># assume last column is target value</span></div><div class="line">    fr = open(fileName)</div><div class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> fr.readlines():</div><div class="line">        curLine = line.strip().split(<span class="string">'\t'</span>)</div><div class="line">        i = <span class="number">0</span></div><div class="line">        <span class="keyword">for</span> s <span class="keyword">in</span> curLine:</div><div class="line">            curLine[i] = float(s)</div><div class="line">            i+=<span class="number">1</span></div><div class="line">        dataMat.append(curLine)</div><div class="line">    <span class="keyword">return</span> dataMat</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">distEclud</span><span class="params">(vecA, vecB)</span>:</span></div><div class="line">    <span class="keyword">return</span> sqrt(sum(power(vecA - vecB, <span class="number">2</span>)))  <span class="comment"># 计算欧式距离</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">randCent</span><span class="params">(dataSet, k)</span>:</span></div><div class="line">    n = shape(dataSet)[<span class="number">1</span>]</div><div class="line">    centroids = mat(zeros((k, n)))  <span class="comment"># k 行,n列  随机创建k个初始簇心</span></div><div class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(n):  <span class="comment"># 创建随机聚簇中心，每个质心为centroids的一行,总共k行</span></div><div class="line">        minJ = min(dataSet[:, j])</div><div class="line">        rangeJ = float(max(dataSet[:, j])-minJ)</div><div class="line">        centroids[:, j] = mat(minJ + rangeJ * random.rand(k, <span class="number">1</span>))</div><div class="line">    <span class="keyword">return</span> centroids</div></pre></td></tr></table></figure>
+<p>其中，<code>loadDataSet(fileName)</code>从文件中读入数据并生成矩阵，<code>distEclud(vecA,VecB)</code>计算两个向量的欧式距离，<code>randCent(dataSet, k)</code>则初始化k个质心，以矩阵的形式返回</p>
+<p>K-Means的核心算法实现如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">kMeans</span><span class="params">(dataSet, k, distMeas=distEclud, createCent=randCent)</span>:</span></div><div class="line">    m = shape(dataSet)[<span class="number">0</span>] <span class="comment"># 数据点数目</span></div><div class="line">    clusterAssment = mat(zeros((m, <span class="number">2</span>)))  <span class="comment"># m行2列，其中第一列存放质心的索引，第2列存放误差平方和(SSE)</span></div><div class="line">    centroids = createCent(dataSet, k) <span class="comment"># 得到随机创建的簇心, k行,n列</span></div><div class="line">    clusterChanged = <span class="keyword">True</span></div><div class="line">    <span class="keyword">while</span> clusterChanged:</div><div class="line">        clusterChanged = <span class="keyword">False</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(m):  <span class="comment"># 将每个点分配到最近的质心</span></div><div class="line">            minDist = inf</div><div class="line">            minIndex = <span class="number">-1</span></div><div class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(k):</div><div class="line">                distJI = distMeas(centroids[j, :], dataSet[i, :]) <span class="comment"># 计算点到每个簇心的距离,找到最小距离的簇心的index</span></div><div class="line">                <span class="keyword">if</span> distJI &lt; minDist:</div><div class="line">                    minDist = distJI</div><div class="line">                    minIndex = j</div><div class="line">            <span class="keyword">if</span> clusterAssment[i, <span class="number">0</span>] != minIndex: clusterChanged = <span class="keyword">True</span></div><div class="line">            clusterAssment[i, :] = minIndex, minDist ** <span class="number">2</span> <span class="comment"># 第i个数据对应属于某个索引的簇心</span></div><div class="line">        <span class="keyword">for</span> cent <span class="keyword">in</span> range(k):  <span class="comment"># 重新计算质心</span></div><div class="line">            ptsInClust = dataSet[nonzero(clusterAssment[:, <span class="number">0</span>].A == cent)[<span class="number">0</span>]]  <span class="comment"># 获取所有在cent质心的点</span></div><div class="line">            centroids[cent, :] = mean(ptsInClust, axis=<span class="number">0</span>)  <span class="comment"># 按列方向相加,并求平均值，得到新的质心的值</span></div><div class="line">    <span class="keyword">return</span> centroids, clusterAssment</div></pre></td></tr></table></figure></p>
+<p>测试：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">datMat = mat(loadDataSet(<span class="string">'testSet.txt'</span>))</div><div class="line">myCentroids, clustAssing = kMeans(datMat, <span class="number">4</span>)</div><div class="line">plt.plot(datMat[:,<span class="number">0</span>].tolist(), datMat[:,<span class="number">1</span>].tolist(), <span class="string">'o'</span>, label=<span class="string">'data'</span>)</div><div class="line">plt.plot(myCentroids[:,<span class="number">0</span>].tolist(), myCentroids[:,<span class="number">1</span>].tolist(), <span class="string">'+'</span>, label=<span class="string">'cluster'</span>)</div><div class="line">plt.xlabel(<span class="string">'input x'</span>)</div><div class="line">plt.ylabel(<span class="string">'input y'</span>)</div><div class="line">plt.xlim([<span class="number">-6</span>,<span class="number">6</span>])</div><div class="line">plt.ylim([<span class="number">-6</span>,<span class="number">6</span>])</div><div class="line">plt.title(<span class="string">' K-means'</span>)</div><div class="line">plt.grid()</div><div class="line">plt.legend(loc=<span class="number">2</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p>效果：<br><img src="https://bazingagain.github.io/images/ml/kmeans/kmeans.png" alt="k-means">)</p>
+<p>而该方法存在一个问题是，算法会收敛于局部最小，得到的效果并不是全局最优，为了解决该问题，提出了 <em>二分k-Means</em>算法。</p>
+<h4 id="二分k-Means算法"><a href="#二分k-Means算法" class="headerlink" title="二分k-Means算法"></a>二分k-Means算法</h4><p>二分k-Means算法的过程如下：</p>
+<ul>
+<li>(1)将所有点看成一个簇</li>
+<li>(2)当簇的数目小于k时，对每个簇计算其总误差，在给定的簇上进行k-均值聚类(k=2)，计算该簇被一分为二之后的总误差，选择误差最小的那个簇进行划分</li>
+</ul>
+<p>其具体代码实现如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">biKmeans</span><span class="params">(dataSet, k, distMeas=distEclud)</span>:</span></div><div class="line">    m = shape(dataSet)[<span class="number">0</span>]</div><div class="line">    clusterAssment = mat(zeros((m, <span class="number">2</span>)))</div><div class="line">    centroid0 = mean(dataSet, axis=<span class="number">0</span>).tolist()[<span class="number">0</span>]</div><div class="line">    centList = [centroid0]  <span class="comment"># 计算所有点的唯一质心</span></div><div class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(m):  <span class="comment"># 计算每个点的误差</span></div><div class="line">        clusterAssment[j, <span class="number">1</span>] = distMeas(mat(centroid0), dataSet[j, :]) ** <span class="number">2</span></div><div class="line">    <span class="keyword">while</span> (len(centList) &lt; k):</div><div class="line">        lowestSSE = inf</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(centList)):</div><div class="line">            ptsInCurrCluster = dataSet[nonzero(clusterAssment[:, <span class="number">0</span>].A == i)[<span class="number">0</span>],:]  <span class="comment">#获取第i个簇的数据点集合</span></div><div class="line">            centroidMat, splitClustAss = kMeans(ptsInCurrCluster, <span class="number">2</span>, distMeas) <span class="comment"># 对第i个簇进行2-Means聚类</span></div><div class="line">            sseSplit = sum(splitClustAss[:, <span class="number">1</span>])  <span class="comment"># 第i簇进行2-Means后的总误差</span></div><div class="line">            sseNotSplit = sum(clusterAssment[nonzero(clusterAssment[:, <span class="number">0</span>].A != i)[<span class="number">0</span>], <span class="number">1</span>]) <span class="comment"># 其它簇的总误差</span></div><div class="line">            print(<span class="string">"sseSplit, and notSplit: "</span>, sseSplit, sseNotSplit)</div><div class="line">            <span class="keyword">if</span> (sseSplit + sseNotSplit) &lt; lowestSSE: <span class="comment"># 进行二分后的总误差与当前总误差比较</span></div><div class="line">                bestCentToSplit = i</div><div class="line">                bestNewCents = centroidMat</div><div class="line">                bestClustAss = splitClustAss.copy()</div><div class="line">                lowestSSE = sseSplit + sseNotSplit</div><div class="line">        bestClustAss[nonzero(bestClustAss[:, <span class="number">0</span>].A == <span class="number">1</span>)[<span class="number">0</span>], <span class="number">0</span>] = len(centList)  <span class="comment"># 划分到第 len(centList) 新簇</span></div><div class="line">        bestClustAss[nonzero(bestClustAss[:, <span class="number">0</span>].A == <span class="number">0</span>)[<span class="number">0</span>], <span class="number">0</span>] = bestCentToSplit <span class="comment"># 划分到原第bestCentToSplit簇</span></div><div class="line">        print(<span class="string">'the bestCentToSplit is: '</span>, bestCentToSplit)</div><div class="line">        print(<span class="string">'the len of bestClustAss is: '</span>, len(bestClustAss))</div><div class="line">        centList[bestCentToSplit] = bestNewCents[<span class="number">0</span>, :].tolist()[<span class="number">0</span>]  <span class="comment"># 将原来的簇心以两个新的簇心进行替代</span></div><div class="line">        centList.append(bestNewCents[<span class="number">1</span>, :].tolist()[<span class="number">0</span>])</div><div class="line">        clusterAssment[nonzero(clusterAssment[:, <span class="number">0</span>].A == bestCentToSplit)[<span class="number">0</span>],:] = bestClustAss  <span class="comment"># 更新簇</span></div><div class="line">    <span class="keyword">return</span> mat(centList), clusterAssment</div></pre></td></tr></table></figure></p>
+<p>测试：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">datMat3 = mat(loadDataSet(<span class="string">'testSet2.txt'</span>))</div><div class="line">plt.plot(datMat3[:,<span class="number">0</span>].tolist(), datMat3[:,<span class="number">1</span>].tolist(), <span class="string">'o'</span>, label=<span class="string">'data'</span>)</div><div class="line">plt.plot(centList[:,<span class="number">0</span>].tolist(), centList[:,<span class="number">1</span>].tolist(), <span class="string">'+'</span>, label=<span class="string">'cluster'</span>)</div><div class="line">plt.xlabel(<span class="string">'input x'</span>)</div><div class="line">plt.ylabel(<span class="string">'input y'</span>)</div><div class="line">plt.xlim([<span class="number">-6</span>,<span class="number">6</span>])</div><div class="line">plt.ylim([<span class="number">-6</span>,<span class="number">6</span>])</div><div class="line">plt.title(<span class="string">'bisecting K-means'</span>)</div><div class="line">plt.grid()</div><div class="line">plt.legend(loc=<span class="number">2</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure></p>
+<p>效果：<br><img src="https://bazingagain.github.io/images/ml/kmeans/bikmeans.png" alt="">)</p>
+<hr>
+<h3 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h3><p><a href="https://item.jd.com/11242112.html" target="_blank" rel="external">1.Peter Harrington.《机器学习实战》</a><br><a href="https://zh.wikipedia.org/wiki/K-%E5%B9%B3%E5%9D%87%E7%AE%97%E6%B3%95" target="_blank" rel="external">2.维基百科：k-平凡算法</a><br><a href="https://baike.baidu.com/item/K-means/4934806?fr=aladdin" target="_blank" rel="external">3.百度百科：k-Means</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/WeChatQR.jpeg" alt="Xiaolei Peng WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/uploads/AliPayQR.jpeg" alt="Xiaolei Peng Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Xiaolei Peng
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://bazingagain.com/2017/11/28/ml-kmeans-cluster/" title="ml-kmeans-cluster">http://bazingagain.com/2017/11/28/ml-kmeans-cluster/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Machine-Learning/" rel="tag"># Machine Learning</a>
+          
+            <a href="/tags/KMeans/" rel="tag"># KMeans</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/21/ml-bayes-classify/" rel="next" title="机器学习之贝叶斯分类算法">
+                <i class="fa fa-chevron-left"></i> 机器学习之贝叶斯分类算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="Xiaolei Peng" />
+          <p class="site-author-name" itemprop="name">Xiaolei Peng</p>
+           
+              <p class="site-description motion-element" itemprop="description">程序员</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/bazingagain" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+        
+<embed src="//music.163.com/style/swf/widget.swf?sid=441359&type=2&auto=0&width=320&height=66" width="340" height="86"  allowNetworking="all"></embed>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#K-Means-算法介绍"><span class="nav-number">1.</span> <span class="nav-text">K-Means 算法介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#K-Means算法的过程"><span class="nav-number">2.</span> <span class="nav-text">K-Means算法的过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#K-Means算法的优缺点"><span class="nav-number">3.</span> <span class="nav-text">K-Means算法的优缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#K-Means算法的实现"><span class="nav-number">4.</span> <span class="nav-text">K-Means算法的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#通用K-Means算法"><span class="nav-number">4.1.</span> <span class="nav-text">通用K-Means算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二分k-Means算法"><span class="nav-number">4.2.</span> <span class="nav-text">二分k-Means算法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考："><span class="nav-number">5.</span> <span class="nav-text">参考：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiaolei Peng</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问用户
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>访问次数
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("6S5WEDrPUzaDfarHnmz74io3-gzGzoHsz", "AFVYQDlsS5XFsBQ3MguKRj4R");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+  
+  
+
+
+  
+
+</body>
+</html>
