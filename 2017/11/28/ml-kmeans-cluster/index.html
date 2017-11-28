@@ -104,7 +104,7 @@
 <meta property="og:image" content="https://bazingagain.github.io/images/ml/kmeans/kmeansformat.png">
 <meta property="og:image" content="https://bazingagain.github.io/images/ml/kmeans/kmeans.png">
 <meta property="og:image" content="https://bazingagain.github.io/images/ml/kmeans/bikmeans.png">
-<meta property="og:updated_time" content="2017-11-28T06:46:07.561Z">
+<meta property="og:updated_time" content="2017-11-28T06:54:42.930Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ml-kmeans-cluster">
 <meta name="twitter:description" content="K-Means 算法介绍k-Means算法是一种简单的聚类算法，对于n个点，将其聚类到k个簇中。引用维基百科k-Means的算法描述：  对于输入的观察集(x1, x2…,xn)，其中每个观测都是一个 d-维实向量，k-平均聚类要把这n个观测划分到k个集合中(k≤n),使得组内平方和 （WCSS within-cluster sum of squares）最小。换句话说，它的目标是找到使得下式满足">
@@ -386,7 +386,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  1,344
+                  1,343
                 </span>
               
 
@@ -423,9 +423,9 @@
       
         <h3 id="K-Means-算法介绍"><a href="#K-Means-算法介绍" class="headerlink" title="K-Means 算法介绍"></a>K-Means 算法介绍</h3><p>k-Means算法是一种简单的聚类算法，对于n个点，将其聚类到k个簇中。<br>引用维基百科k-Means的算法描述：</p>
 <blockquote>
-<p>对于输入的观察集(x1, x2…,xn)，其中每个观测都是一个 d-维实向量，k-平均聚类要把这n个观测划分到k个集合中(k≤n),使得组内平方和 （WCSS within-cluster sum of squares）最小。换句话说，它的目标是找到使得下式满足的聚类 $S_{\i}$，</p>
+<p>对于输入的观察集(x1, x2…,xn)，其中每个观测都是一个 d-维实向量，k-平均聚类要把这n个观测划分到k个集合中(k≤n),使得组内平方和 （WCSS within-cluster sum of squares）最小。换句话说，它的目标是找到使得下式满足的聚类 Si，</p>
 </blockquote>
-<p><img src="https://bazingagain.github.io/images/ml/kmeans/kmeansformat.png" alt="">)</p>
+<p><img src="https://bazingagain.github.io/images/ml/kmeans/kmeansformat.png" alt=""></p>
 <hr>
 <h3 id="K-Means算法的过程"><a href="#K-Means算法的过程" class="headerlink" title="K-Means算法的过程"></a>K-Means算法的过程</h3><p>k-Means 算法一般采取如下步骤进行数据聚类：</p>
 <ul>
@@ -455,7 +455,7 @@
 <p>测试：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">datMat3 = mat(loadDataSet(<span class="string">'testSet2.txt'</span>))</div><div class="line">plt.plot(datMat3[:,<span class="number">0</span>].tolist(), datMat3[:,<span class="number">1</span>].tolist(), <span class="string">'o'</span>, label=<span class="string">'data'</span>)</div><div class="line">plt.plot(centList[:,<span class="number">0</span>].tolist(), centList[:,<span class="number">1</span>].tolist(), <span class="string">'+'</span>, label=<span class="string">'cluster'</span>)</div><div class="line">plt.xlabel(<span class="string">'input x'</span>)</div><div class="line">plt.ylabel(<span class="string">'input y'</span>)</div><div class="line">plt.xlim([<span class="number">-6</span>,<span class="number">6</span>])</div><div class="line">plt.ylim([<span class="number">-6</span>,<span class="number">6</span>])</div><div class="line">plt.title(<span class="string">'bisecting K-means'</span>)</div><div class="line">plt.grid()</div><div class="line">plt.legend(loc=<span class="number">2</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure></p>
 <p>效果：<br><img src="https://bazingagain.github.io/images/ml/kmeans/bikmeans.png" alt="">)</p>
 <hr>
-<h3 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h3><p><a href="https://item.jd.com/11242112.html" target="_blank" rel="external">1.Peter Harrington.《机器学习实战》</a><br><a href="https://zh.wikipedia.org/wiki/K-%E5%B9%B3%E5%9D%87%E7%AE%97%E6%B3%95" target="_blank" rel="external">2.维基百科：k-平凡算法</a><br><a href="https://baike.baidu.com/item/K-means/4934806?fr=aladdin" target="_blank" rel="external">3.百度百科：k-Means</a></p>
+<h3 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h3><p><a href="https://item.jd.com/11242112.html" target="_blank" rel="external">1.Peter Harrington.《机器学习实战》</a><br><a href="https://zh.wikipedia.org/wiki/K-%E5%B9%B3%E5%9D%87%E7%AE%97%E6%B3%95" target="_blank" rel="external">2.维基百科：k-平均算法</a><br><a href="https://baike.baidu.com/item/K-means/4934806?fr=aladdin" target="_blank" rel="external">3.百度百科：k-Means</a></p>
 
       
     </div>
