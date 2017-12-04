@@ -1,0 +1,998 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|consolas:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Machine Learning,logistic回归," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="什么是Logistic回归？首先要理解Logistic回归，就要先了解回归是什么。在数学范畴，回归指对模型中的点进行拟合，而这个拟合过程便是回归。回归分为线性回归、曲线回归、二元Logistic回归、多元Logistic等。Logistic回归是一种广义的线性回归，引用百度百科对Logistic回归的解释：  logistic回归则通过函数L将w‘x+b对应一个隐状态p，p =L(w‘x+b),然">
+<meta name="keywords" content="Machine Learning,logistic回归">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习之Logistic回归">
+<meta property="og:url" content="http://bazingagain.com/2017/12/04/ml-logistic-regress/index.html">
+<meta property="og:site_name" content="bazingagain">
+<meta property="og:description" content="什么是Logistic回归？首先要理解Logistic回归，就要先了解回归是什么。在数学范畴，回归指对模型中的点进行拟合，而这个拟合过程便是回归。回归分为线性回归、曲线回归、二元Logistic回归、多元Logistic等。Logistic回归是一种广义的线性回归，引用百度百科对Logistic回归的解释：  logistic回归则通过函数L将w‘x+b对应一个隐状态p，p =L(w‘x+b),然">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://bazingagain.github.io/images/ml/logistic/Snip20171204_26.png">
+<meta property="og:image" content="https://bazingagain.github.io/images/ml/logistic/sigmod.png">
+<meta property="og:image" content="https://bazingagain.github.io/images/ml/logistic/Snip20171204_28.png">
+<meta property="og:image" content="https://bazingagain.github.io/images/ml/logistic/Snip20171204_29.png">
+<meta property="og:image" content="https://bazingagain.github.io/images/ml/logistic/Snip20171204_30.png">
+<meta property="og:image" content="https://bazingagain.github.io/images/ml/logistic/Snip20171204_31.png">
+<meta property="og:image" content="https://bazingagain.github.io/images/ml/logistic/Snip20171204_32.png">
+<meta property="og:image" content="https://bazingagain.github.io/images/ml/logistic/Snip20171204_34.png">
+<meta property="og:image" content="https://bazingagain.github.io/images/ml/logistic/normalgrad.png">
+<meta property="og:image" content="https://bazingagain.github.io/images/ml/logistic/randomgrad.png">
+<meta property="og:image" content="https://bazingagain.github.io/images/ml/logistic/stocrandomgrad.png">
+<meta property="og:updated_time" content="2017-12-04T08:05:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="机器学习之Logistic回归">
+<meta name="twitter:description" content="什么是Logistic回归？首先要理解Logistic回归，就要先了解回归是什么。在数学范畴，回归指对模型中的点进行拟合，而这个拟合过程便是回归。回归分为线性回归、曲线回归、二元Logistic回归、多元Logistic等。Logistic回归是一种广义的线性回归，引用百度百科对Logistic回归的解释：  logistic回归则通过函数L将w‘x+b对应一个隐状态p，p =L(w‘x+b),然">
+<meta name="twitter:image" content="https://bazingagain.github.io/images/ml/logistic/Snip20171204_26.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://bazingagain.com/2017/12/04/ml-logistic-regress/"/>
+
+
+
+
+
+  <title> 机器学习之Logistic回归 | bazingagain </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">bazingagain</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">行者常至、为者常成</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://bazingagain.com/2017/12/04/ml-logistic-regress/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xiaolei Peng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="bazingagain">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                机器学习之Logistic回归
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-04T12:57:23+08:00">
+                2017-12-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/12/04/ml-logistic-regress/" class="leancloud_visitors" data-flag-title="机器学习之Logistic回归">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>访问次数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1,746
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="什么是Logistic回归？"><a href="#什么是Logistic回归？" class="headerlink" title="什么是Logistic回归？"></a>什么是Logistic回归？</h3><p>首先要理解Logistic回归，就要先了解回归是什么。在数学范畴，回归指对模型中的点进行拟合，而这个拟合过程便是回归。回归分为线性回归、曲线回归、二元Logistic回归、多元Logistic等。<br>Logistic回归是一种广义的线性回归，引用百度百科对Logistic回归的解释：</p>
+<blockquote>
+<p>logistic回归则通过函数L将w‘x+b对应一个隐状态p，p =L(w‘x+b),然后根据p 与1-p的大小决定因变量的值。如果L是logistic函数，就是logistic回归，如果L是多项式函数就是多项式回归</p>
+</blockquote>
+<p>对应的Logistic函数使用非线性函数Sigmod：<br><img src="https://bazingagain.github.io/images/ml/logistic/Snip20171204_26.png" alt=""></p>
+<p>为什么使用sigmod函数作为Logistic回归的分类函数呢？可以看下Sigmod函数的图形：<br><img src="https://bazingagain.github.io/images/ml/logistic/sigmod.png" alt=""></p>
+<p>可以看到，Sigmod函数在x从0趋近无穷大的时候，函数值趋近于1，而在x从0趋近于负无穷大的时候，函数值趋近于0，非常类似于阶跃函数，可以作为二分类的分类器使用。</p>
+<h3 id="Logistic回归的最优化方案"><a href="#Logistic回归的最优化方案" class="headerlink" title="Logistic回归的最优化方案"></a>Logistic回归的最优化方案</h3><p>从上节可知,Logistic是通过使用Sigmod函数进行二分类的，而Sigmod函数的输入为z,采用向量的形式则可以表示为：<br><img src="https://bazingagain.github.io/images/ml/logistic/Snip20171204_28.png" alt=""></p>
+<p>其中，x为输入的数据，向量w为回归系数，而我们要做的便是通过最优化方法为w找到最好的参数。</p>
+<h4 id="梯度上升法"><a href="#梯度上升法" class="headerlink" title="梯度上升法"></a>梯度上升法</h4><p>对Logistic回归的最优化分案，这里选用梯度上升法，其思想是沿着函数的梯度的方向寻找函数的最大值，而梯度下降法则是沿着负梯度的方向寻找函数的最小值。<br>对于二元函数z=f(x,y)，其梯度为：<br><img src="https://bazingagain.github.io/images/ml/logistic/Snip20171204_29.png" alt=""><br>通过梯度上升是怎么优化的呢？这里我看到网上有一篇文章讲的比较清楚[1]，其讲的是梯度下降，但其实也适用梯度上升：<br>引用[1]中的说法：</p>
+<blockquote>
+<p>参数w按照一定的学习率沿着负梯度方向更新，即w(k+1)=w(k)−Δw(k+1)，其中Δw可以表示为:<br><img src="https://bazingagain.github.io/images/ml/logistic/Snip20171204_30.png" alt=""><br>对于每个训练样本i，∂ξi/∂w计算如下:<br><img src="https://bazingagain.github.io/images/ml/logistic/Snip20171204_31.png" alt=""><br>对于每个权重的更新Δwj可以表示为:<br><img src="https://bazingagain.github.io/images/ml/logistic/Snip20171204_32.png" alt=""><br>在批处理中，我们需要将N个样本的梯度都进行累加，即：<br><img src="https://bazingagain.github.io/images/ml/logistic/Snip20171204_34.png" alt=""><br>这里，X为输入样本，为(N, n)的矩阵，即有N个样本，每个样本的维度为n（每个维度代表样本的一个特征）<br>∆Wj为第j个权重，从∆Wj最终的计算公式可知，∆Wj为µ（步长，在神经网络中也可以值学习率）<em> ∑Xij（所有样本的第j个维度的值的和）</em> (yi-ti)(即误差)</p>
+</blockquote>
+<h3 id="Logistic回归算法的实现"><a href="#Logistic回归算法的实现" class="headerlink" title="Logistic回归算法的实现"></a>Logistic回归算法的实现</h3><p>参考《机器学习实战》第5章的代码如下：</p>
+<p>加载数据：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">loadDataSet</span><span class="params">()</span>:</span></div><div class="line">    dataMat = []</div><div class="line">    labelMat = []</div><div class="line">    fr = open(<span class="string">'testSet.txt'</span>) <span class="comment"># 每行的前2个为x的特征值，最后一个数为1或0，代表分类</span></div><div class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> fr.readlines():</div><div class="line">        lineArr = line.strip().split()</div><div class="line">        dataMat.append([<span class="number">1.0</span>, float(lineArr[<span class="number">0</span>]), float(lineArr[<span class="number">1</span>])])</div><div class="line">        labelMat.append(int(lineArr[<span class="number">2</span>]))</div><div class="line">    <span class="keyword">return</span> dataMat, labelMat</div></pre></td></tr></table></figure></p>
+<p>定义Sigmod函数：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">sigmoid</span><span class="params">(inX)</span>:</span></div><div class="line">    <span class="keyword">return</span> <span class="number">1.0</span> / (<span class="number">1</span> + exp(-inX))</div></pre></td></tr></table></figure></p>
+<p>实现梯度下降算法并测试：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">gradAscent</span><span class="params">(dataMatIn, classLabels)</span>:</span> <span class="comment">#梯度下降算法</span></div><div class="line">    dataMatrix = mat(dataMatIn)</div><div class="line">    labelMat = mat(classLabels).transpose() <span class="comment"># 矩阵转置,转换为n行1列</span></div><div class="line">    m, n = shape(dataMatrix)</div><div class="line">    alpha = <span class="number">0.001</span></div><div class="line">    maxCycles = <span class="number">500</span> <span class="comment"># 迭代次数,这里设置迭代500次</span></div><div class="line">    weights = ones((n, <span class="number">1</span>))</div><div class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> range(maxCycles):</div><div class="line">        h = sigmoid(dataMatrix * weights)</div><div class="line">        error = (labelMat - h)</div><div class="line">        weights = weights + alpha * dataMatrix.transpose() * error  <span class="comment"># 对应上面的∆w的计算公式,本文中的w为3行1列的向量，即w0,w1,w2</span></div><div class="line">    <span class="keyword">return</span> weights</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">plotBestFit</span><span class="params">(weights)</span>:</span></div><div class="line">    <span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line">    dataMat, labelMat = loadDataSet()</div><div class="line">    dataArr = array(dataMat)</div><div class="line">    n = shape(dataArr)[<span class="number">0</span>]</div><div class="line">    xcord1 = []</div><div class="line">    ycord1 = []</div><div class="line">    xcord2 = []</div><div class="line">    ycord2 = []</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</div><div class="line">        <span class="keyword">if</span> int(labelMat[i]) == <span class="number">1</span>:</div><div class="line">            xcord1.append(dataArr[i, <span class="number">1</span>])</div><div class="line">            ycord1.append(dataArr[i, <span class="number">2</span>])</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            xcord2.append(dataArr[i, <span class="number">1</span>])</div><div class="line">            ycord2.append(dataArr[i, <span class="number">2</span>])</div><div class="line">    fig = plt.figure()</div><div class="line">    ax = fig.add_subplot(<span class="number">111</span>)</div><div class="line">    ax.scatter(xcord1, ycord1, s=<span class="number">30</span>, c=<span class="string">'red'</span>, marker=<span class="string">'s'</span>)</div><div class="line">    ax.scatter(xcord2, ycord2, s=<span class="number">30</span>, c=<span class="string">'green'</span>)</div><div class="line">    x = arange(<span class="number">-3.0</span>, <span class="number">3.0</span>, <span class="number">0.1</span>)</div><div class="line">    y = (-weights[<span class="number">0</span>] - weights[<span class="number">1</span>] * x) / weights[<span class="number">2</span>] <span class="comment"># z=0为sigmod函数的分界处，设置z=w0*x0+w1*x1+w2*x2=0,求得x1和x2的关系式，x0=1</span></div><div class="line">    ax.plot(x, y)</div><div class="line">    plt.xlabel(<span class="string">'X1'</span>)</div><div class="line">    plt.ylabel(<span class="string">'X2'</span>)</div><div class="line">    plt.show()</div><div class="line"></div><div class="line">datArr, labMat = loadDataSet()</div><div class="line">weights = gradAscent(datArr, labMat)</div><div class="line">plotBestFit(weights.getA())</div></pre></td></tr></table></figure></p>
+<p>普通梯度上升算法实现的logistic回归分类的效果：<br><img src="https://bazingagain.github.io/images/ml/logistic/normalgrad.png" alt=""></p>
+<p>从上面的随机梯度上升法的计算可以看出，每次迭代都是(3,n)<em>(n,1)的矩阵乘法，进行3</em>100(假设有100个数据)次乘法，迭代500次就是计算150000次乘法,计算量过大，为了改善计算量，这里提出了随机梯度上升法：</p>
+<blockquote>
+<p>所有回归系统初始化为1<br>对数据集中的每个样本<br>      计算该样本的梯度<br>      使用alpha * gradient更新回归系数<br>返回回归系统值<br>这里每个样本就进行一次回归系数更新，总共计算了n（样本数）次，代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">stocGradAscent0</span><span class="params">(dataMatrix, classLabels)</span>:</span></div><div class="line">    m, n = shape(dataMatrix)</div><div class="line">    alpha = <span class="number">0.01</span></div><div class="line">    weights = ones(n)  <span class="comment"># [1,1,1]</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(m):</div><div class="line">        h = sigmoid(sum(dataMatrix[i] * weights))</div><div class="line">        error = classLabels[i] - h</div><div class="line">        weights = weights + alpha * error * dataMatrix[i]</div><div class="line">    <span class="keyword">return</span> weights</div></pre></td></tr></table></figure></p>
+</blockquote>
+<p>使用该种随机梯度下降算法进行分类的效果如下：<br><img src="https://bazingagain.github.io/images/ml/logistic/randomgrad.png" alt=""></p>
+<p>可以看到，效果并不是很理想，错分了比较多的数据。<br>进一步改进随机梯度上升算法：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">stocGradAscent1</span><span class="params">(dataMatrix, classLabels, numIter=<span class="number">150</span>)</span>:</span></div><div class="line">    m, n = shape(dataMatrix)</div><div class="line">    weights = ones(n)  <span class="comment"># </span></div><div class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(numIter):</div><div class="line">        dataIndex = list(range(m))</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(m):</div><div class="line">            alpha = <span class="number">4</span> / (<span class="number">1.0</span> + j + i) + <span class="number">0.0001</span>  <span class="comment"># apha decreases with iteration, does not</span></div><div class="line">            randIndex = int(random.uniform(<span class="number">0</span>, len(dataIndex)))  <span class="comment"># go to 0 because of the constant</span></div><div class="line">            h = sigmoid(sum(dataMatrix[randIndex] * weights))</div><div class="line">            error = classLabels[randIndex] - h</div><div class="line">            weights = weights + alpha * error * dataMatrix[randIndex]</div><div class="line">            <span class="keyword">del</span> (dataIndex[randIndex])</div><div class="line">    <span class="keyword">return</span> weights</div></pre></td></tr></table></figure></p>
+<p>alpha每次迭代都会调整，alpha随着迭代次数的变大，而不断减小，因为迭代次数越多，回归系数越来越接近稳定值，此时调整的步长也应当越来越小，避免波动，但要大于0，使其对数据仍有影响</p>
+<p>使用改进后的随机梯度上升的效果：<br><img src="https://bazingagain.github.io/images/ml/logistic/stocrandomgrad.png" alt=""></p>
+<p>最后使用Logistic回归进行分类：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">classifyVector</span><span class="params">(inX, weights)</span>:</span> <span class="comment"># 0.5为类别的分界</span></div><div class="line">    prob = sigmoid(sum(inX * weights))</div><div class="line">    <span class="keyword">if</span> prob &gt; <span class="number">0.5</span>:</div><div class="line">        <span class="keyword">return</span> <span class="number">1.0</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">return</span> <span class="number">0.0</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">colicTest</span><span class="params">()</span>:</span></div><div class="line">    frTrain = open(<span class="string">'horseColicTraining.txt'</span>);</div><div class="line">    frTest = open(<span class="string">'horseColicTest.txt'</span>)</div><div class="line">    trainingSet = []</div><div class="line">    trainingLabels = []</div><div class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> frTrain.readlines():</div><div class="line">        currLine = line.strip().split(<span class="string">'\t'</span>)</div><div class="line">        lineArr = []</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">21</span>):</div><div class="line">            lineArr.append(float(currLine[i]))</div><div class="line">        trainingSet.append(lineArr)</div><div class="line">        trainingLabels.append(float(currLine[<span class="number">21</span>]))</div><div class="line">    trainWeights = stocGradAscent1(array(trainingSet), trainingLabels, <span class="number">1000</span>)<span class="comment">#得到训练的回归系数</span></div><div class="line">    errorCount = <span class="number">0</span></div><div class="line">    numTestVec = <span class="number">0.0</span></div><div class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> frTest.readlines():</div><div class="line">        numTestVec += <span class="number">1.0</span></div><div class="line">        currLine = line.strip().split(<span class="string">'\t'</span>)</div><div class="line">        lineArr = []</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">21</span>):</div><div class="line">            lineArr.append(float(currLine[i]))</div><div class="line">        <span class="keyword">if</span> int(classifyVector(array(lineArr), trainWeights)) != int(currLine[<span class="number">21</span>]): <span class="comment">#通过将数据带入sigmod函数(使用训练好的回归系数)求值得到分类</span></div><div class="line">            errorCount += <span class="number">1</span></div><div class="line">    errorRate = (float(errorCount) / numTestVec) <span class="comment">#错误的分类数 / 总测试样本</span></div><div class="line">    print(<span class="string">"the error rate of this test is: %f"</span> % errorRate)</div><div class="line">    <span class="keyword">return</span> errorRate</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">multiTest</span><span class="params">()</span>:</span></div><div class="line">    numTests = <span class="number">10</span></div><div class="line">    errorSum = <span class="number">0.0</span></div><div class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> range(numTests): <span class="comment"># 多长平均</span></div><div class="line">        errorSum += colicTest()</div><div class="line">    print(<span class="string">"after %d iterations the average error rate is: %f"</span> % (numTests, errorSum / float(numTests)))</div></pre></td></tr></table></figure></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://item.jd.com/11242112.html" target="_blank" rel="external">1.Peter Harrington.《机器学习实战》</a><br><a href="http://www.jianshu.com/p/d94e40e2df81" target="_blank" rel="external">2.chen_h. 简书: 神经网络入门之Logistic回归（分类问题）</a><br><a href="https://baike.baidu.com/item/logistic%E5%9B%9E%E5%BD%92/2981575?fr=aladdin" target="_blank" rel="external">3.百度百科：Logistic回归</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/WeChatQR.jpeg" alt="Xiaolei Peng WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/uploads/AliPayQR.jpeg" alt="Xiaolei Peng Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Xiaolei Peng
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://bazingagain.com/2017/12/04/ml-logistic-regress/" title="机器学习之Logistic回归">http://bazingagain.com/2017/12/04/ml-logistic-regress/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Machine-Learning/" rel="tag"># Machine Learning</a>
+          
+            <a href="/tags/logistic回归/" rel="tag"># logistic回归</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/28/ml-kmeans-cluster/" rel="next" title="机器学习之K-Means算法">
+                <i class="fa fa-chevron-left"></i> 机器学习之K-Means算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="Xiaolei Peng" />
+          <p class="site-author-name" itemprop="name">Xiaolei Peng</p>
+           
+              <p class="site-description motion-element" itemprop="description">程序员</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/bazingagain" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+        
+<embed src="//music.163.com/style/swf/widget.swf?sid=441359&type=2&auto=0&width=320&height=66" width="340" height="86"  allowNetworking="all"></embed>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是Logistic回归？"><span class="nav-number">1.</span> <span class="nav-text">什么是Logistic回归？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Logistic回归的最优化方案"><span class="nav-number">2.</span> <span class="nav-text">Logistic回归的最优化方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#梯度上升法"><span class="nav-number">2.1.</span> <span class="nav-text">梯度上升法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Logistic回归算法的实现"><span class="nav-number">3.</span> <span class="nav-text">Logistic回归算法的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiaolei Peng</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问用户
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>访问次数
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("6S5WEDrPUzaDfarHnmz74io3-gzGzoHsz", "AFVYQDlsS5XFsBQ3MguKRj4R");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+  
+  
+
+
+  
+
+</body>
+</html>
