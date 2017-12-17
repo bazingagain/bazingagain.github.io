@@ -93,20 +93,20 @@
 
 
 
-<meta name="description" content="MyBatis缓存为什么MyBatis要使用缓存？从源码的一次查询分析可知，MyBatis查询一次数据库，都要构造SqlSession, MapperProxyFactory, MapperProxy,StatementHandler, Connection,Statement等对象。而多数情况下，数据库查询的语句一般都不变，也就是说，在一次Session中，我们执行完全相同的SQL的概论非常高，">
+<meta name="description" content="MyBatis缓存为什么MyBatis要使用缓存？从源码的一次查询分析可知，MyBatis查询一次数据库，都要构造SqlSession, MapperProxyFactory, MapperProxy,StatementHandler, Connection,Statement等对象。而多数情况下，数据库查询的语句一般都不变，也就是说，在一次Session中，我们执行完全相同的SQL的概率非常高，">
 <meta name="keywords" content="Java,MyBatis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MyBatis学习第四篇 - MyBatis源码剖析之缓存">
 <meta property="og:url" content="http://bazingagain.com/2017/10/29/mybatis-code-analysis-cache/index.html">
 <meta property="og:site_name" content="bazingagain">
-<meta property="og:description" content="MyBatis缓存为什么MyBatis要使用缓存？从源码的一次查询分析可知，MyBatis查询一次数据库，都要构造SqlSession, MapperProxyFactory, MapperProxy,StatementHandler, Connection,Statement等对象。而多数情况下，数据库查询的语句一般都不变，也就是说，在一次Session中，我们执行完全相同的SQL的概论非常高，">
+<meta property="og:description" content="MyBatis缓存为什么MyBatis要使用缓存？从源码的一次查询分析可知，MyBatis查询一次数据库，都要构造SqlSession, MapperProxyFactory, MapperProxy,StatementHandler, Connection,Statement等对象。而多数情况下，数据库查询的语句一般都不变，也就是说，在一次Session中，我们执行完全相同的SQL的概率非常高，">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://bazingagain.github.io/images/mybatis/2017_10_31/mybatis-executor.png">
 <meta property="og:image" content="https://bazingagain.github.io/images/mybatis/2017_10_31/mybatis-cache.png">
-<meta property="og:updated_time" content="2017-11-01T15:54:34.000Z">
+<meta property="og:updated_time" content="2017-12-16T07:41:27.194Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MyBatis学习第四篇 - MyBatis源码剖析之缓存">
-<meta name="twitter:description" content="MyBatis缓存为什么MyBatis要使用缓存？从源码的一次查询分析可知，MyBatis查询一次数据库，都要构造SqlSession, MapperProxyFactory, MapperProxy,StatementHandler, Connection,Statement等对象。而多数情况下，数据库查询的语句一般都不变，也就是说，在一次Session中，我们执行完全相同的SQL的概论非常高，">
+<meta name="twitter:description" content="MyBatis缓存为什么MyBatis要使用缓存？从源码的一次查询分析可知，MyBatis查询一次数据库，都要构造SqlSession, MapperProxyFactory, MapperProxy,StatementHandler, Connection,Statement等对象。而多数情况下，数据库查询的语句一般都不变，也就是说，在一次Session中，我们执行完全相同的SQL的概率非常高，">
 <meta name="twitter:image" content="https://bazingagain.github.io/images/mybatis/2017_10_31/mybatis-executor.png">
 
 
@@ -420,7 +420,7 @@
       
 
       
-        <h3 id="MyBatis缓存"><a href="#MyBatis缓存" class="headerlink" title="MyBatis缓存"></a>MyBatis缓存</h3><h4 id="为什么MyBatis要使用缓存？"><a href="#为什么MyBatis要使用缓存？" class="headerlink" title="为什么MyBatis要使用缓存？"></a>为什么MyBatis要使用缓存？</h4><p>从源码的一次查询分析可知，MyBatis查询一次数据库，都要构造SqlSession, MapperProxyFactory, MapperProxy,StatementHandler, Connection,Statement等对象。而多数情况下，数据库查询的语句一般都不变，也就是说，在一次Session中，我们执行完全相同的SQL的概论非常高，他们返回的结果相同的概论也非常高，如果每次查询都去创建这么多的对象，非常消耗系统资源。为了充分利用查询语句大部分情况下相同导致数据结果可能相同的特性，MyBatis提供了一级和二级缓存机制，减少了资源开销，同时提高了查询效率。</p>
+        <h3 id="MyBatis缓存"><a href="#MyBatis缓存" class="headerlink" title="MyBatis缓存"></a>MyBatis缓存</h3><h4 id="为什么MyBatis要使用缓存？"><a href="#为什么MyBatis要使用缓存？" class="headerlink" title="为什么MyBatis要使用缓存？"></a>为什么MyBatis要使用缓存？</h4><p>从源码的一次查询分析可知，MyBatis查询一次数据库，都要构造SqlSession, MapperProxyFactory, MapperProxy,StatementHandler, Connection,Statement等对象。而多数情况下，数据库查询的语句一般都不变，也就是说，在一次Session中，我们执行完全相同的SQL的概率非常高，他们返回的结果相同的概率也非常高，如果每次查询都去创建这么多的对象，非常消耗系统资源。为了充分利用查询语句大部分情况下相同导致数据结果可能相同的特性，MyBatis提供了一级和二级缓存机制，减少了资源开销，同时提高了查询效率。</p>
 <h4 id="MyBatis的一级缓存"><a href="#MyBatis的一级缓存" class="headerlink" title="MyBatis的一级缓存"></a>MyBatis的一级缓存</h4><p>MyBatis的一级缓存主要在两个地方有所体现：</p>
 <p><em>1.缓存Mapper类的代理类执行时的MapperMethod对象</em></p>
 <p>在构建SqlSession并获取Mapper的时候，通过<code>MapperProxyFactory.newInstance(sqlSession)</code>来生成一个反射代理对象：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MapperProxyFactory</span>&lt;<span class="title">T</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">  <span class="keyword">private</span> <span class="keyword">final</span> Class&lt;T&gt; mapperInterface;</div><div class="line">  <span class="keyword">private</span> <span class="keyword">final</span> Map&lt;Method, MapperMethod&gt; methodCache = <span class="keyword">new</span> ConcurrentHashMap&lt;Method, MapperMethod&gt;();</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="title">MapperProxyFactory</span><span class="params">(Class&lt;T&gt; mapperInterface)</span> </span>&#123;</div><div class="line">    <span class="keyword">this</span>.mapperInterface = mapperInterface;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> Class&lt;T&gt; <span class="title">getMapperInterface</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> mapperInterface;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> Map&lt;Method, MapperMethod&gt; <span class="title">getMethodCache</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> methodCache;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</div><div class="line">  <span class="function"><span class="keyword">protected</span> T <span class="title">newInstance</span><span class="params">(MapperProxy&lt;T&gt; mapperProxy)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> (T) Proxy.newProxyInstance(mapperInterface.getClassLoader(), <span class="keyword">new</span> Class[] &#123; mapperInterface &#125;, mapperProxy); <span class="comment">//生成一个Mapper接口的代理对象，InvocationHandler为MapperProxy</span></div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> T <span class="title">newInstance</span><span class="params">(SqlSession sqlSession)</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> MapperProxy&lt;T&gt; mapperProxy = <span class="keyword">new</span> MapperProxy&lt;T&gt;(sqlSession, mapperInterface, methodCache);</div><div class="line">    <span class="keyword">return</span> newInstance(mapperProxy);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
@@ -627,7 +627,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
