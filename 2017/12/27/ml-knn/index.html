@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="NLP," />
+  <meta name="keywords" content="Machine Learning,k近邻算法," />
 
 
 
@@ -93,18 +93,21 @@
 
 
 
-<meta name="description" content="背景知识：词向量： One-Hot Representation  用词典的大小表示向量的维度，向量的分量只有一个1（对应该词出现的位置），其它全为0，采用稀疏存储，给每个词分配一个唯一Hash值，适合最大熵，SVM，CRF等算法存在的问题：1.维度灾难： 随着维度的增加，计算量呈指数增加2.词汇鸿沟：不能描绘词与词之间的相似性  Distributed Representation  用普通向量">
-<meta name="keywords" content="NLP">
+<meta name="description" content="在机器学习的分类算法中，k近邻算法可以说是分类算法中最为简单的一种了，其实用性比较好，实现起来也比较简单。  k近邻算法的思想对于给定的样本集，每个样本集中的每个样本都对于一个分类标签，对于输入的没有分类的数据，将新数据的每个特征与样本集中数据对应的特征进行比较（计算欧式距离），然后算法提取样本中特征最相似数据的分类标签。  k近邻算法的优缺点k近邻算法对异常数据不敏感，精度比较高，但其缺点也很明">
+<meta name="keywords" content="Machine Learning,k近邻算法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="自然语言处理-语言模型">
-<meta property="og:url" content="http://bazingagain.com/2017/11/02/nlp-language-model/index.html">
+<meta property="og:title" content="ml-knn">
+<meta property="og:url" content="http://bazingagain.com/2017/12/27/ml-knn/index.html">
 <meta property="og:site_name" content="bazingagain">
-<meta property="og:description" content="背景知识：词向量： One-Hot Representation  用词典的大小表示向量的维度，向量的分量只有一个1（对应该词出现的位置），其它全为0，采用稀疏存储，给每个词分配一个唯一Hash值，适合最大熵，SVM，CRF等算法存在的问题：1.维度灾难： 随着维度的增加，计算量呈指数增加2.词汇鸿沟：不能描绘词与词之间的相似性  Distributed Representation  用普通向量">
+<meta property="og:description" content="在机器学习的分类算法中，k近邻算法可以说是分类算法中最为简单的一种了，其实用性比较好，实现起来也比较简单。  k近邻算法的思想对于给定的样本集，每个样本集中的每个样本都对于一个分类标签，对于输入的没有分类的数据，将新数据的每个特征与样本集中数据对应的特征进行比较（计算欧式距离），然后算法提取样本中特征最相似数据的分类标签。  k近邻算法的优缺点k近邻算法对异常数据不敏感，精度比较高，但其缺点也很明">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-03T11:50:05.000Z">
+<meta property="og:image" content="https://bazingagain.github.io/images/ml/knn/knn_20171227_1.png">
+<meta property="og:image" content="https://bazingagain.github.io/images/ml/knn/knn_20171227_2.png">
+<meta property="og:updated_time" content="2017-12-27T13:46:10.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="自然语言处理-语言模型">
-<meta name="twitter:description" content="背景知识：词向量： One-Hot Representation  用词典的大小表示向量的维度，向量的分量只有一个1（对应该词出现的位置），其它全为0，采用稀疏存储，给每个词分配一个唯一Hash值，适合最大熵，SVM，CRF等算法存在的问题：1.维度灾难： 随着维度的增加，计算量呈指数增加2.词汇鸿沟：不能描绘词与词之间的相似性  Distributed Representation  用普通向量">
+<meta name="twitter:title" content="ml-knn">
+<meta name="twitter:description" content="在机器学习的分类算法中，k近邻算法可以说是分类算法中最为简单的一种了，其实用性比较好，实现起来也比较简单。  k近邻算法的思想对于给定的样本集，每个样本集中的每个样本都对于一个分类标签，对于输入的没有分类的数据，将新数据的每个特征与样本集中数据对应的特征进行比较（计算欧式距离），然后算法提取样本中特征最相似数据的分类标签。  k近邻算法的优缺点k近邻算法对异常数据不敏感，精度比较高，但其缺点也很明">
+<meta name="twitter:image" content="https://bazingagain.github.io/images/ml/knn/knn_20171227_1.png">
 
 
 
@@ -132,13 +135,13 @@
 
 
 
-  <link rel="canonical" href="http://bazingagain.com/2017/11/02/nlp-language-model/"/>
+  <link rel="canonical" href="http://bazingagain.com/2017/12/27/ml-knn/"/>
 
 
 
 
 
-  <title> 自然语言处理-语言模型 | bazingagain </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> ml-knn | bazingagain </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -277,7 +280,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://bazingagain.com/2017/11/02/nlp-language-model/">
+    <link itemprop="mainEntityOfPage" href="http://bazingagain.com/2017/12/27/ml-knn/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Xiaolei Peng">
@@ -298,7 +301,7 @@
             
             
               
-                自然语言处理-语言模型
+                ml-knn
               
             
           </h1>
@@ -313,8 +316,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-02T23:07:15+08:00">
-                2017-11-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-27T21:45:12+08:00">
+                2017-12-27
               </time>
             
 
@@ -336,8 +339,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/NLP/" itemprop="url" rel="index">
-                    <span itemprop="name">NLP</span>
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
                   </a>
                 </span>
 
@@ -353,7 +356,7 @@
 
           
           
-             <span id="/2017/11/02/nlp-language-model/" class="leancloud_visitors" data-flag-title="自然语言处理-语言模型">
+             <span id="/2017/12/27/ml-knn/" class="leancloud_visitors" data-flag-title="ml-knn">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -382,7 +385,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  759
+                  843
                 </span>
               
 
@@ -398,7 +401,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  3
+                  4
                 </span>
               
             </div>
@@ -417,30 +420,34 @@
       
 
       
-        <h3 id="背景知识："><a href="#背景知识：" class="headerlink" title="背景知识："></a>背景知识：</h3><h4 id="词向量："><a href="#词向量：" class="headerlink" title="词向量："></a>词向量：</h4><ul>
-<li>One-Hot Representation</li>
-</ul>
-<p>用词典的大小表示向量的维度，向量的分量只有一个1（对应该词出现的位置），其它全为0，采用稀疏存储，给每个词分配一个唯一Hash值，适合最大熵，SVM，CRF等算法<br>存在的问题：<br>1.维度灾难： 随着维度的增加，计算量呈指数增加<br>2.词汇鸿沟：不能描绘词与词之间的相似性</p>
-<ul>
-<li>Distributed Representation</li>
-</ul>
-<p>用普通向量表示一个词，如[0.14, 0.15, -0.22, 0.34, …]，维度一般比较适中，避免出现维度灾难问题，每个词代表向量空间中的一个点，计算两点之间的欧氏距离，即可得到两者的相似性</p>
-<h3 id="语言模型："><a href="#语言模型：" class="headerlink" title="语言模型："></a>语言模型：</h3><p>语言模型是计算一个句子是自然语言的概论的模型：P(w1, w2, w3, …)，w1, w2…为句子T中的词。<br>计算规则：P(s) = P(w1, w2, w3..) = P(w1)P(w2|w1)P(w3|w1w2)…P(wk|w1w2..wk-1)。<br>可以看到，越到后面，参数越多，计算量越大，为简化计算该句子的概论，产生了如下计算方法模型：</p>
-<h4 id="N-Gram模型"><a href="#N-Gram模型" class="headerlink" title="N-Gram模型"></a>N-Gram模型</h4><p>即n-1阶马尔科夫模型，该模型假设：当前词出现的概率仅与前n-1个词有关，则该句子出现的概论公式表示为:<br>    P(s) = P(w1, w2, w3..) = $$\Pi_{i=1}^kP(W<em>1|W</em>{i-n+1},…,W_{i-1})$$<br> n=1，则为unigram；n=2，则为bigram；n=3，则为trigram 模型。该模型的参数就是，词表大小为1000，则n-gram模型的参数数量为，n越大，预测的结果也就越准确，但计算量也越大，一般采用bigram。例如在bigram中，P()</p>
-<p>存在的问题：<br>1.n不能太大<br>2.词之间的相似度无法计算，同一content下总出现A1,A2两个词，但n-gram模型不能描述这两个词之间的相似性<br>3.n元组（n个词的组合）在语料库中没有，则计算的条件概率为0，则该句话的概论为0，即数据稀疏现象，显然不对，解决办法：平滑法、回退法（用n-1元组的概论替换n元组的概论）</p>
+        <p>在机器学习的分类算法中，k近邻算法可以说是分类算法中最为简单的一种了，其实用性比较好，实现起来也比较简单。</p>
+<hr>
+<h3 id="k近邻算法的思想"><a href="#k近邻算法的思想" class="headerlink" title="k近邻算法的思想"></a>k近邻算法的思想</h3><p>对于给定的样本集，每个样本集中的每个样本都对于一个分类标签，对于输入的没有分类的数据，将新数据的每个特征与样本集中数据对应的特征进行比较（计算欧式距离），然后算法提取样本中特征最相似数据的分类标签。</p>
+<hr>
+<h3 id="k近邻算法的优缺点"><a href="#k近邻算法的优缺点" class="headerlink" title="k近邻算法的优缺点"></a>k近邻算法的优缺点</h3><p>k近邻算法对异常数据不敏感，精度比较高，但其缺点也很明显：计算复杂度高，空间复杂度高。</p>
+<hr>
+<h3 id="k近邻算法的的流程"><a href="#k近邻算法的的流程" class="headerlink" title="k近邻算法的的流程"></a>k近邻算法的的流程</h3><p>对于k近邻算法的流程，引用机器学习实战中的介绍：</p>
 <blockquote>
-<p>n-gram的数据平滑（解决数据稀疏 Data Sparseness）：<br>对概论为0的n元对进行概论估计，包括：</p>
+<p>(1)计算已知类别数据集中的点与当前点之间的距离(欧式距离)</p>
+<p>(2)按照距离递增词性排序</p>
+<p>(3)选取当前点距离最小的k个点</p>
+<p>(4)确定前k个点所在类别的出现频率</p>
+<p>(5)返回前k个点出现频率最高的类别作为当前点的预测分类</p>
 </blockquote>
-<ul>
-<li>加法平滑：<br>避免0概论，将每个n元对的出现次数加一个常数∂（0&lt;∂&lt;1）：</li>
-</ul>
-<p>C(X)表示X在训练语料中出现的次数。</p>
-<ul>
-<li>Good-Turing平滑 – 利用频率的类别信息对频率进行平滑</li>
-<li>线性插值平滑 – 利用低元n-Gram对高元n-Gram模型进行线性插值</li>
-<li>Katz平滑（回退平滑） - n元对的次数出现足够大时，采用最大似然估计；n元对的出现次数不够大时，采用Good-Turing平滑；当出现次数为0时，模型回退到低元模型。</li>
-</ul>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="http://www.cnblogs.com/Dream-Fish/p/3963028.html" target="_blank" rel="external">1.语言模型的基本概念</a><br><a href="http://blog.csdn.net/mytestmy/article/details/26961315" target="_blank" rel="external">2.深度学习word2vec笔记</a></p>
+<hr>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><p>这里我选用机器学习实战的knn算法中对手写识别系统的示例进行梳理：</p>
+<p>在原始的文件中，testDigist文件夹中存放的是900多个测试数据，而trainingDigits中存放的是用于训练的数据：</p>
+<p><img src="https://bazingagain.github.io/images/ml/knn/knn_20171227_1.png" alt=""></p>
+<p>每个测试数据类似如下：</p>
+<p><img src="https://bazingagain.github.io/images/ml/knn/knn_20171227_2.png" alt=""></p>
+<p>1.knn分类算法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">classify</span><span class="params">(inX, dataSet, labels, k)</span>:</span></div><div class="line">    <span class="string">""" K 近邻算法</span></div><div class="line"><span class="string">    :param inX: 输入向量</span></div><div class="line"><span class="string">    :param dataSet: 训练样本集</span></div><div class="line"><span class="string">    :param labels: 标签向量, 其元素数目和dataSet的行数相同</span></div><div class="line"><span class="string">    :param k: 前k个</span></div><div class="line"><span class="string">    :return:</span></div><div class="line"><span class="string">    """</span></div><div class="line">    dataSetSize = dataSet.shape[<span class="number">0</span>] <span class="comment"># 读取矩阵第一维度的长度</span></div><div class="line">    diffMat = tile(inX, (dataSetSize, <span class="number">1</span>)) - dataSet <span class="comment">#和各个向量计算向量差</span></div><div class="line">    sqDiffMat = diffMat**<span class="number">2</span>  <span class="comment"># 矩阵点乘平方</span></div><div class="line">    sqDistance = sqDiffMat.sum(axis=<span class="number">1</span>) <span class="comment"># 行 和, 即每行的所有列值相加,最后行数不变,列数变为1</span></div><div class="line">    distances = sqDistance**<span class="number">0.5</span> <span class="comment"># 对矩阵的每个元素开根号, 最后的数值越小,说明距离越近</span></div><div class="line">    sortedDistancies = distances.argsort() <span class="comment">#返回数组值从小到大的索引</span></div><div class="line">    classCount = &#123;&#125;</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(k):</div><div class="line">        voteIlabel = labels[sortedDistancies[i]]</div><div class="line">        classCount[voteIlabel] = classCount.get(voteIlabel, <span class="number">0</span>) + <span class="number">1</span></div><div class="line">    sortedClassCount = sorted(classCount.items(), key=operator.itemgetter(<span class="number">1</span>), reverse=<span class="keyword">True</span>) <span class="comment">#根据第2个域进行降序排序</span></div><div class="line">    <span class="keyword">return</span> sortedClassCount[<span class="number">0</span>][<span class="number">0</span>]</div></pre></td></tr></table></figure>
+<p>2.图像数据转换为矩阵</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">img2vector</span><span class="params">(filename)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line"><span class="string">    将32 * 32的二进制图像转换为 1*1024的矩阵</span></div><div class="line"><span class="string">    :param filename: 文件名</span></div><div class="line"><span class="string">    :return:</span></div><div class="line"><span class="string">    """</span></div><div class="line">    returnVect = zeros((<span class="number">1</span>, <span class="number">1024</span>))</div><div class="line">    fr = open(filename)</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">32</span>):</div><div class="line">        lineStr = fr.readline()</div><div class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">32</span>):</div><div class="line">            returnVect[<span class="number">0</span>, <span class="number">32</span>*i+j] = int(lineStr[j]) <span class="comment"># 第0行,第32*i+j个元素设置为 图像中的1或0</span></div><div class="line">    <span class="keyword">return</span> returnVect</div></pre></td></tr></table></figure>
+<p>3.测试</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">handWritingClassTest</span><span class="params">()</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line"><span class="string">    图片分类算法, 采用k-近邻相似处理</span></div><div class="line"><span class="string">    :return:</span></div><div class="line"><span class="string">    """</span></div><div class="line">    hwLables = []</div><div class="line">    trainingFileList = listdir(<span class="string">'trainingDigits'</span>)</div><div class="line">    m = len(trainingFileList)</div><div class="line">    trainingMat = zeros((m, <span class="number">1024</span>))</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(m):</div><div class="line">        fileNameStr = trainingFileList[i]</div><div class="line">        fileStr = fileNameStr.split(<span class="string">'.'</span>)[<span class="number">0</span>]</div><div class="line">        classNumStr = int(fileStr.split(<span class="string">'_'</span>)[<span class="number">0</span>])</div><div class="line">        hwLables.append(classNumStr)</div><div class="line">        trainingMat[i,:] = img2vector(<span class="string">'trainingDigits/%s'</span> % fileNameStr)</div><div class="line">    testFileList = listdir(<span class="string">'testDigits'</span>)</div><div class="line">    errorCount = <span class="number">0.0</span></div><div class="line">    mTest = len(testFileList)</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(mTest):</div><div class="line">        fileNameStr = testFileList[i]</div><div class="line">        fileStr = fileNameStr.split(<span class="string">'.'</span>)[<span class="number">0</span>]</div><div class="line">        classNumStr = int(fileStr.split(<span class="string">'_'</span>)[<span class="number">0</span>])</div><div class="line">        vectorUnderTest = img2vector(<span class="string">'testDigits/%s'</span> % fileNameStr)</div><div class="line">        classifierResult = classify(vectorUnderTest, trainingMat, hwLables, <span class="number">5</span>)</div><div class="line">        print(<span class="string">"the classifier came back with: %d, the real answer is:%d"</span> % (classifierResult, classNumStr))</div><div class="line">        <span class="keyword">if</span> (classifierResult != classNumStr):</div><div class="line">            errorCount += <span class="number">1.0</span></div><div class="line">    print(<span class="string">"the total number of error is:%d"</span> % (errorCount))</div><div class="line">    print(<span class="string">"the total error rate is:%f"</span> % (errorCount / float(mTest)))</div></pre></td></tr></table></figure>
+<hr>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://item.jd.com/11242112.html" target="_blank" rel="external">1.Peter Harrington.《机器学习实战》</a></p>
 
       
     </div>
@@ -490,7 +497,7 @@
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="http://bazingagain.com/2017/11/02/nlp-language-model/" title="自然语言处理-语言模型">http://bazingagain.com/2017/11/02/nlp-language-model/</a>
+      <a href="http://bazingagain.com/2017/12/27/ml-knn/" title="ml-knn">http://bazingagain.com/2017/12/27/ml-knn/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -506,7 +513,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/NLP/" rel="tag"># NLP</a>
+            <a href="/tags/Machine-Learning/" rel="tag"># Machine Learning</a>
+          
+            <a href="/tags/k近邻算法/" rel="tag"># k近邻算法</a>
           
         </div>
       
@@ -519,8 +528,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/31/mybatis-code-analysis-framework/" rel="next" title="MyBatis学习第五篇 - MyBatis源码剖析之整体框架">
-                <i class="fa fa-chevron-left"></i> MyBatis学习第五篇 - MyBatis源码剖析之整体框架
+              <a href="/2017/12/27/ml-decistiontree/" rel="next" title="机器学习之决策树算法">
+                <i class="fa fa-chevron-left"></i> 机器学习之决策树算法
               </a>
             
           </div>
@@ -528,10 +537,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/11/21/ml-bayes-classify/" rel="prev" title="机器学习之贝叶斯分类算法">
-                机器学习之贝叶斯分类算法 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -687,7 +692,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景知识："><span class="nav-number">1.</span> <span class="nav-text">背景知识：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#词向量："><span class="nav-number">1.1.</span> <span class="nav-text">词向量：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#语言模型："><span class="nav-number">2.</span> <span class="nav-text">语言模型：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#N-Gram模型"><span class="nav-number">2.1.</span> <span class="nav-text">N-Gram模型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#k近邻算法的思想"><span class="nav-number">1.</span> <span class="nav-text">k近邻算法的思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#k近邻算法的优缺点"><span class="nav-number">2.</span> <span class="nav-text">k近邻算法的优缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#k近邻算法的的流程"><span class="nav-number">3.</span> <span class="nav-text">k近邻算法的的流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现"><span class="nav-number">4.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
@@ -965,33 +970,7 @@
         showTime(Counter);
       }
     });
-  </script>
-
-
-
-  
-
-  
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -1009,6 +988,12 @@
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
+
+
+  
+
+  
   
 
 
