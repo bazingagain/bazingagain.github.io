@@ -1,0 +1,1027 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|consolas:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Machine Learning,决策树," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="在分类算法中，决策树属于一种比较简单而直观的分类算法，其决策更加符合人在对事物进行分类时的习惯。而决策树分类算法就是通过构造一个决策树并模拟这种决策的过程。  为什么使用决策树？决策树的主要优势在于其数据形式非常直观，易于理解，其计算复杂度不高，输出的结果易于理解，对中间值的缺失不敏感，可以处理不相关的特征数据等。其更适用于数值型数据和标称型数据。  决策树的处理流程对于决策树的处理流程，其实最重">
+<meta name="keywords" content="Machine Learning,决策树">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ml-decistiontree">
+<meta property="og:url" content="http://bazingagain.com/2017/12/27/ml-decistiontree/index.html">
+<meta property="og:site_name" content="bazingagain">
+<meta property="og:description" content="在分类算法中，决策树属于一种比较简单而直观的分类算法，其决策更加符合人在对事物进行分类时的习惯。而决策树分类算法就是通过构造一个决策树并模拟这种决策的过程。  为什么使用决策树？决策树的主要优势在于其数据形式非常直观，易于理解，其计算复杂度不高，输出的结果易于理解，对中间值的缺失不敏感，可以处理不相关的特征数据等。其更适用于数值型数据和标称型数据。  决策树的处理流程对于决策树的处理流程，其实最重">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://bazingagain.github.io/images/ml/decisiontree/xiangnongshang.jpg">
+<meta property="og:image" content="https://bazingagain.github.io/images/ml/decisiontree/decisiontreet_2017_12_27.png">
+<meta property="og:updated_time" content="2017-12-27T07:38:37.855Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ml-decistiontree">
+<meta name="twitter:description" content="在分类算法中，决策树属于一种比较简单而直观的分类算法，其决策更加符合人在对事物进行分类时的习惯。而决策树分类算法就是通过构造一个决策树并模拟这种决策的过程。  为什么使用决策树？决策树的主要优势在于其数据形式非常直观，易于理解，其计算复杂度不高，输出的结果易于理解，对中间值的缺失不敏感，可以处理不相关的特征数据等。其更适用于数值型数据和标称型数据。  决策树的处理流程对于决策树的处理流程，其实最重">
+<meta name="twitter:image" content="https://bazingagain.github.io/images/ml/decisiontree/xiangnongshang.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://bazingagain.com/2017/12/27/ml-decistiontree/"/>
+
+
+
+
+
+  <title> ml-decistiontree | bazingagain </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">bazingagain</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">行者常至、为者常成</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://bazingagain.com/2017/12/27/ml-decistiontree/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xiaolei Peng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="bazingagain">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ml-decistiontree
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-27T15:37:42+08:00">
+                2017-12-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/12/27/ml-decistiontree/" class="leancloud_visitors" data-flag-title="ml-decistiontree">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>访问次数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1,697
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在分类算法中，决策树属于一种比较简单而直观的分类算法，其决策更加符合人在对事物进行分类时的习惯。而决策树分类算法就是通过构造一个决策树并模拟这种决策的过程。</p>
+<hr>
+<h3 id="为什么使用决策树？"><a href="#为什么使用决策树？" class="headerlink" title="为什么使用决策树？"></a>为什么使用决策树？</h3><p>决策树的主要优势在于其数据形式非常直观，易于理解，其计算复杂度不高，输出的结果易于理解，对中间值的缺失不敏感，可以处理不相关的特征数据等。其更适用于数值型数据和标称型数据。</p>
+<hr>
+<h3 id="决策树的处理流程"><a href="#决策树的处理流程" class="headerlink" title="决策树的处理流程"></a>决策树的处理流程</h3><p>对于决策树的处理流程，其实最重要的是首先构建一颗决策树，那么如何构建这颗决策树呢？机器学习实战上的CreateBranch()伪代码已经非常直观：</p>
+<blockquote>
+<p>检测数据集中的每个子项是否属于同一分类：</p>
+<pre><code>if so 
+
+   return 类标签
+
+else
+
+    寻找划分数据集的最好特征（选取信息增益最大的特征进行划分）
+    划分数据集
+    创建分支节点
+        for 每个划分的子集
+            调用函数createBranch并增加返回结果到分支节点中
+    return 分支节点
+</code></pre></blockquote>
+<hr>
+<h3 id="划分特征选取"><a href="#划分特征选取" class="headerlink" title="划分特征选取"></a>划分特征选取</h3><p>对于决策树来说，每次划分数据集都要选取一个属性进行划分，这里面就存在一个如何选取划分特征的问题。</p>
+<p>要知道怎样划分数据，就得知道为什么要划分数据。划分数据的原因在于为了从众多无序的数据中找到最终的类，我们需要<code>将无序的数据变得有序</code>，以便我们更加快速地对数据进行决策。</p>
+<p>那么如何将数据从无序变得有序呢？在其他领域如化学、热力学领域，衡量事务的混乱程度一般用“熵”来表示，同样，在信息学领域，对象信息的混乱程度，也可以用“香农熵”来表示。数据从无序变得有序，就是熵值减小的过程，而熵值的变化量则称作“信息增益”。<em>我们每次划分数据集时，计算每个特征值划分数据获得的信息增益，获得信息增益最高的特征就是最好的选择</em>，且其从无序变得有序的过程也更快。</p>
+<p>信息熵的定义公式为：</p>
+<p><img src="https://bazingagain.github.io/images/ml/decisiontree/xiangnongshang.jpg" alt=""></p>
+<p>关于香农熵的由来，以及为什么使用log，底数为什么使用2(其实是由于计算机的信息用bit表示)，可以从<a href="https://baike.baidu.com/item/%E9%A6%99%E5%86%9C%E7%86%B5/1649961?fr=aladdin" target="_blank" rel="external">香农熵：百度百科</a>中得到结果，其举的实例也非常有趣。</p>
+<hr>
+<h3 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h3><p>依据机器学习实战中的代码实现，对其总结和梳理如下：</p>
+<p>1.计算数据集的香农熵：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">calcShannonEnt</span><span class="params">(dataSet)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line"><span class="string">    计算数据集的香农熵</span></div><div class="line"><span class="string">    :param dataSet:</span></div><div class="line"><span class="string">    :return:</span></div><div class="line"><span class="string">    """</span></div><div class="line">    numEntries = len(dataSet)</div><div class="line">    labelCounts =&#123;&#125;</div><div class="line">    <span class="keyword">for</span> featVec <span class="keyword">in</span> dataSet: <span class="comment"># 创建分类字典，key：classLabel, value: 该种分类的样本数目</span></div><div class="line">        currentLabel = featVec[<span class="number">-1</span>]</div><div class="line">        <span class="keyword">if</span> currentLabel <span class="keyword">not</span> <span class="keyword">in</span> labelCounts.keys():</div><div class="line">            labelCounts[currentLabel] = <span class="number">0</span></div><div class="line">        labelCounts[currentLabel] += <span class="number">1</span></div><div class="line">    shannonEnt = <span class="number">0.0</span></div><div class="line">    <span class="keyword">for</span> key <span class="keyword">in</span> labelCounts: <span class="comment"># 根据熵的公式计算香农熵</span></div><div class="line">        prob = float(labelCounts[key]) / numEntries</div><div class="line">        shannonEnt -= prob * log(prob, <span class="number">2</span>)</div><div class="line">    <span class="keyword">return</span> shannonEnt</div></pre></td></tr></table></figure>
+<p>2.划分数据集</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">splitDataSet</span><span class="params">(dataSet, axis, value)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line"><span class="string">    对数据集进行划分</span></div><div class="line"><span class="string">    :param dataSet: 数据集 [[feat1value, feat2value, feat3value ..], [feat1value, feat2value, feat3value, ..]]</span></div><div class="line"><span class="string">    :param axis: 指定要依据哪个特征进行划分</span></div><div class="line"><span class="string">    :param value: 特征的值, 一个特征有多个值, 如&#123;size特征: small, normal, big&#125;</span></div><div class="line"><span class="string">    :return:</span></div><div class="line"><span class="string">    """</span></div><div class="line">    retDataSet = []</div><div class="line">    <span class="keyword">for</span> featVec <span class="keyword">in</span> dataSet:</div><div class="line">        <span class="keyword">if</span> featVec[axis] == value:</div><div class="line">            reduceFeatureVec = featVec[:axis]</div><div class="line">            reduceFeatureVec.extend(featVec[axis+<span class="number">1</span>:])</div><div class="line">            retDataSet.append(reduceFeatureVec)</div><div class="line">    <span class="keyword">return</span> retDataSet</div></pre></td></tr></table></figure>
+<p>3.选择最好的数据集划分</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">chooseBestFeatureToSplit</span><span class="params">(dataSet)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line"><span class="string">    找到最佳的特征进行划分（决策）</span></div><div class="line"><span class="string">    :param dataSet:</span></div><div class="line"><span class="string">    :return: 特征在样本中的下标</span></div><div class="line"><span class="string">    """</span></div><div class="line">    numFeatures = len(dataSet[<span class="number">0</span>]) - <span class="number">1</span></div><div class="line">    baseEntropy = calcShannonEnt(dataSet)</div><div class="line">    bestInfoGain =<span class="number">0.0</span></div><div class="line">    bestFeature = <span class="number">-1</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(numFeatures):</div><div class="line">        featList = [example[i] <span class="keyword">for</span> example <span class="keyword">in</span> dataSet]</div><div class="line">        uniqueVals = set(featList) <span class="comment"># 得到某个特征的唯一取值集合</span></div><div class="line">        newEntropy = <span class="number">0.0</span></div><div class="line">        <span class="keyword">for</span> value <span class="keyword">in</span> uniqueVals: <span class="comment"># 计算每个取值的信息熵,</span></div><div class="line">            subDataSet = splitDataSet(dataSet, i, value)</div><div class="line">            prob = len(subDataSet)/ float(len(dataSet))</div><div class="line">            newEntropy += prob * calcShannonEnt(subDataSet)</div><div class="line">        infoGain = baseEntropy - newEntropy <span class="comment"># (信息增益)</span></div><div class="line">        <span class="keyword">if</span> (infoGain &gt; bestInfoGain): <span class="comment"># 得到最大的信息增益,即通过此种划分,信息混乱度减小幅度最大</span></div><div class="line">            bestInfoGain = infoGain</div><div class="line">            bestFeature = i</div><div class="line">    <span class="keyword">return</span> bestFeature</div></pre></td></tr></table></figure>
+<p>4.构建决策树</p>
+<p>构建决策树是一个递归地过程，其根据最好的属性值（信息增益最大）进行划分，而递归地结束条件则是<em>程序遍历完所有划分数据集的属性，或者每个分支下的所有实例都具有相同的分类</em></p>
+<p>由于存在处理了所有属性,但是依然存在类别不同的情况, 该方法通过多数表决的方式指定分类：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">majorityCnt</span><span class="params">(classList)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line"><span class="string">    由于存在处理了所有属性,但是依然存在类别不同的情况, 该方法通过多数表决的方式指定分类</span></div><div class="line"><span class="string">    :param classList:</span></div><div class="line"><span class="string">    :return:</span></div><div class="line"><span class="string">    """</span></div><div class="line">    classCount = &#123;&#125;</div><div class="line">    <span class="keyword">for</span> vote <span class="keyword">in</span> classList:</div><div class="line">        <span class="keyword">if</span> vote <span class="keyword">not</span> <span class="keyword">in</span> classCount.keys():</div><div class="line">            classCount[vote] = <span class="number">0</span></div><div class="line">        classCount += <span class="number">1</span></div><div class="line">    sortedClassCount = sorted(classCount.items(), key=operator.itemgetter(<span class="number">1</span>), reversed=<span class="keyword">True</span>)</div><div class="line">    <span class="keyword">return</span> sortedClassCount[<span class="number">0</span>][<span class="number">0</span>]</div></pre></td></tr></table></figure>
+<p>创建树：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">createTree</span><span class="params">(dataSet, labels)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line"><span class="string">    构建决策树</span></div><div class="line"><span class="string">    :param dataSet:</span></div><div class="line"><span class="string">    :param labels:</span></div><div class="line"><span class="string">    :return:</span></div><div class="line"><span class="string">    """</span></div><div class="line">    classList = [example[<span class="number">-1</span>] <span class="keyword">for</span> example <span class="keyword">in</span> dataSet] <span class="comment"># 获得分类集</span></div><div class="line">    <span class="keyword">if</span> classList.count(classList[<span class="number">0</span>]) == len(classList): <span class="comment"># 类别完全相同则停止划分</span></div><div class="line">        <span class="keyword">return</span> classList[<span class="number">0</span>]</div><div class="line">    <span class="keyword">if</span> len(dataSet[<span class="number">0</span>]) == <span class="number">1</span>: <span class="comment">#遍历完所有特征时,仍然不能将数据集划分成仅包含唯一类别的分组时，返回出现次数最多的类别</span></div><div class="line">        <span class="keyword">return</span> majorityCnt(classList)</div><div class="line">    bestFeat = chooseBestFeatureToSplit(dataSet)</div><div class="line">    bestFeatLabel = labels[bestFeat]</div><div class="line">    myTree = &#123;bestFeatLabel:&#123;&#125;&#125;</div><div class="line">    <span class="keyword">del</span>(labels[bestFeat])</div><div class="line">    featValues = [example[bestFeat] <span class="keyword">for</span> example <span class="keyword">in</span> dataSet]</div><div class="line">    uniqueVals = set(featValues)</div><div class="line">    <span class="keyword">for</span> value <span class="keyword">in</span> uniqueVals: <span class="comment"># 特征的每一种值,都是一个树的分支</span></div><div class="line">        subLabels = labels[:]</div><div class="line">        myTree[bestFeatLabel][value] = createTree(splitDataSet(dataSet, bestFeat, value), subLabels)</div><div class="line">    <span class="keyword">return</span> myTree</div></pre></td></tr></table></figure>
+<p>5.绘图工具</p>
+<p>为了更加形象化地展示决策的整个过程，这里使用matplotlib来绘制整个决策树，由于绘制代码并非核心需求，这里我并不展开讲这个绘制的实现过程，有兴趣的可以参考具体实现:<a href="https://github.com/bazingagain/MLInAction/blob/master/com.leon.ml/decisiontree/treePlotter.py" target="_blank" rel="external">决策树绘制实现</a></p>
+<p>这里我选取书中预测隐形眼镜例子的实现效果：</p>
+<p><img src="https://bazingagain.github.io/images/ml/decisiontree/decisiontreet_2017_12_27.png" alt=""></p>
+<p>6.使用决策树进行分类</p>
+<p>利用训练数据会得到构造好的决策树，这时就可以使用它来进行分类：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">createDataSet</span><span class="params">()</span>:</span></div><div class="line">    dataSet = [[<span class="number">1</span>, <span class="number">1</span>, <span class="string">'yes'</span>],</div><div class="line">               [<span class="number">1</span>, <span class="number">1</span>, <span class="string">'yes'</span>],</div><div class="line">               [<span class="number">1</span>, <span class="number">0</span>, <span class="string">'no'</span>],</div><div class="line">               [<span class="number">0</span>, <span class="number">1</span>, <span class="string">'no'</span>],</div><div class="line">               [<span class="number">0</span>, <span class="number">1</span>, <span class="string">'no'</span>]]</div><div class="line">    labels = [<span class="string">'no surfacing'</span>, <span class="string">'flippers'</span>]</div><div class="line">    <span class="keyword">return</span> dataSet, labels</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">classify</span><span class="params">(inputTree, featLabels, testVec)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line"><span class="string">    分类函数</span></div><div class="line"><span class="string">    :param inputTree:</span></div><div class="line"><span class="string">    :param featLabels:</span></div><div class="line"><span class="string">    :param testVec:</span></div><div class="line"><span class="string">    :return:</span></div><div class="line"><span class="string">    """</span></div><div class="line">    firstStr = list(inputTree.keys())[<span class="number">0</span>]</div><div class="line">    secondDict = inputTree[firstStr]</div><div class="line">    featIndex = featLabels.index(firstStr) <span class="comment"># 将标签字符串转换为索引</span></div><div class="line">    <span class="keyword">for</span> key <span class="keyword">in</span> secondDict.keys():</div><div class="line">        <span class="keyword">if</span> testVec[featIndex] == key:</div><div class="line">            <span class="keyword">if</span> type(secondDict[key]).__name__ == <span class="string">'dict'</span>:</div><div class="line">                classLabel = classify(secondDict[key], featLabels, testVec)</div><div class="line">            <span class="keyword">else</span>: classLabel = secondDict[key]</div><div class="line">    <span class="keyword">return</span> classLabel</div><div class="line">    </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test1</span><span class="params">()</span>:</span></div><div class="line">    mydat, labels = createDataSet()</div><div class="line">    myTree = treePlotter.retrieveTree(<span class="number">0</span>)</div><div class="line">    print(myTree)</div><div class="line">    print(classify(myTree, labels, [<span class="number">1</span>, <span class="number">1</span>]))</div></pre></td></tr></table></figure>
+<p>调用<code>test1()</code>的结果如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&#123;'no surfacing': &#123;0: 'no', 1: &#123;'flippers': &#123;0: 'no', 1: 'yes'&#125;&#125;&#125;&#125;</div><div class="line">yes</div></pre></td></tr></table></figure>
+<hr>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://item.jd.com/11242112.html" target="_blank" rel="external">1.Peter Harrington.《机器学习实战》</a><br><a href="https://baike.baidu.com/item/%E9%A6%99%E5%86%9C%E7%86%B5/1649961?fr=aladdin" target="_blank" rel="external">2.百度百科：香农熵</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/WeChatQR.jpeg" alt="Xiaolei Peng WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/uploads/AliPayQR.jpeg" alt="Xiaolei Peng Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Xiaolei Peng
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://bazingagain.com/2017/12/27/ml-decistiontree/" title="ml-decistiontree">http://bazingagain.com/2017/12/27/ml-decistiontree/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Machine-Learning/" rel="tag"># Machine Learning</a>
+          
+            <a href="/tags/决策树/" rel="tag"># 决策树</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/16/maven-dependency/" rel="next" title="Maven学习之依赖">
+                <i class="fa fa-chevron-left"></i> Maven学习之依赖
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="Xiaolei Peng" />
+          <p class="site-author-name" itemprop="name">Xiaolei Peng</p>
+           
+              <p class="site-description motion-element" itemprop="description">程序员</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/bazingagain" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+        
+<embed src="//music.163.com/style/swf/widget.swf?sid=441359&type=2&auto=0&width=320&height=66" width="340" height="86"  allowNetworking="all"></embed>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-link"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://qinjiangbo.com" title="心灵港" target="_blank">心灵港</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么使用决策树？"><span class="nav-number">1.</span> <span class="nav-text">为什么使用决策树？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#决策树的处理流程"><span class="nav-number">2.</span> <span class="nav-text">决策树的处理流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#划分特征选取"><span class="nav-number">3.</span> <span class="nav-text">划分特征选取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法实现"><span class="nav-number">4.</span> <span class="nav-text">算法实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiaolei Peng</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问用户
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>访问次数
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("6S5WEDrPUzaDfarHnmz74io3-gzGzoHsz", "AFVYQDlsS5XFsBQ3MguKRj4R");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+  
+  
+
+
+  
+
+</body>
+</html>
