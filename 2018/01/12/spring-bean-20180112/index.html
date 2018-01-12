@@ -1,0 +1,1077 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|consolas:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java,Spring," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="自动化配置BeanSpring在自动化装配Bean的时候，主要包含两个步骤：  组件扫描(component scanning):Spring自动发现应用上下文中所创建的Bean 自动装配(autowiring):Spring自动满足bean之间的依赖  使用自动化配置的方式配置bean，可以将显示配置降到最低，减小工作量。 例如： 接口及实现类： 12345678910111213public">
+<meta name="keywords" content="Java,Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring学习之Bean的装配方式">
+<meta property="og:url" content="http://bazingagain.com/2018/01/12/spring-bean-20180112/index.html">
+<meta property="og:site_name" content="bazingagain">
+<meta property="og:description" content="自动化配置BeanSpring在自动化装配Bean的时候，主要包含两个步骤：  组件扫描(component scanning):Spring自动发现应用上下文中所创建的Bean 自动装配(autowiring):Spring自动满足bean之间的依赖  使用自动化配置的方式配置bean，可以将显示配置降到最低，减小工作量。 例如： 接口及实现类： 12345678910111213public">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-12T07:54:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring学习之Bean的装配方式">
+<meta name="twitter:description" content="自动化配置BeanSpring在自动化装配Bean的时候，主要包含两个步骤：  组件扫描(component scanning):Spring自动发现应用上下文中所创建的Bean 自动装配(autowiring):Spring自动满足bean之间的依赖  使用自动化配置的方式配置bean，可以将显示配置降到最低，减小工作量。 例如： 接口及实现类： 12345678910111213public">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://bazingagain.com/2018/01/12/spring-bean-20180112/"/>
+
+
+
+
+
+  <title> Spring学习之Bean的装配方式 | bazingagain </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">bazingagain</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">行者常至、为者常成</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://bazingagain.com/2018/01/12/spring-bean-20180112/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xiaolei Peng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="bazingagain">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Spring学习之Bean的装配方式
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-12T15:51:46+08:00">
+                2018-01-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/01/12/spring-bean-20180112/" class="leancloud_visitors" data-flag-title="Spring学习之Bean的装配方式">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>访问次数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1,859
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  9
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="自动化配置Bean"><a href="#自动化配置Bean" class="headerlink" title="自动化配置Bean"></a>自动化配置Bean</h3><p>Spring在自动化装配Bean的时候，主要包含两个步骤：</p>
+<ul>
+<li>组件扫描(component scanning):Spring自动发现应用上下文中所创建的Bean</li>
+<li>自动装配(autowiring):Spring自动满足bean之间的依赖</li>
+</ul>
+<p>使用自动化配置的方式配置bean，可以将显示配置降到最低，减小工作量。</p>
+<p>例如：</p>
+<p>接口及实现类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">CompactDisc</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">play</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Component</span>(<span class="string">"lonelyHeartsClub"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SgtPeppers</span> <span class="keyword">implements</span> <span class="title">CompactDisc</span></span>&#123;</div><div class="line">    <span class="keyword">private</span> String title = <span class="string">" sgt. spper's Lonely Hearts Club Band"</span>;</div><div class="line">    <span class="keyword">private</span> String artist = <span class="string">"The Betles"</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">play</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"Playing "</span> + title + <span class="string">" by "</span> + artist);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>组件扫描配置：</p>
+<ul>
+<li>Java配置方式：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.leon.springlearn.config;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.leon.springlearn.dao.CompactDisc;</div><div class="line"><span class="keyword">import</span> com.leon.springlearn.dao.impl.*;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</div><div class="line"></div><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="comment">//@ComponentScan("com.leon.springlearn")</span></div><div class="line"><span class="comment">//@ComponentScan(basePackages = "com.leon.springlearn")</span></div><div class="line"><span class="comment">//@ComponentScan(basePackages = &#123;"com.leon.springlearn.config", "com.leon.springlearn.dao"&#125;)</span></div><div class="line"><span class="comment">//@ComponentScan(basePackageClasses = &#123;SgtPeppers.class&#125;) //SgtPeppers类所在的包会作为组件扫描的基础包</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CDPlayerConfig</span> </span>&#123;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>@componentScan</strong>默认扫描与配置类相同的包，即<code>com.leon.springlearn.config</code>包，但一般我们将配置类与其它实体类放在不同的包，这时候就要显示指定自动扫描的包：<code>@ComponentScan(&quot;com.leon.springlearn&quot;)</code>，当有多个包要扫描时：<code>@ComponentScan(basePackages = {&quot;com.leon.springlearn.config&quot;, &quot;com.leon.springlearn.dao&quot;})</code></p>
+<ul>
+<li>XML配置方式：</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></div><div class="line"><span class="tag">       <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span></span></div><div class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"com.leon.springlearn"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><strong><context:component-scan></context:component-scan></strong>同样也可以配置自动扫描的包</p>
+<h4 id="bean命名"><a href="#bean命名" class="headerlink" title="bean命名"></a>bean命名</h4><ul>
+<li><strong>@Component</strong>. 默认命名，Spring会指定一个ID，例如上面的SgtPeppers若按默认命名的方式配置，则其ID为sgtPeppers，即将类名的首字母变为小写</li>
+<li><strong>@Component(“lonelyHeartsClub”)</strong>. 自定义命名，指定Bean的ID为<code>lonelyHeartsClub</code></li>
+</ul>
+<h4 id="bean自动注入"><a href="#bean自动注入" class="headerlink" title="bean自动注入"></a>bean自动注入</h4><p>bean的自动注入有三种方式：</p>
+<ul>
+<li><strong>构造器注入</strong></li>
+<li><strong>setter注入</strong></li>
+<li><strong>其它方法注入</strong></li>
+</ul>
+<p>例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.leon.springlearn.dao.impl;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.leon.springlearn.dao.CompactDisc;</div><div class="line"><span class="keyword">import</span> com.leon.springlearn.dao.MediaPlayer;</div><div class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</div><div class="line"></div><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CDPlayer</span> <span class="keyword">implements</span> <span class="title">MediaPlayer</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> CompactDisc cd;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span>(required = <span class="keyword">false</span>) <span class="comment">//构造器注入自动装配，required设为false，则使用构造器注入时，如果没有该bean，则不会抛异常，但是要做到程序的健壮，需在内部判空</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CDPlayer</span><span class="params">(CompactDisc cd)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.cd = cd;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">play</span><span class="params">()</span> </span>&#123;</div><div class="line">        cd.play();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span> <span class="comment">//setter 自动装配</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCd</span><span class="params">(CompactDisc cd)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.cd = cd;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="meta">@Autowired</span> <span class="comment">//@Autowired可以用在类的任何方法上</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertDics</span><span class="params">(CompactDisc cd)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.cd = cd;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h3 id="Java配置Bean"><a href="#Java配置Bean" class="headerlink" title="Java配置Bean"></a>Java配置Bean</h3><p>将自动扫描<strong>@ComponentScan</strong>从类<code>CDPlayerConfig</code>去掉后，我们使用显示的bean配置方式：</p>
+<p>例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.leon.springlearn.config;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.leon.springlearn.dao.CompactDisc;</div><div class="line"><span class="keyword">import</span> com.leon.springlearn.dao.impl.*;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</div><div class="line"></div><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CDPlayerConfig</span> </span>&#123;</div><div class="line">    <span class="meta">@Bean</span></div><div class="line">    <span class="function"><span class="keyword">public</span> CompactDisc <span class="title">sgtPeppers</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> SgtPeppers();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Bean</span>(<span class="string">"loneHeartsClubBand"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> CompactDisc <span class="title">otherSgtPeppers</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> SgtPeppers();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Bean</span></div><div class="line">    <span class="function"><span class="keyword">public</span> CompactDisc <span class="title">randomBeatlesCD</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> choice = (<span class="keyword">int</span>) Math.floor(Math.random() * <span class="number">4</span>);</div><div class="line">        <span class="keyword">if</span> (choice == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> SgtPeppers();</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (choice == <span class="number">1</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> WhiteAlbum();</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (choice == <span class="number">2</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> HardDaysNight();</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> Revolver();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Bean</span></div><div class="line">    <span class="function"><span class="keyword">public</span> CDPlayer <span class="title">cdPlayer</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> CDPlayer(sgtPeppers());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Bean</span></div><div class="line">    <span class="function"><span class="keyword">public</span> CDPlayer <span class="title">anotherCDPlayer</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">//anotherCDPlayer() 与 cdPlayer() 得到的 SgtPeppers都是一样的,因为Spring 中的Bean默认都是单例的</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> CDPlayer(sgtPeppers());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">	<span class="comment">//该方式的前提是通过组件自动扫描或者XML配置方式配置CompactDisc</span></div><div class="line">    <span class="meta">@Bean</span></div><div class="line">    <span class="function"><span class="keyword">public</span> CDPlayer <span class="title">cdPlayer</span><span class="params">(CompactDisc compactDisc)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> CDPlayer(compactDisc);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">	<span class="comment">//该方式的前提是通过组件自动扫描或者XML配置方式配置CompactDisc</span></div><div class="line">    <span class="meta">@Bean</span></div><div class="line">    <span class="function"><span class="keyword">public</span> CDPlayer <span class="title">cdPlayer1</span><span class="params">(CompactDisc compactDisc)</span> </span>&#123;</div><div class="line">        CDPlayer cdPlayer = <span class="keyword">new</span> CDPlayer(compactDisc);</div><div class="line">        cdPlayer.setCd(compactDisc); <span class="comment">//setter方式注入</span></div><div class="line">        <span class="keyword">return</span> cdPlayer;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h3 id="XML配置Bean"><a href="#XML配置Bean" class="headerlink" title="XML配置Bean"></a>XML配置Bean</h3><p>xml配置bean是比较常见的一种方式，使用也比较广泛，其配置方式也比较多：</p>
+<ul>
+<li><h4 id="简单构造"><a href="#简单构造" class="headerlink" title="简单构造"></a>简单构造</h4><ul>
+<li><p><strong>默认ID</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"com.leon.springlearn.dao.impl.SgtPeppers"</span>/&gt;</span></div></pre></td></tr></table></figure>
+<p>其ID默认为<code>com.leon.springlearn.dao.impl.SgtPeppers#0</code>，不建议该种配置方式</p>
+</li>
+<li><p><strong>自定义ID</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"compactDisc"</span> <span class="attr">class</span>=<span class="string">"com.leon.springlearn.dao.impl.SgtPeppers"</span>/&gt;</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><h4 id="构造器方式"><a href="#构造器方式" class="headerlink" title="构造器方式"></a>构造器方式</h4><ul>
+<li><p><strong>constructor-arg</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"compactDisc3_1"</span> <span class="attr">class</span>=<span class="string">"com.leon.springlearn.dao.impl.BlackDisc"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">value</span>=<span class="string">"Sgt. Pepper's Lonely Hearts Club Band"</span>/&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">value</span>=<span class="string">"The Beatles"</span>/&gt;</span></div><div class="line">	<span class="comment">&lt;!--&lt;constructor-arg&gt;&lt;null/&gt;&lt;/constructor-arg&gt;--&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">constructor-arg</span>&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">list</span>&gt;</span></div><div class="line">         <span class="tag">&lt;<span class="name">value</span>&gt;</span>Sgt. Pepper's Lonely Hearts Club Band<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">         <span class="tag">&lt;<span class="name">value</span>&gt;</span>With a Little Help from Friend<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">     <span class="tag">&lt;/<span class="name">list</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><code>BlackDisc</code>的构造函数如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">BlackDisc</span><span class="params">(String title, String artist, List&lt;String&gt; tracks)</span> </span>&#123;</div><div class="line">       <span class="keyword">this</span>.title = title;</div><div class="line">       <span class="keyword">this</span>.artist = artist;</div><div class="line">       <span class="keyword">this</span>.tracks = tracks;</div><div class="line">   &#125;</div><div class="line">```	</div><div class="line">加入存在类`Discography`，其构造函数要应用其它Bean:</div><div class="line"></div><div class="line">```java</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">Discography</span><span class="params">(String artist, List&lt;CompactDisc&gt; cds)</span> </span>&#123;</div><div class="line">       <span class="keyword">this</span>.artist = artist;</div><div class="line">       <span class="keyword">this</span>.cds = cds;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>则配置方式(<strong>bean引用</strong>)为:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"beatlesDiscography"</span> <span class="attr">class</span>=<span class="string">"com.leon.springlearn.dao.impl.Discography"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">value</span>=<span class="string">"The Beatles"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">list</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">ref</span> <span class="attr">bean</span>=<span class="string">"compactDisc"</span>/&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">ref</span> <span class="attr">bean</span>=<span class="string">"compactDisc2_1"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">list</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div></pre></td></tr></table></figure>
+<ul>
+<li><strong>c-命名空间</strong></li>
+</ul>
+<p>注意：c-命名空间操作不了集合，其存在局限性，所以可以将c-命名空间与constructor-arg混合使用以提高效率</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"compactDisc2_2"</span> <span class="attr">class</span>=<span class="string">"com.leon.springlearn.dao.impl.BlackDisc"</span></span></div><div class="line"><span class="tag">         <span class="attr">c:title</span>=<span class="string">"Sgt. Pepper's Lonely Hearts Club Band"</span></span></div><div class="line"><span class="tag">         <span class="attr">c:artist</span>=<span class="string">"The Beatles"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"compactDisc2_3"</span> <span class="attr">class</span>=<span class="string">"com.leon.springlearn.dao.impl.BlackDisc"</span></span></div><div class="line"><span class="tag">         <span class="attr">c:_0</span>=<span class="string">"Sgt. Pepper's Lonely Hearts Club Band"</span></span></div><div class="line"><span class="tag">         <span class="attr">c:_1</span>=<span class="string">"The Beatles"</span>/&gt;</span></div></pre></td></tr></table></figure>
+<p><code>BlackDisc</code>的构造函数如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">BlackDisc</span><span class="params">(String title, String artist)</span> </span>&#123;</div><div class="line">       <span class="keyword">this</span>.title = title;</div><div class="line">       <span class="keyword">this</span>.artist = artist;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><h4 id="setter方式"><a href="#setter方式" class="headerlink" title="setter方式"></a>setter方式</h4><ul>
+<li><p><strong>property 方式</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"cdPlayer_p1"</span> <span class="attr">class</span>=<span class="string">"com.leon.springlearn.dao.impl.CDPlayer"</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"cd"</span> <span class="attr">ref</span>=<span class="string">"compactDisc"</span>/&gt;</span> <span class="comment">&lt;!--setter方式注入--&gt;</span></div><div class="line">   <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>   `CDPlayer`的setter方法为：
+
+   <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Autowired</span> <span class="comment">//setter 自动装配</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCd</span><span class="params">(CompactDisc cd)</span> </span>&#123;</div><div class="line">    <span class="keyword">this</span>.cd = cd;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
++ **p-命名空间**
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"cdPlayer_p2"</span> <span class="attr">class</span>=<span class="string">"com.leon.springlearn.dao.impl.CDPlayer"</span></span></div><div class="line"><span class="tag">         <span class="attr">p:cd-ref</span>=<span class="string">"compactDisc"</span>/&gt;</span></div></pre></td></tr></table></figure>
+
+其中，cd为类成员属性的名字:`private CompactDisc cd;`
+
+p-命名空间与property混合：
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"compactDisc_p2"</span> <span class="attr">class</span>=<span class="string">"com.leon.springlearn.dao.impl.BlackDisc"</span></span></div><div class="line"><span class="tag">      <span class="attr">p:title</span>=<span class="string">"Sgt. Pepper's Lonely Hearts Club Band"</span></span></div><div class="line"><span class="tag">      <span class="attr">p:artist</span>=<span class="string">"The Beatles"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"tracks"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">list</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span>Sgt. Pepper's Lonely Hearts Club Band<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span>With a Little Help from Friend<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">list</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div></pre></td></tr></table></figure>
+
+
+另外，可以使用 spring-util命名空间简化配置：
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">util:list</span> <span class="attr">id</span>=<span class="string">"trackList"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>Sgt. Pepper's Lonely Hearts Club Band<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>With a Little Help from Friend<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">util:list</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"compactDisc_p3"</span> <span class="attr">class</span>=<span class="string">"com.leon.springlearn.dao.impl.BlackDisc"</span></span></div><div class="line"><span class="tag">      <span class="attr">p:title</span>=<span class="string">"Sgt. Pepper's Lonely Hearts Club Band"</span></span></div><div class="line"><span class="tag">      <span class="attr">p:artist</span>=<span class="string">"The Beatles"</span></span></div><div class="line"><span class="tag">      <span class="attr">p:tracks-ref</span>=<span class="string">"trackList"</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div></pre></td></tr></table></figure>
+
+其它util命名空间中的元素如map、set等配置和使用可参考 [spring util命名空间](https://www.cnblogs.com/shuqi/p/4595618.html?utm_source=tuicool)
+</code></pre><h3 id="混合配置"><a href="#混合配置" class="headerlink" title="混合配置"></a>混合配置</h3><p>在实际项目中，项目可能分为多个模块，每个模块都有自己的bean定义，那么如何将他们组织起来便于管理呢？</p>
+<p>主要由两种方式，一种是通过JavaConfig来汇总Bean的配置，另一种则是通过XML来汇总Bean的配置。</p>
+<h4 id="JavaConfig汇总配置"><a href="#JavaConfig汇总配置" class="headerlink" title="JavaConfig汇总配置"></a>JavaConfig汇总配置</h4><p>例如存在两个Java配置文件和1个xml配置文件：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CDConfig</span> </span>&#123;</div><div class="line">    <span class="meta">@Bean</span></div><div class="line">    <span class="function"><span class="keyword">public</span> CompactDisc <span class="title">compactDisc</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> SgtPeppers();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CDPlayerConfig</span> </span>&#123;</div><div class="line">    <span class="meta">@Bean</span></div><div class="line">    <span class="function"><span class="keyword">public</span> CompactDisc <span class="title">sgtPeppers</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> SgtPeppers();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></div><div class="line"><span class="tag">       <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span></span></div><div class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"com.leon.springlearn.dao.impl.SgtPeppers"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>则使用JavaConfig的方式汇总：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="meta">@Import</span>(&#123;CDPlayerConfig.class, CDConfig.class&#125;)</div><div class="line"><span class="meta">@ImportResource</span>(<span class="string">"classpath:mybeans.xml"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SoundSystemConfig</span> </span>&#123;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>JavaConfig下，使用<strong>@Import</strong>导入Java配置，使用<strong>@ImportResource</strong>导入xml配置。</p>
+<h4 id="XML汇总配置"><a href="#XML汇总配置" class="headerlink" title="XML汇总配置"></a>XML汇总配置</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></div><div class="line"><span class="tag">       <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span></span></div><div class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"</span>&gt;</span></div><div class="line">	 <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"com.leon.springlearn.config.CDPlayerConfig"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">import</span> <span class="attr">resource</span>=<span class="string">"cdplayer-config.xml"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>XML下，使用<strong>bean</strong>导入Java配置，使用<strong>import</strong>导入xml配置。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><hr>
+<p>Spring配置Bean的方式灵活多变，但根本点在于根据项目的构建方式作出合理的配置方案。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><hr>
+<p><a href="https://item.jd.com/11899370.html" target="_blank" rel="external">1.《Spring实战》</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/WeChatQR.jpeg" alt="Xiaolei Peng WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/uploads/AliPayQR.jpeg" alt="Xiaolei Peng Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Xiaolei Peng
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://bazingagain.com/2018/01/12/spring-bean-20180112/" title="Spring学习之Bean的装配方式">http://bazingagain.com/2018/01/12/spring-bean-20180112/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/07/think-20180107/" rel="next" title="金字塔原理-思考的逻辑-应用逻辑顺序">
+                <i class="fa fa-chevron-left"></i> 金字塔原理-思考的逻辑-应用逻辑顺序
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="Xiaolei Peng" />
+          <p class="site-author-name" itemprop="name">Xiaolei Peng</p>
+           
+              <p class="site-description motion-element" itemprop="description">程序员</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/bazingagain" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+        
+<embed src="//music.163.com/style/swf/widget.swf?sid=441359&type=2&auto=0&width=320&height=66" width="340" height="86"  allowNetworking="all"></embed>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-link"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://qinjiangbo.com" title="心灵港" target="_blank">心灵港</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#自动化配置Bean"><span class="nav-number">1.</span> <span class="nav-text">自动化配置Bean</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#bean命名"><span class="nav-number">1.1.</span> <span class="nav-text">bean命名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bean自动注入"><span class="nav-number">1.2.</span> <span class="nav-text">bean自动注入</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java配置Bean"><span class="nav-number">2.</span> <span class="nav-text">Java配置Bean</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XML配置Bean"><span class="nav-number">3.</span> <span class="nav-text">XML配置Bean</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简单构造"><span class="nav-number">3.1.</span> <span class="nav-text">简单构造</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#构造器方式"><span class="nav-number">3.2.</span> <span class="nav-text">构造器方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#setter方式"><span class="nav-number">3.3.</span> <span class="nav-text">setter方式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#混合配置"><span class="nav-number">4.</span> <span class="nav-text">混合配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JavaConfig汇总配置"><span class="nav-number">4.1.</span> <span class="nav-text">JavaConfig汇总配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#XML汇总配置"><span class="nav-number">4.2.</span> <span class="nav-text">XML汇总配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiaolei Peng</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问用户
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>访问次数
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("6S5WEDrPUzaDfarHnmz74io3-gzGzoHsz", "AFVYQDlsS5XFsBQ3MguKRj4R");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+  
+  
+
+
+  
+
+</body>
+</html>
