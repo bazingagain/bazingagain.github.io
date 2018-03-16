@@ -1,0 +1,1015 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|consolas:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Spring,Spring Boot," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="什么是SpringBoot？SpringBoot 是Spring领域中的一个全新的项目，它提供了快速便捷的方式开发Spring项目，简化了传统的Spring配置项。它能够快速的构建独立的、工业化级别的Spring应用并运行。 SpringBoot主要提供了如下特性：  Spring Boot Starter: 对常用依赖分组进行整合，合并到一个依赖中，简化依赖配置 自动配置：SPring Boot">
+<meta name="keywords" content="Spring,Spring Boot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot学习之构建一个简单的SpringBoot项目">
+<meta property="og:url" content="http://bazingagain.com/2018/03/16/spring-boot-20180316/index.html">
+<meta property="og:site_name" content="bazingagain">
+<meta property="og:description" content="什么是SpringBoot？SpringBoot 是Spring领域中的一个全新的项目，它提供了快速便捷的方式开发Spring项目，简化了传统的Spring配置项。它能够快速的构建独立的、工业化级别的Spring应用并运行。 SpringBoot主要提供了如下特性：  Spring Boot Starter: 对常用依赖分组进行整合，合并到一个依赖中，简化依赖配置 自动配置：SPring Boot">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://bazingagain.github.io/images/springboot/2018_03_16/springboot_demo.png">
+<meta property="og:image" content="https://bazingagain.github.io/images/springboot/2018_03_16/springboot_actuator_conditions.png">
+<meta property="og:updated_time" content="2018-03-16T07:44:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringBoot学习之构建一个简单的SpringBoot项目">
+<meta name="twitter:description" content="什么是SpringBoot？SpringBoot 是Spring领域中的一个全新的项目，它提供了快速便捷的方式开发Spring项目，简化了传统的Spring配置项。它能够快速的构建独立的、工业化级别的Spring应用并运行。 SpringBoot主要提供了如下特性：  Spring Boot Starter: 对常用依赖分组进行整合，合并到一个依赖中，简化依赖配置 自动配置：SPring Boot">
+<meta name="twitter:image" content="https://bazingagain.github.io/images/springboot/2018_03_16/springboot_demo.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://bazingagain.com/2018/03/16/spring-boot-20180316/"/>
+
+
+
+
+
+  <title> SpringBoot学习之构建一个简单的SpringBoot项目 | bazingagain </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">bazingagain</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">行者常至、为者常成</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://bazingagain.com/2018/03/16/spring-boot-20180316/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xiaolei Peng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="bazingagain">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                SpringBoot学习之构建一个简单的SpringBoot项目
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-16T15:34:38+08:00">
+                2018-03-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/03/16/spring-boot-20180316/" class="leancloud_visitors" data-flag-title="SpringBoot学习之构建一个简单的SpringBoot项目">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>访问次数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1,200
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="什么是SpringBoot？"><a href="#什么是SpringBoot？" class="headerlink" title="什么是SpringBoot？"></a>什么是SpringBoot？</h3><p>SpringBoot 是Spring领域中的一个全新的项目，它提供了快速便捷的方式开发Spring项目，简化了传统的Spring配置项。它能够快速的构建独立的、工业化级别的Spring应用并运行。</p>
+<p>SpringBoot主要提供了如下特性：</p>
+<ul>
+<li><strong>Spring Boot Starter</strong>: 对常用依赖分组进行整合，合并到一个依赖中，简化依赖配置</li>
+<li><strong>自动配置</strong>：SPring Boot 自动推测所需要的bean并配置它们</li>
+<li><strong>命令行接口</strong>：CLI，提供SpringBoot CLI支持Groovy</li>
+<li><strong>Actuator</strong>：为SpringBoot提供一些管理特性</li>
+</ul>
+<h3 id="什么是Spring-Boot-Starter"><a href="#什么是Spring-Boot-Starter" class="headerlink" title="什么是Spring Boot Starter"></a>什么是Spring Boot Starter</h3><p>Spring Boot Starter 是将常见的依赖组合聚合在一起而构成的一项依赖，如当我们要编写SpringMVC应用时，传统的做法是添加core、context、mvc等依赖，而利用starter则只需添加<code>pring-boot-starter-web</code>：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><code>pring-boot-starter-web</code>包含了pring-boot-starter、pring-web、pring-webmvc、jackson-databind等依赖，这样我们只需添加一项就可以导入所需的多个依赖，简化了pom.xml的配置。</p>
+<hr>
+<h3 id="如何构建一个SpringBoot项目？"><a href="#如何构建一个SpringBoot项目？" class="headerlink" title="如何构建一个SpringBoot项目？"></a>如何构建一个SpringBoot项目？</h3><p>这里我利用SpringBoot构建了一个SpringMVC的Demo，使用SpringMVC + Thymeleaf + Mybatis的方式，项目结构如下：</p>
+<p><img src="https://bazingagain.github.io/images/springboot/2018_03_16/springboot_demo.png" alt=""></p>
+<p>是不是非常熟悉，和传统的Spring项目相比基本上没有变化，无非是多了SpringBoot的启动配置类<code>Application.java</code>和配置文件<code>application.yml</code>, 由于其他文件与Spring传统配置并无区别，这里我只讲<code>Application.java</code>和<code>application.yml</code>该如何配置：</p>
+<p>首先看下 <strong>Application.java</strong> :</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.leon.learnspringboot;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.mybatis.spring.annotation.MapperScan;</div><div class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</div><div class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.EnableAutoConfiguration;</div><div class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.ComponentScan;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Created on 15/03/2018.</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> * <span class="doctag">@author</span> Xiaolei-Peng</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> * 注意,是在Mybatis配置下,需要使用<span class="doctag">@Mapper</span>,如果是其它等持久化框架,则照常使用<span class="doctag">@Repository</span></span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> */</span></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * 1.启动方式1 :</span></div><div class="line"><span class="comment"> * <span class="doctag">@ComponentScan</span></span></div><div class="line"><span class="comment"> * <span class="doctag">@EnableAutoConfiguration</span></span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> * 此种方式 需将使用<span class="doctag">@Mapper</span> 在映射类上声明,</span></div><div class="line"><span class="comment"> * 或在Application上加上<span class="doctag">@MapperScan</span>("com.leon.learnspringboot.mapper")</span></div><div class="line"><span class="comment"> */</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * 2.启动方式2</span></div><div class="line"><span class="comment"> * 同样要使用<span class="doctag">@MapperScan</span></span></div><div class="line"><span class="comment"> */</span></div><div class="line"></div><div class="line"><span class="meta">@SpringBootApplication</span></div><div class="line"><span class="meta">@MapperScan</span>(<span class="string">"com.leon.learnspringboot.mapper"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        SpringApplication.run(Application.class, args);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里，我使用了方式2的方式启动，值得注意的是，使用MyBatis作为持久层的时候，使用@Repository注解并不能生产对应的映射Bean，这时我们需要再DAO接口上声明 @Mapper，或者在配置类上添加@MapperScan(“com.leon.learnspringboot.mapper”)一次性声明所有的映射Bean就可以了。</p>
+<p>SpringBoot提供了application.properties和application.yml两种方式类配置一些变量，这里我选用application.yml，看下<strong>application.yml</strong>:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line"><span class="attr">server:</span></div><div class="line"><span class="attr">  port:</span> <span class="number">8080</span></div><div class="line"></div><div class="line"><span class="attr">spring:</span></div><div class="line"><span class="attr">    datasource:</span></div><div class="line"><span class="attr">        name:</span> <span class="string">test</span></div><div class="line"><span class="attr">        url:</span> <span class="attr">jdbc:mysql://127.0.0.1:3306/springboottest</span></div><div class="line"><span class="attr">        username:</span> <span class="string">root</span></div><div class="line"><span class="attr">        password:</span> <span class="string">root</span></div><div class="line"><span class="attr">        driver-class-name:</span> <span class="string">com.mysql.jdbc.Driver</span></div><div class="line">        <span class="comment"># 如若使用druid数据源,则需配置如下内容</span></div><div class="line"><span class="attr">        type:</span> <span class="string">com.alibaba.druid.pool.DruidDataSource</span></div><div class="line"><span class="attr">        filters:</span> <span class="string">stat</span></div><div class="line"><span class="attr">        maxActive:</span> <span class="number">20</span></div><div class="line"><span class="attr">        initialSize:</span> <span class="number">1</span></div><div class="line"><span class="attr">        maxWait:</span> <span class="number">60000</span></div><div class="line"><span class="attr">        minIdle:</span> <span class="number">1</span></div><div class="line"><span class="attr">        timeBetweenEvictionRunsMillis:</span> <span class="number">60000</span></div><div class="line"><span class="attr">        minEvictableIdleTimeMillis:</span> <span class="number">300000</span></div><div class="line"><span class="attr">        validationQuery:</span> <span class="string">select</span> <span class="string">'x'</span></div><div class="line"><span class="attr">        testWhileIdle:</span> <span class="literal">true</span></div><div class="line"><span class="attr">        testOnBorrow:</span> <span class="literal">false</span></div><div class="line"><span class="attr">        testOnReturn:</span> <span class="literal">false</span></div><div class="line"><span class="attr">        poolPreparedStatements:</span> <span class="literal">true</span></div><div class="line"><span class="attr">        maxOpenPreparedStatements:</span> <span class="number">20</span></div><div class="line"><span class="attr">mybatis:</span></div><div class="line"><span class="attr">  mapper-locations:</span> <span class="attr">classpath:mapper/*.xml</span></div><div class="line"><span class="attr">  type-aliases-package:</span> <span class="string">com.leon.learnspringboot.model</span></div><div class="line"><span class="comment">#  config-location: classpath:config/mybatis.xml</span></div><div class="line"></div><div class="line"><span class="comment">#pagehelper分页插件</span></div><div class="line"><span class="attr">pagehelper:</span></div><div class="line"><span class="attr">    helperDialect:</span> <span class="string">mysql</span></div><div class="line"><span class="attr">    reasonable:</span> <span class="literal">true</span></div><div class="line"><span class="attr">    supportMethodsArguments:</span> <span class="literal">true</span></div><div class="line"><span class="attr">    params:</span> <span class="string">count=countSql</span></div><div class="line"></div><div class="line"><span class="comment">#spring-boot-actuator监控</span></div><div class="line"><span class="attr">management:</span></div><div class="line"><span class="attr">  endpoint:</span></div><div class="line"><span class="attr">    info:</span></div><div class="line"><span class="attr">      enabled:</span> <span class="literal">true</span></div><div class="line"><span class="attr">    beans:</span></div><div class="line"><span class="attr">      enabled:</span> <span class="literal">true</span></div><div class="line"><span class="attr">    conditions:</span></div><div class="line"><span class="attr">      enabled:</span> <span class="literal">true</span></div><div class="line"><span class="attr">  endpoints:</span>  <span class="comment">#值得注意的是两个endpoint并不能合并,合并之后就不能访问/actuator/beans了</span></div><div class="line"><span class="attr">    web:</span></div><div class="line"><span class="attr">      exposure:</span></div><div class="line"><span class="attr">        include:</span> <span class="string">["info",</span> <span class="string">"beans"</span><span class="string">,</span> <span class="string">"conditions"</span><span class="string">]</span></div></pre></td></tr></table></figure>
+<p>配置是不是非常简单直观。</p>
+<p>期间，在自动生成mapper的dao及xml文件的时候，遇到了 Invalid bound statement “insert”(not found)，多次排查才发现使用mybatis-generator生成的ContactMapper.xml中namespace有误：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">"mapper.ContactMapper"</span> &gt;</span></div></pre></td></tr></table></figure>
+<p>改正为<code>com.leon.learnspringboot.mapper.ContactMapper</code>就解决了。</p>
+<p>另外就是在使用PageHelper的时候，会报<code>Error creating bean with name &#39;com.github.pagehelper.autoconfigure.PageHelperAutoConfiguration&#39;:</code>的错误，经过排查发现，是Springboot的版本与pagehelper的版本不兼容导致，解决版本问题后就解决了该问题。</p>
+<hr>
+<h3 id="使用Spring-Boot-Actuator"><a href="#使用Spring-Boot-Actuator" class="headerlink" title="使用Spring Boot Actuator"></a>使用Spring Boot Actuator</h3><p>Actuator为SpringBoot提供了多个有用的管理端点，包括<br><code>/beans</code>：列出运行应用的所有bean<br><code>/info</code>: 应用的特定信息<br><code>/health</code>: 应用的健康状况<br><code>/auditevents</code>: 当前应用的事件信息</p>
+<p>使用Actuator首先要声明依赖:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-actuator<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>然后在application.yml中添加配置：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="attr">management:</span></div><div class="line"><span class="attr">  endpoint:</span></div><div class="line"><span class="attr">    info:</span></div><div class="line"><span class="attr">      enabled:</span> <span class="literal">true</span></div><div class="line"><span class="attr">    beans:</span></div><div class="line"><span class="attr">      enabled:</span> <span class="literal">true</span></div><div class="line"><span class="attr">    conditions:</span></div><div class="line"><span class="attr">      enabled:</span> <span class="literal">true</span></div><div class="line"><span class="attr">  endpoints:</span>  <span class="comment">#值得注意的是两个endpoint并不能合并,合并之后就不能访问/actuator/beans了</span></div><div class="line"><span class="attr">    web:</span></div><div class="line"><span class="attr">      exposure:</span></div><div class="line"><span class="attr">        include:</span> <span class="string">["info",</span> <span class="string">"beans"</span><span class="string">,</span> <span class="string">"conditions"</span><span class="string">]</span></div></pre></td></tr></table></figure>
+<p>actuator默认只暴露info 和health接口，要调用其它接口则需要自己配置。另外actuator默认访问端点时是在<code>/actuator</code>路由下访问的，所以访问如info等端点时，则是输入路由’/actuator/info’就可得到信息了。</p>
+<p>测试<code>/actuator/conditions</code>的效果：</p>
+<p><img src="https://bazingagain.github.io/images/springboot/2018_03_16/springboot_actuator_conditions.png" alt=""></p>
+<p>其它更多的端点可以参考<a href="https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#production-ready" target="_blank" rel="external">官方文档</a>的Actuator章节。</p>
+<hr>
+<h3 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h3><p>项目完整代码：<a href="https://github.com/bazingagain/SpringInAction/tree/master/LearnSpringBoot" target="_blank" rel="external">SpringBootDemo</a></p>
+<hr>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://item.jd.com/11899370.html" target="_blank" rel="external">1.《Spring实战》</a></p>
+<p><a href="https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#production-ready" target="_blank" rel="external">2. SpringBoot官方文档</a></p>
+<p><a href="https://docs.spring.io/spring-boot/docs/2.0.0.RELEASE/actuator-api//html/" target="_blank" rel="external">3. SpringBoot Actuator配置文档</a></p>
+<p><a href="http://blog.csdn.net/winter_chen001/article/details/77249029" target="_blank" rel="external">4. CSDN: Spring boot Mybatis整合</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/WeChatQR.jpeg" alt="Xiaolei Peng WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/uploads/AliPayQR.jpeg" alt="Xiaolei Peng Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Xiaolei Peng
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://bazingagain.com/2018/03/16/spring-boot-20180316/" title="SpringBoot学习之构建一个简单的SpringBoot项目">http://bazingagain.com/2018/03/16/spring-boot-20180316/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
+          
+            <a href="/tags/Spring-Boot/" rel="tag"># Spring Boot</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/13/spring-cache-20180313/" rel="next" title="Spring学习之缓存的使用">
+                <i class="fa fa-chevron-left"></i> Spring学习之缓存的使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="Xiaolei Peng" />
+          <p class="site-author-name" itemprop="name">Xiaolei Peng</p>
+           
+              <p class="site-description motion-element" itemprop="description">程序员</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/bazingagain" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+        
+<embed src="//music.163.com/style/swf/widget.swf?sid=441359&type=2&auto=0&width=320&height=66" width="340" height="86"  allowNetworking="all"></embed>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-link"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://qinjiangbo.com" title="心灵港" target="_blank">心灵港</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是SpringBoot？"><span class="nav-number">1.</span> <span class="nav-text">什么是SpringBoot？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是Spring-Boot-Starter"><span class="nav-number">2.</span> <span class="nav-text">什么是Spring Boot Starter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何构建一个SpringBoot项目？"><span class="nav-number">3.</span> <span class="nav-text">如何构建一个SpringBoot项目？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Spring-Boot-Actuator"><span class="nav-number">4.</span> <span class="nav-text">使用Spring Boot Actuator</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#附录"><span class="nav-number">5.</span> <span class="nav-text">附录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiaolei Peng</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问用户
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>访问次数
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("6S5WEDrPUzaDfarHnmz74io3-gzGzoHsz", "AFVYQDlsS5XFsBQ3MguKRj4R");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+  
+  
+
+
+  
+
+</body>
+</html>
