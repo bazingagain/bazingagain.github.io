@@ -1,0 +1,1023 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|consolas:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Spring,SpringSecurity," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="什么是认证授权管理？在实际应用中，一个项目往往有多个不同使用者，这些使用者的角色也有多种，这就要求我们对用户的认证及授权应当做相应的控制。其中，比较出名认证授权管理框架的有Spring Security和Apache shiro。 用户认证  用户认证(Authentication)就是“你是谁？”，网站需要对判断你是否是有效用户，需要对你的登录进行信息验证，这个过程就是用户认证。  授权管理">
+<meta name="keywords" content="Spring,SpringSecurity">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringSecurity学习之应用认证授权管理">
+<meta property="og:url" content="http://bazingagain.com/2018/03/31/spring-security-20180331/index.html">
+<meta property="og:site_name" content="bazingagain">
+<meta property="og:description" content="什么是认证授权管理？在实际应用中，一个项目往往有多个不同使用者，这些使用者的角色也有多种，这就要求我们对用户的认证及授权应当做相应的控制。其中，比较出名认证授权管理框架的有Spring Security和Apache shiro。 用户认证  用户认证(Authentication)就是“你是谁？”，网站需要对判断你是否是有效用户，需要对你的登录进行信息验证，这个过程就是用户认证。  授权管理">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://bazingagain.github.io/images/springsecurity/2018_03_31/security-filters.png">
+<meta property="og:image" content="https://bazingagain.github.io/images/springsecurity/2018_03_31/security-filters-dispatch.png">
+<meta property="og:updated_time" content="2018-03-31T13:30:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringSecurity学习之应用认证授权管理">
+<meta name="twitter:description" content="什么是认证授权管理？在实际应用中，一个项目往往有多个不同使用者，这些使用者的角色也有多种，这就要求我们对用户的认证及授权应当做相应的控制。其中，比较出名认证授权管理框架的有Spring Security和Apache shiro。 用户认证  用户认证(Authentication)就是“你是谁？”，网站需要对判断你是否是有效用户，需要对你的登录进行信息验证，这个过程就是用户认证。  授权管理">
+<meta name="twitter:image" content="https://bazingagain.github.io/images/springsecurity/2018_03_31/security-filters.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://bazingagain.com/2018/03/31/spring-security-20180331/"/>
+
+
+
+
+
+  <title> SpringSecurity学习之应用认证授权管理 | bazingagain </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">bazingagain</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">行者常至、为者常成</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://bazingagain.com/2018/03/31/spring-security-20180331/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xiaolei Peng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="bazingagain">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                SpringSecurity学习之应用认证授权管理
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-31T21:20:07+08:00">
+                2018-03-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/03/31/spring-security-20180331/" class="leancloud_visitors" data-flag-title="SpringSecurity学习之应用认证授权管理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>访问次数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1,305
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="什么是认证授权管理？"><a href="#什么是认证授权管理？" class="headerlink" title="什么是认证授权管理？"></a>什么是认证授权管理？</h3><p>在实际应用中，一个项目往往有多个不同使用者，这些使用者的角色也有多种，这就要求我们对用户的认证及授权应当做相应的控制。其中，比较出名认证授权管理框架的有Spring Security和Apache shiro。</p>
+<p><strong>用户认证</strong></p>
+<blockquote>
+<p>用户认证(Authentication)就是“你是谁？”，网站需要对判断你是否是有效用户，需要对你的登录进行信息验证，这个过程就是用户认证。</p>
+</blockquote>
+<p><strong>授权管理</strong></p>
+<blockquote>
+<p>授权管理(Authorization)就是“你被允许做什么？”，对于网站中不同的用户，管理员用户可以进入后台页面，而普通用户只能访问前台页面，两者的权限不同，所能访问的结果也不同。</p>
+</blockquote>
+<hr>
+<h3 id="什么是Spring-Security？"><a href="#什么是Spring-Security？" class="headerlink" title="什么是Spring Security？"></a>什么是Spring Security？</h3><p>Spring Security是一个强大的、可适配的认证和访问控制框架，Spring Security框架提供了完整的用户认证、授权管理、请求拦截、加密解密、Session管理等功能，和Spring框架完美整合，无需额外的配置。</p>
+<hr>
+<h3 id="Spring是如何进行访问控制的？"><a href="#Spring是如何进行访问控制的？" class="headerlink" title="Spring是如何进行访问控制的？"></a>Spring是如何进行访问控制的？</h3><h4 id="Spring访问控制的实现机制"><a href="#Spring访问控制的实现机制" class="headerlink" title="Spring访问控制的实现机制"></a>Spring访问控制的实现机制</h4><p>Spring使用Servlet的Filter机制进行访问控制，在Spring中，对于用户的请求，首先要经过FilterChain的过滤之后，才有可能最终到达Servlet。Spring Security提供了DelegatingFilterProxy（也是一个Filter）并将其加入到原有的FilterChain中。</p>
+<p><img src="https://bazingagain.github.io/images/springsecurity/2018_03_31/security-filters.png" alt=""></p>
+<p>其将请求委托给名为<strong>FilterChainProxy</strong>的 bean（一个特殊的Filter），而FilterChainProxy内部对于不同的请求会对其进行内部Filter的匹配：</p>
+<p><img src="https://bazingagain.github.io/images/springsecurity/2018_03_31/security-filters-dispatch.png" alt=""></p>
+<hr>
+<h3 id="如何使用Spring-Security来对访问进行控制？"><a href="#如何使用Spring-Security来对访问进行控制？" class="headerlink" title="如何使用Spring Security来对访问进行控制？"></a>如何使用Spring Security来对访问进行控制？</h3><h4 id="添加security依赖"><a href="#添加security依赖" class="headerlink" title="添加security依赖"></a>添加security依赖</h4><p>这里使用SpringBoot构建应用，首先添加SpringSecurity依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-security<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.security<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-security-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="进行security的配置"><a href="#进行security的配置" class="headerlink" title="进行security的配置"></a>进行security的配置</h4><p>xml方式(SpringWeb)：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">filter</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>springSecurityFilterChain<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.springframework.web.filter.DelegatingFilterProxy<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">filter</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>Java方式(SpringWeb, SpringBoot):</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="meta">@EnableWebSecurity</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SecurityConfig</span> <span class="keyword">extends</span> <span class="title">WebSecurityConfigurerAdapter</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">private</span> DataSource dataSource;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">private</span> SpitterUserServiceImpl spitterUserService;</div><div class="line"></div><div class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;secret-key&#125;"</span>)</div><div class="line">    <span class="keyword">private</span> String secretKey;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(HttpSecurity http)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        http.formLogin()</div><div class="line">                .defaultSuccessUrl(<span class="string">"/"</span>);<span class="comment">//登录成功后默认跳转到"/"</span></div><div class="line">                .and()</div><div class="line">                .authorizeRequests()</div><div class="line">                .antMatchers(<span class="string">"/spitter/me"</span>).authenticated()</div><div class="line">                .antMatchers(HttpMethod.POST, <span class="string">"/spitter"</span>).authenticated()</div><div class="line">                .anyRequest().permitAll();</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(AuthenticationManagerBuilder auth)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="comment">//1.基于内存的用户认证</span></div><div class="line">        auth.inMemoryAuthentication()</div><div class="line">                .withUser(<span class="string">"test"</span>).password(<span class="string">"hehe"</span>).roles(<span class="string">"SPITTER"</span>).and()</div><div class="line">                .withUser(<span class="string">"admin"</span>).password(<span class="string">"password"</span>).roles(<span class="string">"SPITTER"</span>, <span class="string">"ADMIN"</span>).and()</div><div class="line">                .passwordEncoder(NoOpPasswordEncoder.getInstance());       </div><div class="line"></div><div class="line">            &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="认证管理"><a href="#认证管理" class="headerlink" title="认证管理"></a>认证管理</h4><p>在上面的 <code>configure(AuthenticationManagerBuilder auth)</code>方法中，我们对可以有多种方式对用户认证进行管理：</p>
+<p><strong>基于内存的方式：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">auth.inMemoryAuthentication()</div><div class="line">        .withUser(<span class="string">"test"</span>).password(<span class="string">"hehe"</span>).roles(<span class="string">"SPITTER"</span>).and()</div><div class="line">        .withUser(<span class="string">"admin"</span>).password(<span class="string">"password"</span>).roles(<span class="string">"SPITTER"</span>, <span class="string">"ADMIN"</span>).and()</div><div class="line">        .passwordEncoder(NoOpPasswordEncoder.getInstance());</div></pre></td></tr></table></figure>
+<p>用户信息存储在内存中。</p>
+<p><strong>基于数据表验证的方式：</strong><br>首先要在SecurityConfig中注入数据源：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Autowired</span></div><div class="line"><span class="keyword">private</span> DataSource dataSource; </div><div class="line">```   </div><div class="line"></div><div class="line">然后配置config(AuthenticationManagerBuilder auth)方法：</div><div class="line"></div><div class="line">```java</div><div class="line">auth.jdbcAuthentication().dataSource(dataSource)</div><div class="line">        .usersByUsernameQuery(<span class="string">"select username, password, true "</span> +</div><div class="line">                <span class="string">"from spitter where username=?"</span>)</div><div class="line">        .authoritiesByUsernameQuery(<span class="string">"select username, 'ROLE_USER' from spitter where username=?"</span>)</div><div class="line">        .passwordEncoder(NoOpPasswordEncoder.getInstance());</div></pre></td></tr></table></figure>
+<p><strong>基于LDPA的方式：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">auth.ldapAuthentication().userSearchBase(<span class="string">"ou=people"</span>)</div><div class="line">                .userSearchFilter(<span class="string">"(uid=&#123;0&#125;)"</span>)</div><div class="line">                .groupSearchBase(<span class="string">"ou=groups"</span>)</div><div class="line">                .groupSearchFilter(<span class="string">"member=&#123;0"</span>)</div><div class="line">                .passwordCompare()</div><div class="line">                .passwordEncoder(<span class="keyword">new</span> StandardPasswordEncoder(secretKey))</div><div class="line">                .passwordAttribute(<span class="string">"passwordcode"</span>);</div></pre></td></tr></table></figure>
+<p><strong>基于用户自定义方式：</strong></p>
+<p>基于用户自定义的方式首先要自定义的处理服务：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Service</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpitterUserServiceImpl</span> <span class="keyword">implements</span> <span class="title">UserDetailsService</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">private</span> SpitterMapper SpitterMapper;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> UserDetails <span class="title">loadUserByUsername</span><span class="params">(String username)</span> <span class="keyword">throws</span> UsernameNotFoundException </span>&#123;</div><div class="line">        Spitter spitter = SpitterMapper.findByUsername(username);</div><div class="line">        <span class="keyword">if</span> (spitter != <span class="keyword">null</span>) &#123;</div><div class="line">            List&lt;GrantedAuthority&gt; authorities = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">            authorities.add(<span class="keyword">new</span> SimpleGrantedAuthority(<span class="string">"ROLE_SPITTER"</span>));</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> User(spitter.getUsername(), spitter.getPassword(), authorities);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> UsernameNotFoundException(<span class="string">"User '"</span> + username + <span class="string">"' not found."</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后配置config方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">String idForEncode = <span class="string">"bcrypt"</span>;</div><div class="line">        Map encoders = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line"></div><div class="line">        encoders.put(idForEncode, <span class="keyword">new</span> BCryptPasswordEncoder());</div><div class="line">        encoders.put(<span class="string">"noop"</span>, NoOpPasswordEncoder.getInstance());</div><div class="line">        encoders.put(<span class="string">"pbkdf2"</span>, <span class="keyword">new</span> Pbkdf2PasswordEncoder());</div><div class="line">        encoders.put(<span class="string">"scrypt"</span>, <span class="keyword">new</span> SCryptPasswordEncoder());</div><div class="line">        encoders.put(<span class="string">"sha256"</span>, <span class="keyword">new</span> StandardPasswordEncoder());</div><div class="line"></div><div class="line">        PasswordEncoder passwordEncoder =</div><div class="line">                <span class="keyword">new</span> DelegatingPasswordEncoder(idForEncode, encoders);</div><div class="line">        auth.userDetailsService(spitterUserService)</div><div class="line">                .passwordEncoder(passwordEncoder);</div></pre></td></tr></table></figure>
+<p>基于用户自定义的方式，我们通过改变SpitterMapper的实现方式（Mybatis，DB2，Redis等等），可以与多种存储方式适配，事实上也的确是使用这种方式。</p>
+<h4 id="权限管理"><a href="#权限管理" class="headerlink" title="权限管理"></a>权限管理</h4><p>在上面认证时，我们给予了用户多种权限，对不同的权限，有不通的结果, 在<code>configure(HttpSecurity http)</code>中进行配置：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">http.formLogin()</div><div class="line">                .loginPage(<span class="string">"/login"</span>)  <span class="comment">//使用自定义的登录页面</span></div><div class="line">                .defaultSuccessUrl(<span class="string">"/"</span>)<span class="comment">//登录成功后默认跳转到"/"</span></div><div class="line">                .and()</div><div class="line">                .rememberMe()  <span class="comment">//启用remember功能（会产生cookie存储在浏览器中）</span></div><div class="line">                .tokenValiditySeconds(<span class="number">3600</span>)</div><div class="line">                .key(<span class="string">"spitterKey"</span>)</div><div class="line">                .and()</div><div class="line">                .logout()</div><div class="line">                .logoutSuccessUrl(<span class="string">"/login"</span>)<span class="comment">//退出登录后的默认url是"/home"  默认开启csrf之后,LogoutFilter仅能使用POST方式请求</span></div><div class="line"><span class="comment">//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")) //这种方式可以设置通过get方式访问加了csrf的logout,但不提倡</span></div><div class="line"><span class="comment">//                .deleteCookies("remember-me")</span></div><div class="line">                .and()</div><div class="line">                .authorizeRequests()</div><div class="line">                .antMatchers(<span class="string">"/spitter/me"</span>).hasAuthority(<span class="string">"ROLE_SPITTER"</span>)</div><div class="line">                .antMatchers(HttpMethod.POST, <span class="string">"/spitter"</span>).hasRole(<span class="string">"SPITTER"</span>)</div><div class="line">                .antMatchers(<span class="string">"/spitter/other"</span>).access(<span class="string">"hasRole('SPITTER')"</span>)</div><div class="line">                .anyRequest().permitAll()</div><div class="line">                .and()</div><div class="line">                .requiresChannel()</div><div class="line">                .antMatchers(<span class="string">"/spitter/form"</span>).requiresSecure() <span class="comment">//需要HTTPS</span></div><div class="line">                .antMatchers(<span class="string">"/"</span>).requiresInsecure(); <span class="comment">//首页使用 HTTP</span></div><div class="line">        <span class="comment">//禁用 csrf保护 (默认自带)</span></div><div class="line"><span class="comment">//        http.csrf().disable();</span></div></pre></td></tr></table></figure>
+<p>值得注意的是，springsecurity默认启用csrf防护，例如使用thymeleaf模板默认的登录页面时，默认生成的影藏csfr：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">name</span>=<span class="string">"_csrf"</span> <span class="attr">value</span>=<span class="string">"66fd066c-657a-4629-ba42-879a8bcd88c0"</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>而默认开启csrf之后，对于默认的’/logout’请求，必须是POST请求，而不能是GET请求。</p>
+<p>更多的方法控制函数可以参考<a href="https://docs.spring.io/spring-security/site/docs/5.0.3.RELEASE/reference/htmlsingle/#what-is-authentication-in-spring-security" target="_blank" rel="external">官方文档</a> 以及<a href="https://docs.spring.io/spring-security/site/docs/5.0.3.RELEASE/api/" target="_blank" rel="external">API</a></p>
+<h4 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h4><p>Spring Security 还提供了JSP视图的渲染控制标签，包括JSP和Thymeleaf，具体可以看文档的JSP Tag Libraries部分。其对SPel的支持也使得使用起来更为灵活强大。</p>
+<hr>
+<h3 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h3><p><a href="https://github.com/bazingagain/SpringInAction/tree/master/LearnSpringSecurity" target="_blank" rel="external">本文源码</a></p>
+<hr>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://docs.spring.io/spring-security/site/docs/5.0.3.RELEASE/reference/htmlsingle/" target="_blank" rel="external">1. Spring Security 官方文档</a></p>
+<p><a href="https://docs.spring.io/spring-security/site/docs/5.0.3.RELEASE/api/" target="_blank" rel="external">2. Spring Security API</a></p>
+<p><a href="https://item.jd.com/11899370.html" target="_blank" rel="external">3.《Spring In Action》</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/WeChatQR.jpeg" alt="Xiaolei Peng WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/uploads/AliPayQR.jpeg" alt="Xiaolei Peng Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Xiaolei Peng
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://bazingagain.com/2018/03/31/spring-security-20180331/" title="SpringSecurity学习之应用认证授权管理">http://bazingagain.com/2018/03/31/spring-security-20180331/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
+          
+            <a href="/tags/SpringSecurity/" rel="tag"># SpringSecurity</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/16/spring-boot-20180316/" rel="next" title="SpringBoot学习之构建一个简单的SpringBoot项目">
+                <i class="fa fa-chevron-left"></i> SpringBoot学习之构建一个简单的SpringBoot项目
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="Xiaolei Peng" />
+          <p class="site-author-name" itemprop="name">Xiaolei Peng</p>
+           
+              <p class="site-description motion-element" itemprop="description">程序员</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/bazingagain" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+        
+<embed src="//music.163.com/style/swf/widget.swf?sid=441359&type=2&auto=0&width=320&height=66" width="340" height="86"  allowNetworking="all"></embed>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-link"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://qinjiangbo.com" title="心灵港" target="_blank">心灵港</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是认证授权管理？"><span class="nav-number">1.</span> <span class="nav-text">什么是认证授权管理？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是Spring-Security？"><span class="nav-number">2.</span> <span class="nav-text">什么是Spring Security？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring是如何进行访问控制的？"><span class="nav-number">3.</span> <span class="nav-text">Spring是如何进行访问控制的？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring访问控制的实现机制"><span class="nav-number">3.1.</span> <span class="nav-text">Spring访问控制的实现机制</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何使用Spring-Security来对访问进行控制？"><span class="nav-number">4.</span> <span class="nav-text">如何使用Spring Security来对访问进行控制？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#添加security依赖"><span class="nav-number">4.1.</span> <span class="nav-text">添加security依赖</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进行security的配置"><span class="nav-number">4.2.</span> <span class="nav-text">进行security的配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#认证管理"><span class="nav-number">4.3.</span> <span class="nav-text">认证管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#权限管理"><span class="nav-number">4.4.</span> <span class="nav-text">权限管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其它"><span class="nav-number">4.5.</span> <span class="nav-text">其它</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#附录"><span class="nav-number">5.</span> <span class="nav-text">附录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiaolei Peng</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问用户
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>访问次数
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("6S5WEDrPUzaDfarHnmz74io3-gzGzoHsz", "AFVYQDlsS5XFsBQ3MguKRj4R");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+  
+  
+
+
+  
+
+</body>
+</html>
