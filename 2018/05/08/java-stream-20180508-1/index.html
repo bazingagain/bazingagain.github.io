@@ -102,7 +102,7 @@
 <meta property="og:description" content="什么是Java Stream？Java Stream 是Java8新添加的API，在java.util.stream下，其提供透明的声明式的方式对数据集合进行处理，使用Java Stream对数据进行处理就像构造一条数据流水线一样，通过输入、过滤、映射以及整合等处理步骤最终得到我们想要的结果。流与集合不同，集合主要是针对数据和结构的概论抽象，而流则是对数据计算的抽象。 以下面的程序为例： 1234">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://bazingagain.github.io/images/java/java_20180509_pic1.png">
-<meta property="og:updated_time" content="2018-05-09T03:05:41.205Z">
+<meta property="og:updated_time" content="2018-05-09T03:17:50.781Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java8学习之Stream的使用">
 <meta name="twitter:description" content="什么是Java Stream？Java Stream 是Java8新添加的API，在java.util.stream下，其提供透明的声明式的方式对数据集合进行处理，使用Java Stream对数据进行处理就像构造一条数据流水线一样，通过输入、过滤、映射以及整合等处理步骤最终得到我们想要的结果。流与集合不同，集合主要是针对数据和结构的概论抽象，而流则是对数据计算的抽象。 以下面的程序为例： 1234">
@@ -424,7 +424,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  1,792
+                  1,793
                 </span>
               
 
@@ -493,10 +493,8 @@
   <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">List&lt;String&gt; words = Arrays.asList(<span class="string">"Java 8"</span>, <span class="string">"Lambda"</span>, <span class="string">"In"</span>, <span class="string">"Action"</span>);</div><div class="line">words.stream().map(word -&gt; word.split(<span class="string">""</span>)).distinct().collect(Collectors.toList());</div></pre></td></tr></table></figure>
 <p>  我们是想得到所有的唯一的字母，即[“J”, “a”, …]上面的代码中的map产生的是Stream<string[]>，distinct比较的也是String[]的引用，最终返回的也是Stream<string[]>，而不是我们想要的Stream<string>，使用flatMap可以解决该问题：</string></string[]></string[]></p>
   <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">List&lt;String&gt; words = Arrays.asList(<span class="string">"Java 8"</span>, <span class="string">"Lambda"</span>, <span class="string">"In"</span>, <span class="string">"Action"</span>);</div><div class="line">List&lt;String&gt; uniqueCharacters = words.stream().map(w -&gt; w.split(<span class="string">""</span>)).flatMap(Arrays::stream).distinct().collect(Collectors.toList());</div></pre></td></tr></table></figure>
+<p>  其中的Arrays.stream()接受一个数组并转化为流，而flatMap则可以将流进行整合为最终的一个流。</p>
 </li>
-</ul>
-<pre><code>其中Arrays.stream()接受一个数组并转化为流，而flatMap则可以将流进行整合为最终的一个流。
-</code></pre><ul>
 <li><p><strong>sort</strong></p>
 <p>  sort对流中的元素进行排序形成排序后的流：</p>
   <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">List&lt;Transaction&gt; tr2011 = transactions.stream()</div><div class="line">            .filter(t -&gt; t.getYear() == <span class="number">2011</span>)</div><div class="line">            .sorted(Comparator.comparing(Transaction::getValue))</div><div class="line">            .collect(Collectors.toList());</div></pre></td></tr></table></figure>
