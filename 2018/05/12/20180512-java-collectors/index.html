@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="思维模式," />
+  <meta name="keywords" content="Java,Java8,Stream," />
 
 
 
@@ -93,22 +93,18 @@
 
 
 
-<meta name="description" content="序言在公文写作时，按照序言（前言、开场白、引言）中的“背景”和“冲突”，提出文章的中心思想和关键句要点，就可以使用疑问/回答的对话方式，在每一个关键句要点之下的层次上展开论述或说明。 这时，我们的思考已经进入到关键句层次的下一个层次，我定义为观点的思考和组织的层次。这一阶段主要分为应用逻辑顺序和概括各组思想。本文主要对应用逻辑顺序进行总结与梳理。  应用逻辑顺序金字塔原理规定：所用列入同一组的思想">
-<meta name="keywords" content="思维模式">
+<meta name="description" content="Stream收集器的概念Java中，对于集合的操作，可以将其转换为流，组装成流水线进行数据的处理，最后，我们要得到一个确切的结果，在Java中，对流的处理的最后步骤一般是使用收集器进行流的聚合整理得到最终的结果。 为了方便收集器的使用，Java提供了Collector类，其包含众多常用的收集器工厂方法。按收集器的功能划分主要可以分为以下几类：  将流元素归约和汇总为一个值 元素分组 元素分区  流">
+<meta name="keywords" content="Java,Java8,Stream">
 <meta property="og:type" content="article">
-<meta property="og:title" content="金字塔原理-思考的逻辑-应用逻辑顺序">
-<meta property="og:url" content="https://pengxiaolei.com/2018/01/07/think-20180107/index.html">
+<meta property="og:title" content="Java中Stream的收集器处理">
+<meta property="og:url" content="https://pengxiaolei.com/2018/05/12/20180512-java-collectors/index.html">
 <meta property="og:site_name" content="bazingagain">
-<meta property="og:description" content="序言在公文写作时，按照序言（前言、开场白、引言）中的“背景”和“冲突”，提出文章的中心思想和关键句要点，就可以使用疑问/回答的对话方式，在每一个关键句要点之下的层次上展开论述或说明。 这时，我们的思考已经进入到关键句层次的下一个层次，我定义为观点的思考和组织的层次。这一阶段主要分为应用逻辑顺序和概括各组思想。本文主要对应用逻辑顺序进行总结与梳理。  应用逻辑顺序金字塔原理规定：所用列入同一组的思想">
+<meta property="og:description" content="Stream收集器的概念Java中，对于集合的操作，可以将其转换为流，组装成流水线进行数据的处理，最后，我们要得到一个确切的结果，在Java中，对流的处理的最后步骤一般是使用收集器进行流的聚合整理得到最终的结果。 为了方便收集器的使用，Java提供了Collector类，其包含众多常用的收集器工厂方法。按收集器的功能划分主要可以分为以下几类：  将流元素归约和汇总为一个值 元素分组 元素分区  流">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://bazingagain.github.io/images/think/2018_01_07/jingzitaoyuanli_sikao_1.png">
-<meta property="og:image" content="https://bazingagain.github.io/images/think/2018_01_07/jingzitaoyuanli_sikao_2.png">
-<meta property="og:image" content="https://bazingagain.github.io/images/think/2018_01_07/jingzitaoyuanli_sikao_3.png">
-<meta property="og:updated_time" content="2018-01-07T13:22:21.053Z">
+<meta property="og:updated_time" content="2018-05-13T03:22:52.793Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="金字塔原理-思考的逻辑-应用逻辑顺序">
-<meta name="twitter:description" content="序言在公文写作时，按照序言（前言、开场白、引言）中的“背景”和“冲突”，提出文章的中心思想和关键句要点，就可以使用疑问/回答的对话方式，在每一个关键句要点之下的层次上展开论述或说明。 这时，我们的思考已经进入到关键句层次的下一个层次，我定义为观点的思考和组织的层次。这一阶段主要分为应用逻辑顺序和概括各组思想。本文主要对应用逻辑顺序进行总结与梳理。  应用逻辑顺序金字塔原理规定：所用列入同一组的思想">
-<meta name="twitter:image" content="https://bazingagain.github.io/images/think/2018_01_07/jingzitaoyuanli_sikao_1.png">
+<meta name="twitter:title" content="Java中Stream的收集器处理">
+<meta name="twitter:description" content="Stream收集器的概念Java中，对于集合的操作，可以将其转换为流，组装成流水线进行数据的处理，最后，我们要得到一个确切的结果，在Java中，对流的处理的最后步骤一般是使用收集器进行流的聚合整理得到最终的结果。 为了方便收集器的使用，Java提供了Collector类，其包含众多常用的收集器工厂方法。按收集器的功能划分主要可以分为以下几类：  将流元素归约和汇总为一个值 元素分组 元素分区  流">
 
 
 
@@ -136,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="https://pengxiaolei.com/2018/01/07/think-20180107/"/>
+  <link rel="canonical" href="https://pengxiaolei.com/2018/05/12/20180512-java-collectors/"/>
 
 
 
 
 
-  <title> 金字塔原理-思考的逻辑-应用逻辑顺序 | bazingagain </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> Java中Stream的收集器处理 | bazingagain </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -310,7 +306,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://pengxiaolei.com/2018/01/07/think-20180107/">
+    <link itemprop="mainEntityOfPage" href="https://pengxiaolei.com/2018/05/12/20180512-java-collectors/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Xiaolei Peng">
@@ -331,7 +327,7 @@
             
             
               
-                金字塔原理-思考的逻辑-应用逻辑顺序
+                Java中Stream的收集器处理
               
             
           </h1>
@@ -346,8 +342,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-07T20:57:46+08:00">
-                2018-01-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-12T10:48:41+08:00">
+                2018-05-12
               </time>
             
 
@@ -369,8 +365,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/思维模式/" itemprop="url" rel="index">
-                    <span itemprop="name">思维模式</span>
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
                   </a>
                 </span>
 
@@ -388,8 +384,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/2018/01/07/think-20180107/#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2018/01/07/think-20180107/" itemprop="commentsCount"></span>
+                <a href="/2018/05/12/20180512-java-collectors/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2018/05/12/20180512-java-collectors/" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -397,7 +393,7 @@
 
           
           
-             <span id="/2018/01/07/think-20180107/" class="leancloud_visitors" data-flag-title="金字塔原理-思考的逻辑-应用逻辑顺序">
+             <span id="/2018/05/12/20180512-java-collectors/" class="leancloud_visitors" data-flag-title="Java中Stream的收集器处理">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -426,7 +422,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  1,631
+                  904
                 </span>
               
 
@@ -442,7 +438,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  6
+                  4
                 </span>
               
             </div>
@@ -461,123 +457,78 @@
       
 
       
-        <h3 id="序言"><a href="#序言" class="headerlink" title="序言"></a>序言</h3><p>在公文写作时，按照序言（前言、开场白、引言）中的“背景”和“冲突”，提出文章的中心思想和关键句要点，就可以使用疑问/回答的对话方式，在每一个关键句要点之下的层次上展开论述或说明。</p>
-<p>这时，我们的思考已经进入到关键句层次的下一个层次，我定义为观点的思考和组织的层次。这一阶段主要分为应用逻辑顺序和概括各组思想。本文主要对应用逻辑顺序进行总结与梳理。</p>
-<hr>
-<h3 id="应用逻辑顺序"><a href="#应用逻辑顺序" class="headerlink" title="应用逻辑顺序"></a>应用逻辑顺序</h3><p>金字塔原理规定：所用列入同一组的思想必须具有某种逻辑顺序。而人脑的逻辑分析中，大脑的归纳分析活动有三种：<strong>时间（步骤）顺序</strong>、<strong>结构（空间）顺序</strong>、<strong>程度（重要性）顺序</strong>。</p>
-<h4 id="时间顺序"><a href="#时间顺序" class="headerlink" title="时间顺序"></a>时间顺序</h4><p><strong>时间顺序在思想分组时使用最广，一般按照采取行动的顺序（第一步、第二步、第三步…）表述达到某一结果必须采取的行动</strong>。例如确定前因后果的关系：</p>
-<center><br><img src="https://bazingagain.github.io/images/think/2018_01_07/jingzitaoyuanli_sikao_1.png" alt=""><br></center>
-
-<p>在写作时，最常见的问题就是无法区分原因和结果。例如书中通过时间顺序对思想进行梳理后的例子：</p>
-<blockquote>
-<p>在第一阶段，我们将确定提高生产效率的可能领域：</p>
-<ol>
-<li><p>确定企业的关键业务</p>
-<blockquote>
+        <h3 id="Stream收集器的概念"><a href="#Stream收集器的概念" class="headerlink" title="Stream收集器的概念"></a>Stream收集器的概念</h3><p>Java中，对于集合的操作，可以将其转换为流，组装成流水线进行数据的处理，最后，我们要得到一个确切的结果，在Java中，对流的处理的最后步骤一般是使用收集器进行流的聚合整理得到最终的结果。</p>
+<p>为了方便收集器的使用，Java提供了Collector类，其包含众多常用的收集器工厂方法。按收集器的功能划分主要可以分为以下几类：</p>
 <ul>
-<li>与主要人员对话</li>
-<li>跟踪并记录交易行为和工作流程</li>
+<li>将流元素归约和汇总为一个值</li>
+<li>元素分组</li>
+<li>元素分区</li>
 </ul>
-</blockquote>
+<h3 id="流元素归约汇总收集器"><a href="#流元素归约汇总收集器" class="headerlink" title="流元素归约汇总收集器"></a>流元素归约汇总收集器</h3><ul>
+<li><p><strong>Collectors.counting</strong></p>
+<p>  计算流中元素的数量，类似于Stream.count():</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">long</span> howManyDishes = menu.stream().collect(counting());</div></pre></td></tr></table></figure>
 </li>
-<li><p>找出在开展业务时存在的弱点</p>
-<blockquote>
-<ul>
-<li>调整组织结构</li>
-<li>制定及实施服务和绩效管理措施</li>
-<li>评估绩效水平</li>
-</ul>
-</blockquote>
+<li><p><strong>Collectors.minBy, Collectors.maxBy</strong></p>
+<p>  查找流中的最大最小值：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Comparator&lt;Dish&gt; disCaloriesComparator = Comparator.comparingInt(Dish::getCalories);</div><div class="line">Optional&lt;Dish&gt; mostCalorieDish = menu.stream().collect(maxBy(disCaloriesComparator));</div></pre></td></tr></table></figure>
 </li>
-<li><p>提出实用可行的改革建议</p>
+<li><p><strong>Collectors.summingInt</strong></p>
+<p>  该方法的参数为将对象映射为求和所需int的函数，返回一个收集器：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> totalCalories = menu.stream().collect(summingInt(Dish::getCalories));</div></pre></td></tr></table></figure>
 </li>
-</ol>
-</blockquote>
-<p>可以看出，这样做一是可以检查步骤是否得当，二是可以检查步骤是否有遗漏。时间顺序遵从活动的发展顺序，对活动的产生、发展、结果进行步骤的抽象。</p>
-<p>另一个方面，在表达的时候要揭示隐含的逻辑，书中举出这样一个例子（揭示因果关系）：</p>
-<blockquote>
-<p>员工思路：</p>
-<p>传统的投资评估的重点——比较未来的收益和可能的成本：</p>
-<ol>
-<li>通常在技术上不可靠</li>
-<li>基于简单化的概念</li>
-<li>结果可能造成误导</li>
-</ol>
-</blockquote>
-<p>通过检查其逻辑顺序，时间顺序为其思想的根本顺序，而第3点为主题思想，因为这一点是其它两项行动的结果：</p>
-<blockquote>
-<p><strong>传统的投资评估的重点可能造成误导</strong>：</p>
-<ol>
-<li>基于简单化的概念</li>
-<li>通常在技术上不可靠</li>
-</ol>
-</blockquote>
-<h4 id="结构顺序"><a href="#结构顺序" class="headerlink" title="结构顺序"></a>结构顺序</h4><p><strong>结构顺序是使用示意图、地图、图画或照片想象某事物时的顺序。结构顺序在于将某事物划分为不同的组，通过分组来表示事物的逻辑或关系</strong></p>
-<p>其分组的原则：</p>
-<ul>
-<li><strong>各部分自检相互独立，没有重叠，没有排他性</strong></li>
-<li><strong>所有部分完全穷尽，没有遗漏</strong></li>
+<li><p><strong>Collectors.averagingInt</strong></p>
+<p>  求平均值：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">double</span> avgCalories = menu.stream().collect(averagingInt(Dish::getCalories));</div></pre></td></tr></table></figure>
+<p>  其它的还有averagingLong,averagingDouble等。</p>
+</li>
+<li><p><strong>Collectors.summarizing</strong></p>
+<p>  一次操作，求得总和、平均值、最大值和最小值：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">IntSummaryStatistics menuStatistic = menu.stream().collect(summarizingInt(Dish::getCalories));</div><div class="line">System.out.println(menuStatistic.toString());</div></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Collectors.joining</strong></p>
+<p>  对流中每个元素应用toString方法并连接成一个字符串：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">String shortMenu = menu.stream().map(Dish::getName).collect(joining());</div><div class="line">String shortMenu1 = menu.stream().map(Dish::getName).collect(joining(<span class="string">", "</span>));</div></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Collectors.reducing</strong></p>
+<p>  广义汇总函数，上面的函数是reducing的特殊情况，使用reducing也能构造上面的函数的功能：</p>
+<p>  计算汇总int值(一般化summingInt)：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> totalCalories = menu.stream().collect(reducing(<span class="number">0</span>, Dish::getCalories, (i, j) -&gt; i + j));</div><div class="line"><span class="keyword">int</span> totalCalories = menu.stream().collect(reducing(<span class="number">0</span>, Dish::getCalories, Integer::sum));</div></pre></td></tr></table></figure>
+<p>  计算最大值(一般化maxBy)：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Optional&lt;Dish&gt; mostCaloriesDish = menu.stream().collect(reducing((d1, d2) -&gt; d1.getCalories() &gt; d2.getCalories() ? d1 : d2));</div></pre></td></tr></table></figure>
+<p>  连接字符串(一般化join):</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">String shortMenu = menu.stream().map(Dish::getName).collect(reducing((s1, s2) -&gt; s1 + s2)).get();</div><div class="line">String shortMenu = menu.stream().collect(reducing(<span class="string">""</span>, Dish::getName, (s1, s2) -&gt; s1 + s2));</div></pre></td></tr></table></figure>
+</li>
 </ul>
-<p>例如书中的例子：</p>
-<center><br><img src="https://bazingagain.github.io/images/think/2018_01_07/jingzitaoyuanli_sikao_2.png" alt=""><br></center>
-
-<p>这个例子只是说明结构顺序的逻辑，实际生活中的公司的组织结构比这复杂的多。<br>其划分组织活动的方式：</p>
-<ul>
-<li><strong>根据活动本身</strong>，如研发、生产、设计</li>
-<li><strong>根据活动发生的地点</strong>，如华南、华北、西北</li>
-<li><strong>针对特定产品、市场或客户活动的集合</strong>，如各事业部、各业务单元等</li>
+<h3 id="流元素分组收集器"><a href="#流元素分组收集器" class="headerlink" title="流元素分组收集器"></a>流元素分组收集器</h3><ul>
+<li><p><strong>Collectors.groupingBy</strong></p>
+<p>  对集合中的元素进行分组，生成Map：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">Map&lt;Dish.Type, List&lt;Dish&gt;&gt; dishesByType = menu.stream().collect(groupingBy(Dish::getType));</div><div class="line">dishesByType.forEach((k, v) -&gt; &#123;</div><div class="line">        System.out.println(k + v.toString());</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">Map&lt;CaloriesLevel, List&lt;Dish&gt;&gt; dishesByCaloriesLevel = menu.stream().collect(</div><div class="line">            groupingBy(dish -&gt; &#123;</div><div class="line">                <span class="keyword">if</span> (dish.getCalories() &lt;= <span class="number">600</span>)</div><div class="line">                    <span class="keyword">return</span> CaloriesLevel.DIET;</div><div class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (dish.getCalories() &lt; <span class="number">700</span>)</div><div class="line">                    <span class="keyword">return</span> CaloriesLevel.NORMAL;</div><div class="line">                <span class="keyword">else</span></div><div class="line">                    <span class="keyword">return</span> CaloriesLevel.FAT;</div><div class="line">            &#125;)</div><div class="line">    );</div></pre></td></tr></table></figure>
+<p>  <strong>多级分组：</strong></p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Map&lt;Dish.Type, Map&lt;CaloriesLevel, List&lt;Dish&gt;&gt;&gt; dishesByTypeCaloriesLevel =</div><div class="line">            menu.stream().collect(groupingBy(Dish::getType, groupingBy(dish -&gt; &#123;</div><div class="line">                <span class="keyword">if</span> (dish.getCalories() &lt;= <span class="number">600</span>)</div><div class="line">                    <span class="keyword">return</span> CaloriesLevel.DIET;</div><div class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (dish.getCalories() &lt; <span class="number">700</span>)</div><div class="line">                    <span class="keyword">return</span> CaloriesLevel.NORMAL;</div><div class="line">                <span class="keyword">else</span></div><div class="line">                    <span class="keyword">return</span> CaloriesLevel.FAT;</div><div class="line">            &#125;)));</div></pre></td></tr></table></figure>
+<p>  <strong>在子组的基础上收集数据：</strong></p>
+<p>  计算每个子组的数目：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Map&lt;Dish.Type, Long&gt; typesCount = menu.stream().collect(groupingBy(Dish::getType, counting()));</div></pre></td></tr></table></figure>
+<p>  计算每个子组中的最大值：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Map&lt;Dish.Type, Optional&lt;Dish&gt;&gt; mostCaloriesByType = menu.stream()</div><div class="line">            .collect(groupingBy(Dish::getType, maxBy(Comparator.comparingInt(Dish::getCalories))));</div></pre></td></tr></table></figure>
+<p>  计算每个子组中的某个值的总和：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Map&lt;Dish.Type, Integer&gt; totalCaloriesByType = menu.stream().</div><div class="line">            collect(groupingBy(Dish::getType, summingInt(Dish::getCalories)));</div></pre></td></tr></table></figure>
+<p>  对分组中的元素进行映射处理：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Map&lt;Dish.Type, Set&lt;CaloriesLevel&gt;&gt; caloriesLevelByType1 = menu.stream().collect(</div><div class="line">            groupingBy(Dish::getType, mapping(dish -&gt; &#123;</div><div class="line">                <span class="keyword">if</span> (dish.getCalories() &lt;= <span class="number">600</span>)</div><div class="line">                    <span class="keyword">return</span> CaloriesLevel.DIET;</div><div class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (dish.getCalories() &lt; <span class="number">700</span>)</div><div class="line">                    <span class="keyword">return</span> CaloriesLevel.NORMAL;</div><div class="line">                <span class="keyword">else</span></div><div class="line">                    <span class="keyword">return</span> CaloriesLevel.FAT;</div><div class="line">            &#125;, toCollection(HashSet::<span class="keyword">new</span>)))</div><div class="line">    );</div></pre></td></tr></table></figure>
+</li>
 </ul>
-<p>书中提到，对于结构顺序的描述，一般按照<strong>自上而下、自左而右</strong>的方式进行描述，在描述各子部分时，有时也会采用过程顺序（书中举的描述西奈半岛的例子，按照人眼看地图的从左上角沿顺时针的方式进行描述）。</p>
-<h4 id="程度顺序"><a href="#程度顺序" class="headerlink" title="程度顺序"></a>程度顺序</h4><p>程度顺序也称重要性顺序，是对一组具有共同特点而被聚集在一起的事务所采用的顺序。</p>
-<p>程度顺序强调：</p>
-<p><strong>明确指明每组中的项目（思想、观点、问题等）具有共同特征，确保将所有具有该特征的项目（思想、观点、问题等）列入改组。每组中，根据各个问题具有该特性的程度的高低排序——最具有该特性的问题排在第一位，即先强后弱，先重要后次要</strong></p>
-<p>如书中对问题分类的示例：</p>
-<center><br><img src="https://bazingagain.github.io/images/think/2018_01_07/jingzitaoyuanli_sikao_3.png" alt=""><br></center>
+<p><strong>Collectors.collectingAndThen</strong></p>
+<pre><code>该函数将收集器的结果转换为另一种类型，其接受两个参数--要转换的收集器以及转换函数，并返回一个收集器：
 
-<p>将所有问题分为3个问题和其它问题，它们之间具有排斥性，而每组中的问题又存在共性。</p>
-<p>书中举出的一个根据重要性进行分组的例子很好的表达了这个观点：</p>
-<blockquote>
-<p>纽约衰退的原因非常复杂，其中包括：</p>
-<ol>
-<li>工资高于美国其它地区的平均工资水平</li>
-<li>能源、房租和土地成本高</li>
-<li>交通拥堵使运输成本增加</li>
-<li>缺少建立现代化工厂的空间</li>
-<li>税率高</li>
-<li>技术的变化</li>
-<li>美国西南部和西部地区与之竞争经济中心的地位</li>
-<li>美国经济和社会生活的中心向郊区转移</li>
-</ol>
-</blockquote>
-<p>上述例子缺乏思考，按照<strong>1.确定该问题的类型，2.将同一类型的思想归类、分组，3.找出各类别思想之间的顺序</strong>的原则，进行问题的归纳梳理如下：</p>
-<table>
-<thead>
-<tr>
-<th>问题</th>
-<th style="text-align:center">问题归类</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1.工资过高 <br>2.能源、房租、土地承包高<br>3.运输成本高<br>5.税率高</td>
-<td style="text-align:center">一、成本高</td>
-</tr>
-<tr>
-<td>4.缺少建立现代化工厂的空间<br>6.技术变化<br>8.业务联系转移到郊区</td>
-<td style="text-align:center">二、地域不合适</td>
-</tr>
-<tr>
-<td>7.西南部和西部地区成为新的中心</td>
-<td style="text-align:center">三、存在竞争</td>
-</tr>
-</tbody>
-</table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Map&lt;Dish.Type, Dish&gt; mostCaloriesByType1 = menu.stream()</div><div class="line">            .collect(groupingBy(Dish::getType,</div><div class="line">                    collectingAndThen(maxBy(Comparator.comparingInt(Dish::getCalories)), Optional::get)));</div></pre></td></tr></table></figure>
+</code></pre><h3 id="流元素分区收集器"><a href="#流元素分区收集器" class="headerlink" title="流元素分区收集器"></a>流元素分区收集器</h3><ul>
+<li><p><strong>partitioningBy</strong></p>
+<p>  使用一个谓词（返回boolean值的函数）作为分类函数，其得到的Map的键为true和false：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Map&lt;Boolean, List&lt;Dish&gt;&gt; partitionMenu = menu.stream().collect(partitioningBy(Dish::isVegetarian));</div><div class="line"></div><div class="line">Map&lt;Boolean, Map&lt;Dish.Type, List&lt;Dish&gt;&gt;&gt; vegetarianDishesByType = menu.stream().collect(</div><div class="line">            partitioningBy(Dish::isVegetarian, groupingBy(Dish::getType))</div><div class="line">    );</div><div class="line"></div><div class="line">Map&lt;Boolean, Dish&gt; mostCaloriesPartitionByVegetarian =</div><div class="line">            menu.stream().collect(partitioningBy(Dish::isVegetarian,</div><div class="line">                    collectingAndThen(maxBy(Comparator.comparingInt(Dish::getCalories)),</div><div class="line">                            Optional::get)));</div></pre></td></tr></table></figure>
+</li>
+</ul>
 <hr>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>无论是在工作还是生活中，对于我们大脑中的思维模式要有一个清晰的认识。当我们在实际生活中遇到需要对思想进行总结或归纳时，思想的逻辑顺序非常重要。在思考的过程中利用时间顺序、结构顺序、程度顺序对思想、观点或问题进行逻辑梳理和检查，能够帮助我们更好地表达思考的本质。</p>
-<hr>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://item.jd.com/11346083.html" target="_blank" rel="external">1.《金字塔原理-思考、表达和解决问题的能力》</a></p>
-<hr>
-<h3 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h3><p>金字塔原理系列文章是对学习该书的过程中的笔记总结、归纳和思考，文章只作整理和学习使用。</p>
+<h3 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h3><p><a href="https://github.com/bazingagain/Java8Demo/tree/master/src/main/java/com/leon/learnjava/part2/chapter6" target="_blank" rel="external">完整代码</a></p>
 
       
     </div>
@@ -627,7 +578,7 @@
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://pengxiaolei.com/2018/01/07/think-20180107/" title="金字塔原理-思考的逻辑-应用逻辑顺序">https://pengxiaolei.com/2018/01/07/think-20180107/</a>
+      <a href="https://pengxiaolei.com/2018/05/12/20180512-java-collectors/" title="Java中Stream的收集器处理">https://pengxiaolei.com/2018/05/12/20180512-java-collectors/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -643,7 +594,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/思维模式/" rel="tag"># 思维模式</a>
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/Java8/" rel="tag"># Java8</a>
+          
+            <a href="/tags/Stream/" rel="tag"># Stream</a>
           
         </div>
       
@@ -656,8 +611,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/03/nlp-data-collection/" rel="next" title="自然语言处理中的语料资源整理">
-                <i class="fa fa-chevron-left"></i> 自然语言处理中的语料资源整理
+              <a href="/2018/05/10/java-20180510-arraylist/" rel="next" title="Java集合之ArrayList">
+                <i class="fa fa-chevron-left"></i> Java集合之ArrayList
               </a>
             
           </div>
@@ -666,8 +621,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/01/12/spring-bean-20180112/" rel="prev" title="Spring学习之Bean的装配方式">
-                Spring学习之Bean的装配方式 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/05/12/2018-05-12-untitled/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -824,7 +779,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#序言"><span class="nav-number">1.</span> <span class="nav-text">序言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用逻辑顺序"><span class="nav-number">2.</span> <span class="nav-text">应用逻辑顺序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#时间顺序"><span class="nav-number">2.1.</span> <span class="nav-text">时间顺序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结构顺序"><span class="nav-number">2.2.</span> <span class="nav-text">结构顺序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#程度顺序"><span class="nav-number">2.3.</span> <span class="nav-text">程度顺序</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#备注"><span class="nav-number">5.</span> <span class="nav-text">备注</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Stream收集器的概念"><span class="nav-number">1.</span> <span class="nav-text">Stream收集器的概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#流元素归约汇总收集器"><span class="nav-number">2.</span> <span class="nav-text">流元素归约汇总收集器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#流元素分组收集器"><span class="nav-number">3.</span> <span class="nav-text">流元素分组收集器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#流元素分区收集器"><span class="nav-number">4.</span> <span class="nav-text">流元素分区收集器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#附录"><span class="nav-number">5.</span> <span class="nav-text">附录</span></a></li></ol></div>
             
 
           </div>
