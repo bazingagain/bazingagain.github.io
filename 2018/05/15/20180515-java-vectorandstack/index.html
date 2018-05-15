@@ -101,12 +101,12 @@
 <meta property="og:site_name" content="bazingagain">
 <meta property="og:description" content="Java中的Vector与Stack的类继承结构Java中，Vector与ArrayList十分相像，底层都是用一个数组作为数据的存储单元，不同的是Vector是同步的(synchronized)，而ArrayList则没有进行同步。Stack继承自Vector，也是同步集合。其类继承结构图如下：   Vector的成员变量1234protected Object[] elementData; /">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://bazingagain.github.io/images/java_20180515_pic1.png">
-<meta property="og:updated_time" content="2018-05-15T08:21:00.403Z">
+<meta property="og:image" content="https://bazingagain.github.io/images/java/java_20180515_pic1.png">
+<meta property="og:updated_time" content="2018-05-15T08:26:40.148Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java集合之Vector与Stack">
 <meta name="twitter:description" content="Java中的Vector与Stack的类继承结构Java中，Vector与ArrayList十分相像，底层都是用一个数组作为数据的存储单元，不同的是Vector是同步的(synchronized)，而ArrayList则没有进行同步。Stack继承自Vector，也是同步集合。其类继承结构图如下：   Vector的成员变量1234protected Object[] elementData; /">
-<meta name="twitter:image" content="https://bazingagain.github.io/images/java_20180515_pic1.png">
+<meta name="twitter:image" content="https://bazingagain.github.io/images/java/java_20180515_pic1.png">
 
 
 
@@ -460,7 +460,7 @@
 
       
         <h3 id="Java中的Vector与Stack的类继承结构"><a href="#Java中的Vector与Stack的类继承结构" class="headerlink" title="Java中的Vector与Stack的类继承结构"></a>Java中的Vector与Stack的类继承结构</h3><p>Java中，Vector与ArrayList十分相像，底层都是用一个数组作为数据的存储单元，不同的是Vector是同步的(synchronized)，而ArrayList则没有进行同步。Stack继承自Vector，也是同步集合。其类继承结构图如下：</p>
-<p><img src="https://bazingagain.github.io/images/java_20180515_pic1.png" alt=""></p>
+<p><img src="https://bazingagain.github.io/images/java/java_20180515_pic1.png" alt=""></p>
 <hr>
 <h3 id="Vector的成员变量"><a href="#Vector的成员变量" class="headerlink" title="Vector的成员变量"></a>Vector的成员变量</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">protected</span> Object[] elementData; <span class="comment">//数据实际存放处</span></div><div class="line"><span class="keyword">protected</span> <span class="keyword">int</span> elementCount; <span class="comment">//实际有效数据的数目</span></div><div class="line"><span class="keyword">protected</span> <span class="keyword">int</span> capacityIncrement; <span class="comment">//每次数组扩容，自增的的大小</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAX_ARRAY_SIZE = Integer.MAX_VALUE - <span class="number">8</span>; <span class="comment">//最大分配数</span></div></pre></td></tr></table></figure>
 <hr>
