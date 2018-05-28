@@ -101,7 +101,7 @@
 <meta property="og:site_name" content="bazingagain">
 <meta property="og:description" content="什么是CompletableFuture?CompleteableFuture是Java8中提出的异步任务处理API，与Java8中Lambda表达式以及流水线的特性相结合，使得构建异步任务更加简洁直观。 什么场景下使用CompletableFuture？在互联网中，我们浏览外部网页或使用外部服务的时候，需要与其它外部服务通信，而你并不希望一直等待服务的响应，阻塞当前任务的运行，浪费CPU时钟周期">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-28T10:33:19.841Z">
+<meta property="og:updated_time" content="2018-05-28T10:34:56.011Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《Java8实战》笔记-CompletableFuture的使用">
 <meta name="twitter:description" content="什么是CompletableFuture?CompleteableFuture是Java8中提出的异步任务处理API，与Java8中Lambda表达式以及流水线的特性相结合，使得构建异步任务更加简洁直观。 什么场景下使用CompletableFuture？在互联网中，我们浏览外部网页或使用外部服务的时候，需要与其它外部服务通信，而你并不希望一直等待服务的响应，阻塞当前任务的运行，浪费CPU时钟周期">
@@ -422,7 +422,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  1,494
+                  1,493
                 </span>
               
 
@@ -500,7 +500,25 @@
 <p>其中，W/C为100（因为99%的时间都在等待商店的响应），要使CPU利用率达到100%，本机器为4核CPU，则线程池大小应该计算出来应该为400。但是，我们应当在实际的任务和最高线程数中选取较小的那个值，避免线程浪费。</p>
 <h4 id="多个异步任务"><a href="#多个异步任务" class="headerlink" title="多个异步任务"></a>多个异步任务</h4><p>文中在多个任务的处理中，比较了简单的顺序流方式和异步方式两种执行方式的时间消耗：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//简单方式</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;String&gt; <span class="title">findPrices1</span><span class="params">(String product)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> shops.stream()</div><div class="line">                .map(shop -&gt; shop.getPrice(product))</div><div class="line">                .map(Quote::parse)</div><div class="line">                .map(Discount::applayDiscount)</div><div class="line">                .collect(Collectors.toList());</div><div class="line">    &#125;</div><div class="line"> </div><div class="line"><span class="comment">//异步方式</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;String&gt; <span class="title">findPrices2</span><span class="params">(String product)</span> </span>&#123;</div><div class="line">        List&lt;CompletableFuture&lt;String&gt;&gt; priceFuture = shops.stream()</div><div class="line">                .map(shop -&gt; CompletableFuture.supplyAsync(() -&gt; shop.getPrice(product), executor))</div><div class="line">                .map(future -&gt; future.thenApply(Quote::parse))</div><div class="line">                .map(future -&gt; future.thenCompose(quote -&gt; CompletableFuture.supplyAsync(() -&gt; Discount.applayDiscount(quote), executor)))</div><div class="line">                .collect(Collectors.toList());</div><div class="line"></div><div class="line">        <span class="keyword">return</span> priceFuture.stream()</div><div class="line">                .map(CompletableFuture::join)</div><div class="line">                .collect(Collectors.toList());</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p>其执行时间如下：<br>| 执行方式 | 时间消耗 |<br>|—|—|<br>| 简单方式 |8141 msecs|<br>| 异步方式 |2132 msecs|</p>
+<p>其执行时间如下：</p>
+<table>
+<thead>
+<tr>
+<th>执行方式</th>
+<th>时间消耗</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>简单方式</td>
+<td>8141 msecs</td>
+</tr>
+<tr>
+<td>异步方式</td>
+<td>2132 msecs</td>
+</tr>
+</tbody>
+</table>
 <p>可以看到，异步方式明显进行快于简单方式，要注意的是异步方式中的几个方法：</p>
 <ul>
 <li><p><strong>thenApply()</strong> : 同步处理，这里对字符串的解析，没有进行IO操作，可以第一时间完成，所以直接使用同步处理的方式</p>
