@@ -1,0 +1,1104 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+<meta name="baidu-site-verification" content="25bXybxIfw" />
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|consolas:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java,CompletableFuture," />
+
+
+
+
+
+
+
+
+
+<link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+
+
+
+
+<meta name="description" content="什么是CompletableFuture?CompleteableFuture是Java8中提出的异步任务处理API，与Java8中Lambda表达式以及流水线的特性相结合，使得构建异步任务更加简洁直观。 什么场景下使用CompletableFuture？在互联网中，我们浏览外部网页或使用外部服务的时候，需要与其它外部服务通信，而你并不希望一直等待服务的响应，阻塞当前任务的运行，浪费CPU时钟周期">
+<meta name="keywords" content="Java,CompletableFuture">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Java8实战》笔记-CompletableFuture的使用">
+<meta property="og:url" content="https://pengxiaolei.com/2018/05/28/20180528-java-completablefuture/index.html">
+<meta property="og:site_name" content="bazingagain">
+<meta property="og:description" content="什么是CompletableFuture?CompleteableFuture是Java8中提出的异步任务处理API，与Java8中Lambda表达式以及流水线的特性相结合，使得构建异步任务更加简洁直观。 什么场景下使用CompletableFuture？在互联网中，我们浏览外部网页或使用外部服务的时候，需要与其它外部服务通信，而你并不希望一直等待服务的响应，阻塞当前任务的运行，浪费CPU时钟周期">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-28T10:30:10.452Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《Java8实战》笔记-CompletableFuture的使用">
+<meta name="twitter:description" content="什么是CompletableFuture?CompleteableFuture是Java8中提出的异步任务处理API，与Java8中Lambda表达式以及流水线的特性相结合，使得构建异步任务更加简洁直观。 什么场景下使用CompletableFuture？在互联网中，我们浏览外部网页或使用外部服务的时候，需要与其它外部服务通信，而你并不希望一直等待服务的响应，阻塞当前任务的运行，浪费CPU时钟周期">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://pengxiaolei.com/2018/05/28/20180528-java-completablefuture/"/>
+
+
+
+
+
+  <title> 《Java8实战》笔记-CompletableFuture的使用 | bazingagain </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?fb461a34697287073d7b084456ec83ec";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65562161";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">bazingagain</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">行者常至、为者常成</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://pengxiaolei.com/2018/05/28/20180528-java-completablefuture/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xiaolei Peng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="bazingagain">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                《Java8实战》笔记-CompletableFuture的使用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-28T18:29:18+08:00">
+                2018-05-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2018/05/28/20180528-java-completablefuture/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2018/05/28/20180528-java-completablefuture/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+             <span id="/2018/05/28/20180528-java-completablefuture/" class="leancloud_visitors" data-flag-title="《Java8实战》笔记-CompletableFuture的使用">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>访问次数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1,494
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="什么是CompletableFuture"><a href="#什么是CompletableFuture" class="headerlink" title="什么是CompletableFuture?"></a>什么是CompletableFuture?</h3><p>CompleteableFuture是Java8中提出的异步任务处理API，与Java8中Lambda表达式以及流水线的特性相结合，使得构建异步任务更加简洁直观。</p>
+<h3 id="什么场景下使用CompletableFuture？"><a href="#什么场景下使用CompletableFuture？" class="headerlink" title="什么场景下使用CompletableFuture？"></a>什么场景下使用CompletableFuture？</h3><p>在互联网中，我们浏览外部网页或使用外部服务的时候，需要与其它外部服务通信，而你并不希望一直等待服务的响应，阻塞当前任务的运行，浪费CPU时钟周期。为了能够充分利用CPU内核，使其处于忙碌状态，我们应避免因等待远程服务的返回，或对数据库的查询，而阻塞线程执行。</p>
+<h3 id="使用CompletableFuture"><a href="#使用CompletableFuture" class="headerlink" title="使用CompletableFuture"></a>使用CompletableFuture</h3><h4 id="模拟远程服务"><a href="#模拟远程服务" class="headerlink" title="模拟远程服务"></a>模拟远程服务</h4><p>文中使用延时来模拟远程服务计算：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">delay</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        Thread.sleep(<span class="number">1000L</span>);</div><div class="line">    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">        e.printStackTrace();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">double</span> <span class="title">calculatePrice</span><span class="params">(String product)</span> </span>&#123;</div><div class="line">    delay();</div><div class="line">    Random random = <span class="keyword">new</span> Random();</div><div class="line">    <span class="keyword">return</span> random.nextDouble() * product.charAt(<span class="number">0</span>) * product.charAt(<span class="number">1</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="使用CompletableFuture建立异步任务"><a href="#使用CompletableFuture建立异步任务" class="headerlink" title="使用CompletableFuture建立异步任务"></a>使用CompletableFuture建立异步任务</h4><p>文中调用远程商店的价格计算服务如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> Future&lt;Double&gt; <span class="title">getPriceAsync</span><span class="params">(String product)</span> </span>&#123;</div><div class="line">    CompletableFuture&lt;Double&gt; futurePrice = <span class="keyword">new</span> CompletableFuture&lt;&gt;();</div><div class="line">    <span class="keyword">new</span> Thread(() -&gt; &#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="keyword">double</span> price = calculatePrice(product);</div><div class="line">            futurePrice.complete(price);</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            <span class="comment">//抛出导致失败的异常</span></div><div class="line">            futurePrice.completeExceptionally(e);</div><div class="line">        &#125;</div><div class="line">    &#125;).start();</div><div class="line">    <span class="keyword">return</span> futurePrice;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其中，在CompletableFuture中fork一个线程进行请求价格计算的处理，当远程任务执行完时，调用complete方法设置变量，结束CompletableFuture的运行。如出现错误，则抛异常。</p>
+<p>上面是不是特别繁琐，其实CompletableFuture提供了一个简化版的写法，直接使用它的<strong>supplyAsync()</strong>方法就可简化：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> Future&lt;Double&gt; <span class="title">getPriceAsync</span><span class="params">(String product)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> CompletableFuture.supplyAsync(() -&gt; calculatePrice(product));</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h4 id="顺序-并行流-CompletableFuture及CompletableFuture-Executor模式的实验对比"><a href="#顺序-并行流-CompletableFuture及CompletableFuture-Executor模式的实验对比" class="headerlink" title="顺序,并行流,CompletableFuture及CompletableFuture+Executor模式的实验对比"></a>顺序,并行流,CompletableFuture及CompletableFuture+Executor模式的实验对比</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> List&lt;Shop&gt; shops = Arrays.asList(<span class="keyword">new</span> Shop(<span class="string">"BestPrice"</span>),</div><div class="line">            <span class="keyword">new</span> Shop(<span class="string">"LetSaveBig"</span>),</div><div class="line">            <span class="keyword">new</span> Shop(<span class="string">"MyFavoriteShop"</span>),</div><div class="line">            <span class="keyword">new</span> Shop(<span class="string">"BuyItAll"</span>));</div><div class="line">            </div><div class="line"><span class="keyword">static</span> Executor executor = Executors.newFixedThreadPool(Math.min(shops.size(), <span class="number">100</span>), <span class="keyword">new</span> ThreadFactory() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> Thread <span class="title">newThread</span><span class="params">(Runnable r)</span> </span>&#123;</div><div class="line">            Thread t = <span class="keyword">new</span> Thread(r);</div><div class="line">            t.setDaemon(<span class="keyword">true</span>);</div><div class="line">            <span class="keyword">return</span> t;</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">            </div><div class="line"><span class="comment">//顺序执行</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;String&gt; <span class="title">findPrices</span><span class="params">(String product)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> shops.stream()</div><div class="line">                .map(shop -&gt; String.format(<span class="string">"%s price is %.2f"</span>,</div><div class="line">                        shop.getName(), shop.getPrice(product)))</div><div class="line">                .collect(Collectors.toList());</div><div class="line">    &#125;</div><div class="line">    </div><div class="line"><span class="comment">//并行流</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;String&gt; <span class="title">findPricesParallel</span><span class="params">(String product)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> shops.parallelStream()</div><div class="line">                .map(shop -&gt; String.format(<span class="string">"%s price is %.2f"</span>,</div><div class="line">                        shop.getName(), shop.getPrice(product)))</div><div class="line">                .collect(Collectors.toList());</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="comment">//CompletableFuture</span></div><div class="line"><span class="comment">//默认使用相同的线程池，线程数固定，为Runtime.getRuntime().avaliableProcessors();</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;String&gt; <span class="title">findPricesAsync</span><span class="params">(String product)</span> </span>&#123;</div><div class="line">        List&lt;CompletableFuture&lt;String&gt;&gt; priceFutures =</div><div class="line">                shops.stream()</div><div class="line">                .map(shop -&gt; CompletableFuture.supplyAsync(</div><div class="line">                        () -&gt; shop.getName() + <span class="string">" price is "</span> +</div><div class="line">                                shop.getPrice(product)</div><div class="line">                )).collect(Collectors.toList());</div><div class="line">        <span class="keyword">return</span> priceFutures.stream()</div><div class="line">                .map(CompletableFuture::join)</div><div class="line">                .collect(Collectors.toList());</div><div class="line">    &#125;</div><div class="line">    </div><div class="line"><span class="comment">//CompetableFuture + Executor</span></div><div class="line"><span class="comment">//自定义线程池的大小</span></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;String&gt; <span class="title">findPricesAsync</span><span class="params">(String product)</span> </span>&#123;</div><div class="line"></div><div class="line">        List&lt;CompletableFuture&lt;String&gt;&gt; priceFutures =</div><div class="line">                shops.stream()</div><div class="line">                .map(shop -&gt; CompletableFuture.supplyAsync(</div><div class="line">                        () -&gt; shop.getName() + <span class="string">" price is "</span> +</div><div class="line">                                shop.getPrice(product),</div><div class="line">                        executor </div><div class="line">                )).collect(Collectors.toList());</div><div class="line">        <span class="keyword">return</span> priceFutures.stream()</div><div class="line">                .map(CompletableFuture::join)</div><div class="line">                .collect(Collectors.toList());</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>结果如下：</p>
+<table>
+<thead>
+<tr>
+<th>执行方式</th>
+<th>时间消耗</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>顺序执行</td>
+<td>4120 msecs</td>
+</tr>
+<tr>
+<td>并行流</td>
+<td>1128 msecs</td>
+</tr>
+<tr>
+<td>Completefuture</td>
+<td>2091 msecs</td>
+</tr>
+<tr>
+<td>Completefuture + Executor</td>
+<td>1095 msecs</td>
+</tr>
+</tbody>
+</table>
+<p>上面的自定义Executor中，根据最佳线程池大小计算公式：</p>
+<p><strong>Nt = Ncpu <em> Ucpu </em> (1 + W/C)</strong></p>
+<p>其中，Nt为线程池大小，Ncpu为CPU内核数目，Ucpu指CPU利用率（介于0-1之间），W/C为等待时间与计算时间的比率。</p>
+<p>其中，W/C为100（因为99%的时间都在等待商店的响应），要使CPU利用率达到100%，本机器为4核CPU，则线程池大小应该计算出来应该为400。但是，我们应当在实际的任务和最高线程数中选取较小的那个值，避免线程浪费。</p>
+<h4 id="多个异步任务"><a href="#多个异步任务" class="headerlink" title="多个异步任务"></a>多个异步任务</h4><p>文中在多个任务的处理中，比较了简单的顺序流方式和异步方式两种执行方式的时间消耗：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//简单方式</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;String&gt; <span class="title">findPrices1</span><span class="params">(String product)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> shops.stream()</div><div class="line">                .map(shop -&gt; shop.getPrice(product))</div><div class="line">                .map(Quote::parse)</div><div class="line">                .map(Discount::applayDiscount)</div><div class="line">                .collect(Collectors.toList());</div><div class="line">    &#125;</div><div class="line"> </div><div class="line"><span class="comment">//异步方式</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;String&gt; <span class="title">findPrices2</span><span class="params">(String product)</span> </span>&#123;</div><div class="line">        List&lt;CompletableFuture&lt;String&gt;&gt; priceFuture = shops.stream()</div><div class="line">                .map(shop -&gt; CompletableFuture.supplyAsync(() -&gt; shop.getPrice(product), executor))</div><div class="line">                .map(future -&gt; future.thenApply(Quote::parse))</div><div class="line">                .map(future -&gt; future.thenCompose(quote -&gt; CompletableFuture.supplyAsync(() -&gt; Discount.applayDiscount(quote), executor)))</div><div class="line">                .collect(Collectors.toList());</div><div class="line"></div><div class="line">        <span class="keyword">return</span> priceFuture.stream()</div><div class="line">                .map(CompletableFuture::join)</div><div class="line">                .collect(Collectors.toList());</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>其执行时间如下：<br>| 执行方式 | 时间消耗 |<br>|—|—|<br>| 简单方式 |8141 msecs|<br>| 异步方式 |2132 msecs|</p>
+<p>可以看到，异步方式明显进行快于简单方式，要注意的是异步方式中的几个方法：</p>
+<ul>
+<li><p><strong>thenApply()</strong> : 同步处理，这里对字符串的解析，没有进行IO操作，可以第一时间完成，所以直接使用同步处理的方式</p>
+</li>
+<li><p><strong>thenCompose()</strong> : <strong>将两个异步操作进行流水线</strong>， 第一个异步操作完成时，将其返回值作为第二个异步操作的传入参数。</p>
+</li>
+</ul>
+<h4 id="合并两个独立的CompletableFuture"><a href="#合并两个独立的CompletableFuture" class="headerlink" title="合并两个独立的CompletableFuture"></a>合并两个独立的CompletableFuture</h4><p>为什么要合并两个独立的CompletableFuture呢？比如两个完全不相关的异步任务，但是我们要用到这两个任务的返回值进行计算，则可以将这两个CompletableFuture合并为一个CompletableFuture：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Future&lt;Double&gt; futurePriceInUSD =</div><div class="line">        CompletableFuture.supplyAsync(() -&gt; shop.getPrice(product))</div><div class="line">        .thenCombine(CompletableFuture.supplyAsync(() -&gt; exchangeService.getRate(Money.ERU, Money.USD)),</div><div class="line">                (price, rate) -&gt; price * rate</div><div class="line">        );</div></pre></td></tr></table></figure>
+<p>其中，第一个future获得商品价格，第二个future获得汇率，其中：</p>
+<ul>
+<li><strong>thenCombine()</strong> : 合并future，其方式为 <code>future1.thenCombine(future2, combineMethod())</code>, 第二个参数为具体的合并策略，为一个BiFunction。</li>
+</ul>
+<h4 id="响应式CompletableFuture"><a href="#响应式CompletableFuture" class="headerlink" title="响应式CompletableFuture"></a>响应式CompletableFuture</h4><p>前面的findPrice都是在取得所有商品的价格后才显示，而由于各个远程商店服务的请求时间不一，更好的一种方法是获得了某个商店的价格，就立即显示该商店的价格：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">randomDelay</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> delay = <span class="number">500</span> + random.nextInt(<span class="number">2000</span>);</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Thread.sleep(delay);</div><div class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> Stream&lt;CompletableFuture&lt;String&gt;&gt; findPricessStream(String product) &#123;</div><div class="line">        <span class="keyword">return</span> shops.stream()</div><div class="line">                .map(shop -&gt; CompletableFuture.supplyAsync(</div><div class="line">                        () -&gt; shop.getPrice(product), executor))</div><div class="line">                .map(future -&gt; future.thenApply(Quote::parse))</div><div class="line">                .map(future -&gt; future.thenCompose(quote -&gt;</div><div class="line">                    CompletableFuture.supplyAsync(() -&gt; Discount.applayDiscount(quote), executor)</div><div class="line">                ));</div><div class="line"></div><div class="line">    &#125;</div><div class="line">    </div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">long</span> start = System.nanoTime();</div><div class="line">        CompletableFuture[] futures = (CompletableFuture[]) findPricessStream(<span class="string">"myPhone27s"</span>)</div><div class="line">                .map(f -&gt; f.thenAccept(s -&gt; System.out.println(s + <span class="string">"(Done in "</span> + ((System.nanoTime() - start) / <span class="number">1000000</span>) + <span class="string">" msecs)"</span>)))</div><div class="line">                .toArray(size -&gt; <span class="keyword">new</span> CompletableFuture[size]);</div><div class="line">        CompletableFuture.allOf(futures).join();</div><div class="line"><span class="comment">//        CompletableFuture.anyOf(futures).join();</span></div><div class="line">        System.out.println(<span class="string">"All shops have now responsed in "</span> + ((System.nanoTime() - start) / <span class="number">1000000</span>) + <span class="string">" msecs"</span>);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>首先，使用randomDelay()来模拟不同商店的服务响应时间的不同，然后构建Stream<completablefuture<string>&gt; 流并执行，运行时，可以看到结果会一条条显示，其中</completablefuture<string></p>
+<ul>
+<li><strong>thenAccept()</strong> ： 在每个CompleteFuture上注册一个操作，该操作会使用future执行后的返回值，并返回一个CompletableFuture<void></void></li>
+<li><strong>allOf()</strong> : 等待future数组中所有的future完成。</li>
+<li><strong>anyOf()</strong> : 当future数组中有一个future完成，则结束。</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/WeChatQR.jpeg" alt="Xiaolei Peng WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/uploads/AliPayQR.jpeg" alt="Xiaolei Peng Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Xiaolei Peng
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://pengxiaolei.com/2018/05/28/20180528-java-completablefuture/" title="《Java8实战》笔记-CompletableFuture的使用">https://pengxiaolei.com/2018/05/28/20180528-java-completablefuture/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/CompletableFuture/" rel="tag"># CompletableFuture</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/16/20180516-java-optional/" rel="next" title="Java8之Optional的使用">
+                <i class="fa fa-chevron-left"></i> Java8之Optional的使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="SOHUCS"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="Xiaolei Peng" />
+          <p class="site-author-name" itemprop="name">Xiaolei Peng</p>
+           
+              <p class="site-description motion-element" itemprop="description">程序员</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/bazingagain" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-link"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://qinjiangbo.com" title="心灵港" target="_blank">心灵港</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是CompletableFuture"><span class="nav-number">1.</span> <span class="nav-text">什么是CompletableFuture?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么场景下使用CompletableFuture？"><span class="nav-number">2.</span> <span class="nav-text">什么场景下使用CompletableFuture？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用CompletableFuture"><span class="nav-number">3.</span> <span class="nav-text">使用CompletableFuture</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#模拟远程服务"><span class="nav-number">3.1.</span> <span class="nav-text">模拟远程服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用CompletableFuture建立异步任务"><span class="nav-number">3.2.</span> <span class="nav-text">使用CompletableFuture建立异步任务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#顺序-并行流-CompletableFuture及CompletableFuture-Executor模式的实验对比"><span class="nav-number">3.3.</span> <span class="nav-text">顺序,并行流,CompletableFuture及CompletableFuture+Executor模式的实验对比</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多个异步任务"><span class="nav-number">3.4.</span> <span class="nav-text">多个异步任务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#合并两个独立的CompletableFuture"><span class="nav-number">3.5.</span> <span class="nav-text">合并两个独立的CompletableFuture</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#响应式CompletableFuture"><span class="nav-number">3.6.</span> <span class="nav-text">响应式CompletableFuture</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiaolei Peng</span>
+</div>
+
+
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?fb461a34697287073d7b084456ec83ec";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问用户
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>访问次数
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cytyQOTCu';
+      var conf = '37484ac6bcb9322a508a48d4bf4c878f';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("6S5WEDrPUzaDfarHnmz74io3-gzGzoHsz", "AFVYQDlsS5XFsBQ3MguKRj4R");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+  
+  
+
+
+  
+
+</body>
+</html>
