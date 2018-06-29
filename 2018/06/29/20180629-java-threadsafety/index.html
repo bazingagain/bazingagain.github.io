@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Java,JVM," />
+  <meta name="keywords" content="Java," />
 
 
 
@@ -93,18 +93,18 @@
 
 
 
-<meta name="description" content="1.什么是Java中的“垃圾对象”？ 垃圾回收，首先我们得明白什么是Java中的“垃圾”。那些用完的对象，不再使用的常量，不再使用的类等等，都是Java中应该回收的“垃圾” 2.这些“垃圾对象”存放在哪里呢？回收它，首先要知道的是这些Garbage存放在哪里呢？ Java虚拟机分为很多区，如方法栈、Java堆、方法区等。随着程序运行，不用的对象、常量、类等就变成了Garbage，占用着宝贵的内存。">
-<meta name="keywords" content="Java,JVM">
+<meta name="description" content="多线程并发已经是应用开发中常见的需求，而在多线程并发中，保证数据的并发安全性是一个非常重要的技术点，Java针对不同的场景，提供了多种保持线程安全的方法。  原子性在Java中一般使用AtomicLong, AtomicReference等原子变量类型进行变量的原子操作，已保证在多线程环境中，变量的安全：例如： 12345678910111213public class CountingFacto">
+<meta name="keywords" content="Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java垃圾回收机制">
-<meta property="og:url" content="https://pengxiaolei.com/2017/09/09/java-garbage-collection/index.html">
+<meta property="og:title" content="Java中的线程安全性">
+<meta property="og:url" content="https://pengxiaolei.com/2018/06/29/20180629-java-threadsafety/index.html">
 <meta property="og:site_name" content="bazingagain">
-<meta property="og:description" content="1.什么是Java中的“垃圾对象”？ 垃圾回收，首先我们得明白什么是Java中的“垃圾”。那些用完的对象，不再使用的常量，不再使用的类等等，都是Java中应该回收的“垃圾” 2.这些“垃圾对象”存放在哪里呢？回收它，首先要知道的是这些Garbage存放在哪里呢？ Java虚拟机分为很多区，如方法栈、Java堆、方法区等。随着程序运行，不用的对象、常量、类等就变成了Garbage，占用着宝贵的内存。">
+<meta property="og:description" content="多线程并发已经是应用开发中常见的需求，而在多线程并发中，保证数据的并发安全性是一个非常重要的技术点，Java针对不同的场景，提供了多种保持线程安全的方法。  原子性在Java中一般使用AtomicLong, AtomicReference等原子变量类型进行变量的原子操作，已保证在多线程环境中，变量的安全：例如： 12345678910111213public class CountingFacto">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-07T12:52:58.000Z">
+<meta property="og:updated_time" content="2018-06-29T03:52:57.219Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java垃圾回收机制">
-<meta name="twitter:description" content="1.什么是Java中的“垃圾对象”？ 垃圾回收，首先我们得明白什么是Java中的“垃圾”。那些用完的对象，不再使用的常量，不再使用的类等等，都是Java中应该回收的“垃圾” 2.这些“垃圾对象”存放在哪里呢？回收它，首先要知道的是这些Garbage存放在哪里呢？ Java虚拟机分为很多区，如方法栈、Java堆、方法区等。随着程序运行，不用的对象、常量、类等就变成了Garbage，占用着宝贵的内存。">
+<meta name="twitter:title" content="Java中的线程安全性">
+<meta name="twitter:description" content="多线程并发已经是应用开发中常见的需求，而在多线程并发中，保证数据的并发安全性是一个非常重要的技术点，Java针对不同的场景，提供了多种保持线程安全的方法。  原子性在Java中一般使用AtomicLong, AtomicReference等原子变量类型进行变量的原子操作，已保证在多线程环境中，变量的安全：例如： 12345678910111213public class CountingFacto">
 
 
 
@@ -132,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="https://pengxiaolei.com/2017/09/09/java-garbage-collection/"/>
+  <link rel="canonical" href="https://pengxiaolei.com/2018/06/29/20180629-java-threadsafety/"/>
 
 
 
 
 
-  <title> Java垃圾回收机制 | bazingagain </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> Java中的线程安全性 | bazingagain </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -306,7 +306,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://pengxiaolei.com/2017/09/09/java-garbage-collection/">
+    <link itemprop="mainEntityOfPage" href="https://pengxiaolei.com/2018/06/29/20180629-java-threadsafety/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Xiaolei Peng">
@@ -327,7 +327,7 @@
             
             
               
-                Java垃圾回收机制
+                Java中的线程安全性
               
             
           </h1>
@@ -342,8 +342,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-09T16:26:14+08:00">
-                2017-09-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-29T11:51:14+08:00">
+                2018-06-29
               </time>
             
 
@@ -384,8 +384,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/2017/09/09/java-garbage-collection/#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/09/09/java-garbage-collection/" itemprop="commentsCount"></span>
+                <a href="/2018/06/29/20180629-java-threadsafety/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2018/06/29/20180629-java-threadsafety/" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -393,7 +393,7 @@
 
           
           
-             <span id="/2017/09/09/java-garbage-collection/" class="leancloud_visitors" data-flag-title="Java垃圾回收机制">
+             <span id="/2018/06/29/20180629-java-threadsafety/" class="leancloud_visitors" data-flag-title="Java中的线程安全性">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -422,7 +422,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  2,247
+                  669
                 </span>
               
 
@@ -438,7 +438,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  8
+                  3
                 </span>
               
             </div>
@@ -457,71 +457,27 @@
       
 
       
-        <h2 id="1-什么是Java中的“垃圾对象”？"><a href="#1-什么是Java中的“垃圾对象”？" class="headerlink" title="1.什么是Java中的“垃圾对象”？"></a>1.什么是Java中的“垃圾对象”？</h2><p> 垃圾回收，首先我们得明白什么是Java中的“垃圾”。那些用完的对象，不再使用的常量，不再使用的类等等，都是Java中应该回收的“垃圾”</p>
-<h2 id="2-这些“垃圾对象”存放在哪里呢？"><a href="#2-这些“垃圾对象”存放在哪里呢？" class="headerlink" title="2.这些“垃圾对象”存放在哪里呢？"></a>2.这些“垃圾对象”存放在哪里呢？</h2><p>回收它，首先要知道的是这些Garbage存放在哪里呢？</p>
-<p>Java虚拟机分为很多区，如方法栈、Java堆、方法区等。随着程序运行，不用的对象、常量、类等就变成了Garbage，占用着宝贵的内存。</p>
-<h2 id="3-怎样判断它是不是“垃圾”？"><a href="#3-怎样判断它是不是“垃圾”？" class="headerlink" title="3.怎样判断它是不是“垃圾”？"></a>3.怎样判断它是不是“垃圾”？</h2><p>我们知道了Garbage存放在哪里，下一步便是判断哪些对象是垃圾，哪些不是，我们不能误删有用对象是吧。</p>
-<p>判断是否是垃圾对象，有两种方法：</p>
-<p>1.引用计数法</p>
-<p>在Java中，我们都是通过引用来找到对象的，引用计数法的原理就是，<strong>对象中添加一个引用计数器</strong>，每当一个引用指向我这个对象，我这个对象的引用计数器就加1，当没有引用指向这个对象时，引用计数器的值就为0，那它就是“垃圾”对象了。是不是很简单，但它的缺点是，两个对象相互引用（循环引用），则垃圾对象就无法被回收</p>
-<p>2.可达性分析</p>
-<p> 可达性分析指通过一系列的<strong>“GC root”</strong>的对象来作为查找的起点，从这些点往下搜，当对象能被搜到时，从“GC root”到该对象的搜索路径便是一条<strong>“引用链”</strong>，而当一个对象无法从“GC root”向下搜到时（即没有任何引用链），说明该对象不可达，标记为“垃圾”对象。</p>
-<p>GC root对象包括：</p>
-<ul>
-<li>虚拟机栈中的引用的对象</li>
-<li>方法区中类静态变量(static)引用的对象 </li>
-<li>方法区中常量(static final)引用的对象 </li>
-<li>本地方法栈JNI(Native 方法)中引用的对象</li>
-</ul>
-<h2 id="4-该回收“垃圾了”，采用什么垃圾收集算法呢？"><a href="#4-该回收“垃圾了”，采用什么垃圾收集算法呢？" class="headerlink" title="4.该回收“垃圾了”，采用什么垃圾收集算法呢？"></a>4.该回收“垃圾了”，采用什么垃圾收集算法呢？</h2><p>Java虚拟机中常用的垃圾收集算法有以下几种：</p>
-<ul>
-<li><strong>标记-清除法（Mark-Sweep）</strong></li>
-</ul>
-<p>看名字就知道，该算法分为“标记”、“清除”两个阶段，首先标记处所有需要清除的对象，然后统一回收。这种算法会产生大量非连续的内存碎片，而当分配大对象找不到足够的连续内存时，则会触发另一次垃圾回收。</p>
-<ul>
-<li><strong>复制算法（Copying）</strong></li>
-</ul>
-<p>复制算法将内存分为许多容量大小相等的两块，每次只使用其中一块，当一块内存用完时，就讲该块中存活的对象复制到另一块中去，然后将将该块一次性清理。优点是不用考虑内存碎片问题（可移动堆顶指针按需分配），缺点是将内存缩小了一半，代价太高。</p>
-<ul>
-<li><strong>标记-整理法（Mark-Compact）</strong></li>
-</ul>
-<p>标记整理法的“标记”阶段和标记清除法一样，但是后面的阶段中，标记整理法则是将所有存活的对象移向一边，然后清理掉边界以外的内存。</p>
-<ul>
-<li><strong>分代收集算法（Generational Collection）</strong></li>
-</ul>
-<p>Java堆分为新生代和老年代，不同的代，对象的生存周期不同，因此不同的代应该采用不同的回收算法，这样能提高回收的效率，新生代中对象大量生成大量死去，只有少量存活，选用“复制”算法比较好；老年代中对象存活时间长，必须采用“标记-清除”或“标记-整理”算法。</p>
-<h2 id="5-什么时候回收？"><a href="#5-什么时候回收？" class="headerlink" title="5.什么时候回收？"></a>5.什么时候回收？</h2><p>在分析回收对象的引用过程中，如果程序仍在运行，则引用关系一直在变，如果开始一个对象标记为可回收，然后执行GC，在执行GC过程中，假如又有引用指向了这个对象，则之后GC回收掉了“非垃圾”对象，这就产生了“不一致”现象，所有在GC的时候，必须停止所有的Java执行线程。</p>
-<p>在选择GC的时间间隔时，既不能太长（可用内存减少），也不能太短（频繁GC，会增大运行负荷），所以，选择合适的时间点来GC，是非常重要的。而这些GC执行点便称为<strong>“安全点”（SafePoint）</strong>，只有程序运行到“安全点”时，系统才能GC。</p>
-<p>“安全点”似乎解决了什么时候回收的问题，但我们仔细想一想，那些阻塞的线程呢？它们得不到CPU时间，不能进入“安全点”，怎么办？这时，就需要<strong>“安全区域”（SafeRegion）</strong>来解决，“安全区域”指一段代码中，引用关系不会发生变化，在这段区域GC都是安全的。当线程执行到<code>Safe Region</code>时，线程标识自己在SafeRegion中，此时GC，则不用管该线程是否阻塞，而当线程要离开<code>SafeRegion</code>时，则系统要检查GC是否完成，如果完成则线程继续执行，如果没有，则必须等到可离开SafeRegion信号（如完成GC Root枚举）才能离开。</p>
-<h2 id="6-选用什么样的垃圾收集器？"><a href="#6-选用什么样的垃圾收集器？" class="headerlink" title="6.选用什么样的垃圾收集器？"></a>6.选用什么样的垃圾收集器？</h2><p>这么多“垃圾”，我该怎么回收啊？就像真实的垃圾场样，一台运输机搬运，搬到猴年马月啊，我们多弄几台运输机办与，垃圾一下子就搬完了。这就像Java的垃圾回收器一样，一台运输机搬运，对应的便是单线程的收集器，许多台运输机搬运，对应的便是多线程的收集器。那你就会想，肯定用多线程的呀，一下子就搬完了，还要单线程干嘛？</p>
-<p>确实，单线程的收集器Serial是Java比较老的垃圾收集器了，它的单线程并不仅指用一个线程去收集，而在于它在回收垃圾时，其它工作线程必须停止。想想，如果你妈在扫垃圾，她一边扫，你一边丢，这打扫的完吗！</p>
-<p>所以，经过长时间的发展，现在的收集器已经有很多了，不同的垃圾收集器适合不同的处理情况，配合使用则能提高Java内存回收的效率。</p>
-<p>集中常见的垃圾收集器：</p>
-<ul>
-<li>Serial——单线程、新生代收集器</li>
-<li>ParNew——多线程、新生代收集器</li>
-<li>Parallel Scanvenge——多线程、新生代收集器、（吞吐量可控，即GC时间与用户时间的占比）、自适应调节（自动调节吞吐量）</li>
-<li>Serial Old——单线程、老年代</li>
-<li>Parallel Old——多线程、老年代</li>
-<li>CMS——以获取最短回收停顿时间为目标，步骤：(1)初始标记（2）并发标记（3）重新标记（4）并发清除</li>
-<li>G1——以获取最短回收停顿时间为目标，将Java堆划分为Region，记录Region的垃圾回收价值大小，优先回收价值较大者</li>
-</ul>
-<h2 id="7-Java堆中的内存分配和回收策略"><a href="#7-Java堆中的内存分配和回收策略" class="headerlink" title="7.Java堆中的内存分配和回收策略"></a>7.Java堆中的内存分配和回收策略</h2><p>我们要回收“垃圾”，肯定得先分配对象，使用完了才成为“垃圾”是吧。</p>
-<ol>
-<li><p><strong>一般，对象在Eden区中分配，当Eden区空间不足时，就会触发Minor GC。</strong></p>
-</li>
-<li><p><strong>大对象（需大量连续内存的Java对象）直接进入老年代。</strong></p>
-</li>
-<li><p><strong>长期存活的对象将进入老年代（对象有一个Age计数器，若对象在Eden出生，则第一次Minor GC后仍存活，并能被Survivor容纳的话，则移至Survivor区，对象Age设为1，对象在Survivor区中每过一次Minor GC，年龄加1，当Age达到一定程度[默认15–可设置]，就移至老年代），老年代的回收则是Full GC。</strong></p>
-</li>
-<li><p><strong>如果Survivor空间中的相同年龄的所有对象大小总和大于Survivor空间的一半，年龄大于或等于该年龄的对象则直接进入老年代。</strong></p>
-</li>
-</ol>
-<h2 id="8-finalize-方法"><a href="#8-finalize-方法" class="headerlink" title="8.finalize()方法"></a>8.finalize()方法</h2><p>在Java中，一个对象要被真正回收，至少要经过两次标记过程：第一次可达性分析中，无引用链相连，则标记并进行筛选，筛选的条件是是否有必要执行<code>finalize()</code>方法，当对象没有覆<code>1finalize()</code>方法，或<code>finalize()</code>方法已被虚拟机执行，则都是为“没有必要执行”（即直接回收）。</p>
-<p>如果该对象有必要执行<code>finalize()</code>方法，则该对象会放置在一个<strong><em>F-Queue队</em></strong>列中，之后虚拟机会自动建立一个低优先级的Finalizer线程去触发（执行）<code>finalize()</code>方法，之后，GC会对F-Queue进行第二次标记。</p>
-<p>要注意的是：</p>
-<p>任何一个对象的<code>finalize()</code>方法都只会被系统调用一次。如果对象在第一次<code>finalize()</code>方法中“逃脱”了，该对象在第二次GC时，它的<code>finalize()</code>方法不会执行，将被立即回收。</p>
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://book.douban.com/subject/24722612/" target="_blank" rel="external">1.《深入理解Java虚拟机》</a></p>
+        <p>多线程并发已经是应用开发中常见的需求，而在多线程并发中，保证数据的并发安全性是一个非常重要的技术点，Java针对不同的场景，提供了多种保持线程安全的方法。</p>
+<hr>
+<h4 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h4><p>在Java中一般使用<code>AtomicLong, AtomicReference</code>等原子变量类型进行变量的原子操作，已保证在多线程环境中，变量的安全：<br>例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CountingFactorizer</span> <span class="keyword">implements</span> <span class="title">Servlet</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AtomicLong count = <span class="keyword">new</span> AtomicLong(<span class="number">0</span>);</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> count.get();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(ServletRequest req, ServletResponse resp)</span> </span>&#123;</div><div class="line">        ...</div><div class="line">        count.incrementAndGet();</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在计算请求次数时，在Servlet是多线程的环境下，count要使用AtomicLong进行原子更新，传统的long count; count++ 在多线程的环境下，会导致变量失效。</p>
+<hr>
+<h4 id="锁机制"><a href="#锁机制" class="headerlink" title="锁机制"></a>锁机制</h4><p><strong>synchronized</strong></p>
+<p>synchronized是Java中保证线程安全最为常用的方式，synchronized以对象作为锁，其使用方式有如下几种：</p>
+<p>1.使用类的实例作为锁</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//同步方法</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</div><div class="line">...</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//同步代码块</span></div><div class="line">sychronized(<span class="keyword">this</span>) &#123;</div><div class="line">...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2.使用类的class实例作为锁</p>
+<p>Java中，每个类初始化后都有唯一一个Class实例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">doSomenthing</span><span class="params">()</span> </span>&#123;</div><div class="line">...</div><div class="line">&#125;</div><div class="line"></div><div class="line">synchrnoized(AClass.class) &#123;</div><div class="line">...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在使用synchronized时，需要注意的是，对于时间较长的计算或者网络I/O等，不要使用锁。</p>
+<hr>
+<h4 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h4><p>volatile变量能够确保将变量的更新操作通知到其它线程。<strong>声明为volatile的变量，编译器不会将该变量上的操作与其它内存操作一起进行重排序</strong>,另外，volatile变量比synchronized更轻量级，由于volatile变量只能保证可见性，而不能保证原子性，volatile适用的场景比较有限，当变量的写入操作不依赖变量的当前值，或者能确保只有单个线程更新变量时，才是正确的使用volatile的场合：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">volatile</span> <span class="keyword">boolean</span> asleep;</div><div class="line"></div><div class="line"><span class="keyword">while</span> (!asleep) &#123;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h4 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h4><p>ThreadLocal类能使线程中的某个值与保存值的对象联系起来，其提供了get与set方法，这些方法为每个使用该变量的线程都存有一份独立的副本，get总是返回当前线程在调用set时设置的最新值：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> ThreadLocal&lt;Connection&gt; connectionHolder = <span class="keyword">new</span> ThreadLocal&lt;Connection&gt;() &#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> Connection <span class="title">initalValue</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> DriverManager.getConnection(DB_URL);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> connectionHolder.get();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>一般，将ThreadLocal声明为全局变量使用（使用static），上面的例子中，每个线程都对应一个Connection对象，不同线程之间的Connection的操作不会影响到其它线程，其并不是进行了变量共享，而是进行了变量的线程内部化来解决线程安全的问题，这种方法在Spring中也有重要应用。</p>
 
       
     </div>
@@ -571,7 +527,7 @@
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://pengxiaolei.com/2017/09/09/java-garbage-collection/" title="Java垃圾回收机制">https://pengxiaolei.com/2017/09/09/java-garbage-collection/</a>
+      <a href="https://pengxiaolei.com/2018/06/29/20180629-java-threadsafety/" title="Java中的线程安全性">https://pengxiaolei.com/2018/06/29/20180629-java-threadsafety/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -589,8 +545,6 @@
           
             <a href="/tags/Java/" rel="tag"># Java</a>
           
-            <a href="/tags/JVM/" rel="tag"># JVM</a>
-          
         </div>
       
 
@@ -602,15 +556,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/06/02/20180602-spring-mongodb/" rel="next" title="Spring学习之集成MongoDB">
+                <i class="fa fa-chevron-left"></i> Spring学习之集成MongoDB
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/09/29/mybatis-first-md/" rel="prev" title="MyBatis学习第一篇 - Mybatis入门">
-                MyBatis学习第一篇 - Mybatis入门 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -766,7 +720,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-什么是Java中的“垃圾对象”？"><span class="nav-number">1.</span> <span class="nav-text">1.什么是Java中的“垃圾对象”？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-这些“垃圾对象”存放在哪里呢？"><span class="nav-number">2.</span> <span class="nav-text">2.这些“垃圾对象”存放在哪里呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-怎样判断它是不是“垃圾”？"><span class="nav-number">3.</span> <span class="nav-text">3.怎样判断它是不是“垃圾”？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-该回收“垃圾了”，采用什么垃圾收集算法呢？"><span class="nav-number">4.</span> <span class="nav-text">4.该回收“垃圾了”，采用什么垃圾收集算法呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-什么时候回收？"><span class="nav-number">5.</span> <span class="nav-text">5.什么时候回收？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-选用什么样的垃圾收集器？"><span class="nav-number">6.</span> <span class="nav-text">6.选用什么样的垃圾收集器？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-Java堆中的内存分配和回收策略"><span class="nav-number">7.</span> <span class="nav-text">7.Java堆中的内存分配和回收策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-finalize-方法"><span class="nav-number">8.</span> <span class="nav-text">8.finalize()方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">9.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#原子性"><span class="nav-number">1.</span> <span class="nav-text">原子性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#锁机制"><span class="nav-number">2.</span> <span class="nav-text">锁机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#volatile"><span class="nav-number">3.</span> <span class="nav-text">volatile</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ThreadLocal"><span class="nav-number">4.</span> <span class="nav-text">ThreadLocal</span></a></li></ol></div>
             
 
           </div>

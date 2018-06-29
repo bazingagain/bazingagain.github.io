@@ -4,8 +4,28 @@
 
     
   <url>
+    <loc>https://pengxiaolei.com/2018/06/29/20180629-java-threadsafety/</loc>
+    <lastmod>2018-06-29T03:52:57.219Z</lastmod>
+    <data>
+        <display>
+        <title>Java中的线程安全性</title>
+        <pubTime>2018-06-29T03:51:14.000Z</pubTime>
+        
+        <tag>Java</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="https://pengxiaolei.com/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://pengxiaolei.com/2018/06/02/20180602-spring-mongodb/</loc>
-    <lastmod>2018-06-02T15:01:00.387Z</lastmod>
+    <lastmod>2018-06-06T08:02:48.153Z</lastmod>
     <data>
         <display>
         <title>Spring学习之集成MongoDB</title>
