@@ -93,18 +93,18 @@
 
 
 
-<meta name="description" content="Shell在Unix/Linux中，是非常重要的一个技术点，在实际的应用过程中，我们常常需要和服务器打交道，而这些服务器大部分都是Linux服务器，掌握Shell的用法能够使我们快速地解决Linux环境下遇到的问题。">
+<meta name="description" content="Shell在Unix/Linux中，是非常重要的一个技术点，在实际的应用过程中，我们常常需要和服务器打交道，而这些服务器大部分都是Linux服务器，掌握Shell的用法能够使我们快速地解决Linux环境下遇到的问题。  如何执行Shell脚本？shell文件以 .sh 后缀名结尾，如 first_shell.sh, 执行该shell脚本一般使用如下命令： 123$ sh first_shell.s">
 <meta name="keywords" content="Shell">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Shell学习之入门篇">
 <meta property="og:url" content="https://pengxiaolei.com/2018/07/01/20180701-shell-initial/index.html">
 <meta property="og:site_name" content="bazingagain">
-<meta property="og:description" content="Shell在Unix/Linux中，是非常重要的一个技术点，在实际的应用过程中，我们常常需要和服务器打交道，而这些服务器大部分都是Linux服务器，掌握Shell的用法能够使我们快速地解决Linux环境下遇到的问题。">
+<meta property="og:description" content="Shell在Unix/Linux中，是非常重要的一个技术点，在实际的应用过程中，我们常常需要和服务器打交道，而这些服务器大部分都是Linux服务器，掌握Shell的用法能够使我们快速地解决Linux环境下遇到的问题。  如何执行Shell脚本？shell文件以 .sh 后缀名结尾，如 first_shell.sh, 执行该shell脚本一般使用如下命令： 123$ sh first_shell.s">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-01T15:53:23.223Z">
+<meta property="og:updated_time" content="2018-07-02T07:08:13.965Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Shell学习之入门篇">
-<meta name="twitter:description" content="Shell在Unix/Linux中，是非常重要的一个技术点，在实际的应用过程中，我们常常需要和服务器打交道，而这些服务器大部分都是Linux服务器，掌握Shell的用法能够使我们快速地解决Linux环境下遇到的问题。">
+<meta name="twitter:description" content="Shell在Unix/Linux中，是非常重要的一个技术点，在实际的应用过程中，我们常常需要和服务器打交道，而这些服务器大部分都是Linux服务器，掌握Shell的用法能够使我们快速地解决Linux环境下遇到的问题。  如何执行Shell脚本？shell文件以 .sh 后缀名结尾，如 first_shell.sh, 执行该shell脚本一般使用如下命令： 123$ sh first_shell.s">
 
 
 
@@ -422,7 +422,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  76
+                  1,288
                 </span>
               
 
@@ -438,7 +438,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  1
+                  5
                 </span>
               
             </div>
@@ -458,6 +458,80 @@
 
       
         <p>Shell在Unix/Linux中，是非常重要的一个技术点，在实际的应用过程中，我们常常需要和服务器打交道，而这些服务器大部分都是Linux服务器，掌握Shell的用法能够使我们快速地解决Linux环境下遇到的问题。</p>
+<hr>
+<h3 id="如何执行Shell脚本？"><a href="#如何执行Shell脚本？" class="headerlink" title="如何执行Shell脚本？"></a>如何执行Shell脚本？</h3><p>shell文件以 .sh 后缀名结尾，如 first_shell.sh, 执行该shell脚本一般使用如下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> sh first_shell.sh</div><div class="line"><span class="meta">$</span> ./first_shell.sh #shell脚本在当前目录下</div><div class="line"><span class="meta">$</span> /bin/bash first_shell.sh</div></pre></td></tr></table></figure>
+<hr>
+<h3 id="如何编写Shell脚本？"><a href="#如何编写Shell脚本？" class="headerlink" title="如何编写Shell脚本？"></a>如何编写Shell脚本？</h3><p>Shell如同一门编程语言一样，同样也有变量，函数，数组，输入输出，条件控制等一些基本特性，下面通过讲解这些基本特性来快速了解一个Shell脚本是怎么编写的。</p>
+<h4 id="Shell中的变量"><a href="#Shell中的变量" class="headerlink" title="Shell中的变量"></a>Shell中的变量</h4><p><strong>Shell中包含两种变量：普通变量和环境变量</strong></p>
+<ul>
+<li>普通变量</li>
+</ul>
+<p>其中，普通变量是shell脚本中最为常见的，普通变量的操作如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">var=value #要注意的是，Shell中的赋值操作的 “=“ 操作符两边不能有空格</div><div class="line">var="value1 vaule2" #包含空格的值需要使用引号</div><div class="line">echo $var</div><div class="line">echo $&#123;var&#125;</div><div class="line">echo "the var is $var"</div><div class="line">echo $&#123;#var&#125; #打印字符串的长度</div></pre></td></tr></table></figure>
+<ul>
+<li>环境变量</li>
+</ul>
+<p>环境变量是进程运行时，环境所自带的变量，其包含了一些重要的信息：</p>
+<p>查看某个进程的环境变量(以tomcat为例)：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> pgrep tomcat</div><div class="line">12345</div><div class="line"><span class="meta">$</span> cat /proc/12345/environ     #其中，12345为tomcat进程的PID</div></pre></td></tr></table></figure>
+<p>查看PTAH环境变量：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">echo $PATH</div><div class="line">export $PATH="$PATH:/home/user/bin" #添加一条新路径到PTAH并导出</div></pre></td></tr></table></figure>
+<p>其它环境变量：</p>
+<ul>
+<li>$SHELL  Shell的版本</li>
+<li>$UID 运行当前脚本的用户是否为root用户，如果是则为0</li>
+</ul>
+<h4 id="Shell中的函数"><a href="#Shell中的函数" class="headerlink" title="Shell中的函数"></a>Shell中的函数</h4><p>Shell中定义函数有如下两种方式：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">function fname()</div><div class="line">&#123;</div><div class="line">&#125;</div><div class="line"></div><div class="line">fname()</div><div class="line">&#123;</div><div class="line">&#125;</div><div class="line"></div><div class="line">fname(); #执行函数</div></pre></td></tr></table></figure>
+<p>当想向函数中传参时，可以这样定义：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">fname()</div><div class="line">&#123;</div><div class="line">	echo $1, $2; #输出参数1和参数2</div><div class="line">	echo "$@"; #以列表方式打印所有函数</div><div class="line">	echo "$*"; #参数作为一个实体（即作为一个字符串）进行输出</div><div class="line">	reurn 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>读取命令或者函数的返回值(退出状态)，命令成功退出，$? 为0， 否则为非0：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cmd;</div><div class="line">echo $?</div></pre></td></tr></table></figure>
+<h4 id="Shell中的数组"><a href="#Shell中的数组" class="headerlink" title="Shell中的数组"></a>Shell中的数组</h4><p>Shell中的数组有两种，普通数组和关联数组，其中普通数组定义如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">array_var=(1 2 3 4 5)</div><div class="line">array_var[3]="test"</div><div class="line">echo $&#123;array_var[0]&#125;</div></pre></td></tr></table></figure>
+<p>关联数组定义如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">declare -a ass_array #首先将ass_array声明为一个关联数组</div><div class="line">ass_array=([index1]='var1' [index2]='var2')</div></pre></td></tr></table></figure>
+<p>对数组的一些主要操作：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#</span>打印数组长度</div><div class="line">echo $&#123;#array_var[*]&#125;</div><div class="line"></div><div class="line"><span class="meta">#</span>打印出数组中所有元素</div><div class="line">echo $&#123;array_var[*]&#125;</div><div class="line">echo $&#123;array_var[@]&#125;</div><div class="line"></div><div class="line"><span class="meta">#</span>列出数组的索引列表</div><div class="line">echo $&#123;!array_var[*]&#125;</div><div class="line">echo $&#123;!array_var[@]&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h4 id="Shell中的读入与输出"><a href="#Shell中的读入与输出" class="headerlink" title="Shell中的读入与输出"></a>Shell中的读入与输出</h4><p>Shell中，输入的方式有多种，从键盘输入，从stdin输入，将命令的输出作为输入等。例如：</p>
+<blockquote>
+<p>从键盘输入：</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">read -n number_of_chars variable_name #读取n个字符存入变量</div><div class="line"></div><div class="line">read -n 2 var</div><div class="line">echo $var</div><div class="line"></div><div class="line">read -s var #不回显的方式读取密码</div><div class="line">read -p "Enter input:" var #显示提示信息</div><div class="line">read -t timeout var #在特定时间内读取输入（timeout单位为秒）</div><div class="line">read -d ":" var #用界定符:结束输入行</div></pre></td></tr></table></figure>
+<blockquote>
+<p>将命令的输出作为输入：</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ls | cat -n &gt; out.txt # cat -n在ls输出的内容上加上行号，将输出重定向到out.txt</div></pre></td></tr></table></figure>
+<p>输出的方式也有多种：</p>
+<blockquote>
+<p>最常见的控制台输出可以使用echo和printf：</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">echo "hello world"</div><div class="line">echo 'Hello world'</div><div class="line">echo "$var"</div><div class="line">echo $var</div><div class="line">echo -n "aaa\n" #忽略尾部的换行符</div><div class="line"></div><div class="line">printf "Hello world\n"</div><div class="line"><span class="meta">#</span>格式化输出，其中-表示左对齐，-5s表示格式为左对齐且宽度为5的字符串</div><div class="line">printf "%-5s %-10s %-4.2f\n" 1 sam 90.8967</div></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>输出到文件</strong>，Shell中使用重定向，可以将数据输出到文件中, 在了解重定向之前，要知道的是，在Linux中，0、1、2分别表示stdin、stdout、stderr三个文件描述符：</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">echo "Hello World" &gt; temp.txt #以重写的方式将数据写入到temp.txt中</div><div class="line">echo "Hello World" &gt;&gt; temp.txt #以追加的方式写入到temp.txt中</div><div class="line"></div><div class="line">ls + 2&gt; stderr.txt  #将错误定向输出到stderr.txt中</div><div class="line">cmd 2&gt; stderr.txt 1&gt;stdout.txt #分别将错误和正确的输出重定向到stderr.txt和stdout.txt中</div><div class="line">cmd 2&gt;&amp;1 output.txt #将错误和正确的输出都重定向到一个文件中</div><div class="line">cmd &amp;&gt; output.txt #同上</div></pre></td></tr></table></figure>
+<h4 id="Shell中的逻辑控制语句"><a href="#Shell中的逻辑控制语句" class="headerlink" title="Shell中的逻辑控制语句"></a>Shell中的逻辑控制语句</h4><p><strong>1.比较</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">if [ $? -eq 0 ]; then  #特别要注意的是[后面必须要有空格，本质上[也是命令</div><div class="line">echo "$CMD execude successfully"</div><div class="line">else</div><div class="line">echo "$CMD terminated unsuccessfully"</div><div class="line">fi</div></pre></td></tr></table></figure>
+<p>其它方式：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[ condition ] &amp;&amp; action; #逻辑与，若condition为true，则执行action</div><div class="line">[ condition ] || action; #逻辑或，若condition为false，则执行action</div><div class="line"></div><div class="line"><span class="meta">[$</span>var -eq 0] or [$var2 -eq 0]</div><div class="line"></div><div class="line">-eq : 等于</div><div class="line">-ne : 不等于</div><div class="line">-gt : 大于</div><div class="line">-lt : 校园</div><div class="line">-ge : 大于或等于</div><div class="line">-le : 小于或等于</div></pre></td></tr></table></figure>
+<p>字符串比较：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[[ $str1 = $str2]]</div><div class="line">[[ $str1 == $str2]]</div><div class="line">[[ $str1 != $str2]]</div><div class="line">[[ $str1 &gt; $str2]]</div><div class="line">[[ -z $str1 ]] #如果字符串为空，则返回true</div><div class="line">[[ -n $str1 ]] #如果字符串返回非空，则返回true</div></pre></td></tr></table></figure>
+<p><strong>循环</strong></p>
+<blockquote>
+<p>for循环：</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">for i in &#123;a..z&#125;;</div><div class="line">do </div><div class="line">echo $i</div><div class="line">done</div><div class="line"></div><div class="line"></div><div class="line">data="name,sex,rollno,location"</div><div class="line">oldIFS=$IFS</div><div class="line">IFS=,</div><div class="line">for item in $data;</div><div class="line">do</div><div class="line">echo Item: $item</div><div class="line">done</div><div class="line">IFS=$oldIFS</div><div class="line"></div><div class="line"></div><div class="line">for ((i=0; i&lt;10; i++))</div><div class="line">&#123;</div><div class="line">    echo $i</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>until循环：</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">x=0;</div><div class="line">until [ $x -eq 9 ];</div><div class="line">do let x++; echo $x;</div><div class="line">done</div></pre></td></tr></table></figure>
+<blockquote>
+<p>while循环：</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">while conditon </div><div class="line">do</div><div class="line">commands;</div><div class="line">done</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -593,8 +667,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/avatar.jpg"
@@ -681,6 +764,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何执行Shell脚本？"><span class="nav-number">1.</span> <span class="nav-text">如何执行Shell脚本？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何编写Shell脚本？"><span class="nav-number">2.</span> <span class="nav-text">如何编写Shell脚本？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Shell中的变量"><span class="nav-number">2.1.</span> <span class="nav-text">Shell中的变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Shell中的函数"><span class="nav-number">2.2.</span> <span class="nav-text">Shell中的函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Shell中的数组"><span class="nav-number">2.3.</span> <span class="nav-text">Shell中的数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Shell中的读入与输出"><span class="nav-number">2.4.</span> <span class="nav-text">Shell中的读入与输出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Shell中的逻辑控制语句"><span class="nav-number">2.5.</span> <span class="nav-text">Shell中的逻辑控制语句</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
