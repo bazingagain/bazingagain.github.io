@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="思维模式," />
+  <meta name="keywords" content="Shell," />
 
 
 
@@ -93,22 +93,18 @@
 
 
 
-<meta name="description" content="序言在公文写作时，按照序言（前言、开场白、引言）中的“背景”和“冲突”，提出文章的中心思想和关键句要点，就可以使用疑问/回答的对话方式，在每一个关键句要点之下的层次上展开论述或说明。 这时，我们的思考已经进入到关键句层次的下一个层次，我定义为观点的思考和组织的层次。这一阶段主要分为应用逻辑顺序和概括各组思想。本文主要对应用逻辑顺序进行总结与梳理。  应用逻辑顺序金字塔原理规定：所用列入同一组的思想">
-<meta name="keywords" content="思维模式">
+<meta name="description" content="find命令是linux shell脚本下使用频率非常高的命令，其功能非常强大，对于我们在linux下对文件进行快速查找来说是一种非常高效的方式。  find的基本用法 打印当前文件下的所有文件和目录  12$ find . -print 		# 以&apos;\n&apos;作为定界符$ find . -print0		# 以&apos;\0&apos;作为定界符  按文件名匹配( -name)  12345find . -name">
+<meta name="keywords" content="Shell">
 <meta property="og:type" content="article">
-<meta property="og:title" content="金字塔原理-思考的逻辑-应用逻辑顺序">
-<meta property="og:url" content="https://pengxiaolei.com/2018/01/07/think-20180107/index.html">
+<meta property="og:title" content="Shell学习之find命令的使用">
+<meta property="og:url" content="https://pengxiaolei.com/2018/07/03/20180703-shell-find/index.html">
 <meta property="og:site_name" content="bazingagain">
-<meta property="og:description" content="序言在公文写作时，按照序言（前言、开场白、引言）中的“背景”和“冲突”，提出文章的中心思想和关键句要点，就可以使用疑问/回答的对话方式，在每一个关键句要点之下的层次上展开论述或说明。 这时，我们的思考已经进入到关键句层次的下一个层次，我定义为观点的思考和组织的层次。这一阶段主要分为应用逻辑顺序和概括各组思想。本文主要对应用逻辑顺序进行总结与梳理。  应用逻辑顺序金字塔原理规定：所用列入同一组的思想">
+<meta property="og:description" content="find命令是linux shell脚本下使用频率非常高的命令，其功能非常强大，对于我们在linux下对文件进行快速查找来说是一种非常高效的方式。  find的基本用法 打印当前文件下的所有文件和目录  12$ find . -print 		# 以&apos;\n&apos;作为定界符$ find . -print0		# 以&apos;\0&apos;作为定界符  按文件名匹配( -name)  12345find . -name">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://bazingagain.github.io/images/think/2018_01_07/jingzitaoyuanli_sikao_1.png">
-<meta property="og:image" content="https://bazingagain.github.io/images/think/2018_01_07/jingzitaoyuanli_sikao_2.png">
-<meta property="og:image" content="https://bazingagain.github.io/images/think/2018_01_07/jingzitaoyuanli_sikao_3.png">
-<meta property="og:updated_time" content="2018-01-07T13:22:21.053Z">
+<meta property="og:updated_time" content="2018-07-03T15:49:28.602Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="金字塔原理-思考的逻辑-应用逻辑顺序">
-<meta name="twitter:description" content="序言在公文写作时，按照序言（前言、开场白、引言）中的“背景”和“冲突”，提出文章的中心思想和关键句要点，就可以使用疑问/回答的对话方式，在每一个关键句要点之下的层次上展开论述或说明。 这时，我们的思考已经进入到关键句层次的下一个层次，我定义为观点的思考和组织的层次。这一阶段主要分为应用逻辑顺序和概括各组思想。本文主要对应用逻辑顺序进行总结与梳理。  应用逻辑顺序金字塔原理规定：所用列入同一组的思想">
-<meta name="twitter:image" content="https://bazingagain.github.io/images/think/2018_01_07/jingzitaoyuanli_sikao_1.png">
+<meta name="twitter:title" content="Shell学习之find命令的使用">
+<meta name="twitter:description" content="find命令是linux shell脚本下使用频率非常高的命令，其功能非常强大，对于我们在linux下对文件进行快速查找来说是一种非常高效的方式。  find的基本用法 打印当前文件下的所有文件和目录  12$ find . -print 		# 以&apos;\n&apos;作为定界符$ find . -print0		# 以&apos;\0&apos;作为定界符  按文件名匹配( -name)  12345find . -name">
 
 
 
@@ -136,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="https://pengxiaolei.com/2018/01/07/think-20180107/"/>
+  <link rel="canonical" href="https://pengxiaolei.com/2018/07/03/20180703-shell-find/"/>
 
 
 
 
 
-  <title> 金字塔原理-思考的逻辑-应用逻辑顺序 | bazingagain </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> Shell学习之find命令的使用 | bazingagain </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -310,7 +306,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://pengxiaolei.com/2018/01/07/think-20180107/">
+    <link itemprop="mainEntityOfPage" href="https://pengxiaolei.com/2018/07/03/20180703-shell-find/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Xiaolei Peng">
@@ -331,7 +327,7 @@
             
             
               
-                金字塔原理-思考的逻辑-应用逻辑顺序
+                Shell学习之find命令的使用
               
             
           </h1>
@@ -346,8 +342,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-07T20:57:46+08:00">
-                2018-01-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-03T22:49:52+08:00">
+                2018-07-03
               </time>
             
 
@@ -369,8 +365,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/思维模式/" itemprop="url" rel="index">
-                    <span itemprop="name">思维模式</span>
+                  <a href="/categories/Shell/" itemprop="url" rel="index">
+                    <span itemprop="name">Shell</span>
                   </a>
                 </span>
 
@@ -388,8 +384,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/2018/01/07/think-20180107/#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2018/01/07/think-20180107/" itemprop="commentsCount"></span>
+                <a href="/2018/07/03/20180703-shell-find/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2018/07/03/20180703-shell-find/" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -397,7 +393,7 @@
 
           
           
-             <span id="/2018/01/07/think-20180107/" class="leancloud_visitors" data-flag-title="金字塔原理-思考的逻辑-应用逻辑顺序">
+             <span id="/2018/07/03/20180703-shell-find/" class="leancloud_visitors" data-flag-title="Shell学习之find命令的使用">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -426,7 +422,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  1,631
+                  987
                 </span>
               
 
@@ -442,7 +438,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  6
+                  4
                 </span>
               
             </div>
@@ -461,123 +457,119 @@
       
 
       
-        <h3 id="序言"><a href="#序言" class="headerlink" title="序言"></a>序言</h3><p>在公文写作时，按照序言（前言、开场白、引言）中的“背景”和“冲突”，提出文章的中心思想和关键句要点，就可以使用疑问/回答的对话方式，在每一个关键句要点之下的层次上展开论述或说明。</p>
-<p>这时，我们的思考已经进入到关键句层次的下一个层次，我定义为观点的思考和组织的层次。这一阶段主要分为应用逻辑顺序和概括各组思想。本文主要对应用逻辑顺序进行总结与梳理。</p>
+        <p>find命令是linux shell脚本下使用频率非常高的命令，其功能非常强大，对于我们在linux下对文件进行快速查找来说是一种<br>非常高效的方式。</p>
 <hr>
-<h3 id="应用逻辑顺序"><a href="#应用逻辑顺序" class="headerlink" title="应用逻辑顺序"></a>应用逻辑顺序</h3><p>金字塔原理规定：所用列入同一组的思想必须具有某种逻辑顺序。而人脑的逻辑分析中，大脑的归纳分析活动有三种：<strong>时间（步骤）顺序</strong>、<strong>结构（空间）顺序</strong>、<strong>程度（重要性）顺序</strong>。</p>
-<h4 id="时间顺序"><a href="#时间顺序" class="headerlink" title="时间顺序"></a>时间顺序</h4><p><strong>时间顺序在思想分组时使用最广，一般按照采取行动的顺序（第一步、第二步、第三步…）表述达到某一结果必须采取的行动</strong>。例如确定前因后果的关系：</p>
-<center><br><img src="https://bazingagain.github.io/images/think/2018_01_07/jingzitaoyuanli_sikao_1.png" alt=""><br></center>
-
-<p>在写作时，最常见的问题就是无法区分原因和结果。例如书中通过时间顺序对思想进行梳理后的例子：</p>
-<blockquote>
-<p>在第一阶段，我们将确定提高生产效率的可能领域：</p>
-<ol>
-<li><p>确定企业的关键业务</p>
-<blockquote>
-<ul>
-<li>与主要人员对话</li>
-<li>跟踪并记录交易行为和工作流程</li>
-</ul>
-</blockquote>
-</li>
-<li><p>找出在开展业务时存在的弱点</p>
-<blockquote>
-<ul>
-<li>调整组织结构</li>
-<li>制定及实施服务和绩效管理措施</li>
-<li>评估绩效水平</li>
-</ul>
-</blockquote>
-</li>
-<li><p>提出实用可行的改革建议</p>
-</li>
+<h3 id="find的基本用法"><a href="#find的基本用法" class="headerlink" title="find的基本用法"></a>find的基本用法</h3><ol>
+<li>打印当前文件下的所有文件和目录</li>
 </ol>
-</blockquote>
-<p>可以看出，这样做一是可以检查步骤是否得当，二是可以检查步骤是否有遗漏。时间顺序遵从活动的发展顺序，对活动的产生、发展、结果进行步骤的抽象。</p>
-<p>另一个方面，在表达的时候要揭示隐含的逻辑，书中举出这样一个例子（揭示因果关系）：</p>
-<blockquote>
-<p>员工思路：</p>
-<p>传统的投资评估的重点——比较未来的收益和可能的成本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> find . -print 		# 以'\n'作为定界符</div><div class="line"><span class="meta">$</span> find . -print0		# 以'\0'作为定界符</div></pre></td></tr></table></figure>
 <ol>
-<li>通常在技术上不可靠</li>
-<li>基于简单化的概念</li>
-<li>结果可能造成误导</li>
+<li>按文件名匹配( -name)</li>
 </ol>
-</blockquote>
-<p>通过检查其逻辑顺序，时间顺序为其思想的根本顺序，而第3点为主题思想，因为这一点是其它两项行动的结果：</p>
-<blockquote>
-<p><strong>传统的投资评估的重点可能造成误导</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">find . -name "*.txt" -print</div><div class="line">find . -iname "output*" -print	#忽略大小写匹配</div><div class="line"></div><div class="line"><span class="meta">#</span> 匹配多种文件，使用or条件</div><div class="line">find . \( -name "*.txt" -o -name "*.sh" \) -print</div></pre></td></tr></table></figure>
 <ol>
-<li>基于简单化的概念</li>
-<li>通常在技术上不可靠</li>
+<li>按路径匹配( -path)</li>
 </ol>
-</blockquote>
-<h4 id="结构顺序"><a href="#结构顺序" class="headerlink" title="结构顺序"></a>结构顺序</h4><p><strong>结构顺序是使用示意图、地图、图画或照片想象某事物时的顺序。结构顺序在于将某事物划分为不同的组，通过分组来表示事物的逻辑或关系</strong></p>
-<p>其分组的原则：</p>
-<ul>
-<li><strong>各部分自检相互独立，没有重叠，没有排他性</strong></li>
-<li><strong>所有部分完全穷尽，没有遗漏</strong></li>
-</ul>
-<p>例如书中的例子：</p>
-<center><br><img src="https://bazingagain.github.io/images/think/2018_01_07/jingzitaoyuanli_sikao_2.png" alt=""><br></center>
-
-<p>这个例子只是说明结构顺序的逻辑，实际生活中的公司的组织结构比这复杂的多。<br>其划分组织活动的方式：</p>
-<ul>
-<li><strong>根据活动本身</strong>，如研发、生产、设计</li>
-<li><strong>根据活动发生的地点</strong>，如华南、华北、西北</li>
-<li><strong>针对特定产品、市场或客户活动的集合</strong>，如各事业部、各业务单元等</li>
-</ul>
-<p>书中提到，对于结构顺序的描述，一般按照<strong>自上而下、自左而右</strong>的方式进行描述，在描述各子部分时，有时也会采用过程顺序（书中举的描述西奈半岛的例子，按照人眼看地图的从左上角沿顺时针的方式进行描述）。</p>
-<h4 id="程度顺序"><a href="#程度顺序" class="headerlink" title="程度顺序"></a>程度顺序</h4><p>程度顺序也称重要性顺序，是对一组具有共同特点而被聚集在一起的事务所采用的顺序。</p>
-<p>程度顺序强调：</p>
-<p><strong>明确指明每组中的项目（思想、观点、问题等）具有共同特征，确保将所有具有该特征的项目（思想、观点、问题等）列入改组。每组中，根据各个问题具有该特性的程度的高低排序——最具有该特性的问题排在第一位，即先强后弱，先重要后次要</strong></p>
-<p>如书中对问题分类的示例：</p>
-<center><br><img src="https://bazingagain.github.io/images/think/2018_01_07/jingzitaoyuanli_sikao_3.png" alt=""><br></center>
-
-<p>将所有问题分为3个问题和其它问题，它们之间具有排斥性，而每组中的问题又存在共性。</p>
-<p>书中举出的一个根据重要性进行分组的例子很好的表达了这个观点：</p>
-<blockquote>
-<p>纽约衰退的原因非常复杂，其中包括：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find . -path "*di*" -print</div></pre></td></tr></table></figure>
 <ol>
-<li>工资高于美国其它地区的平均工资水平</li>
-<li>能源、房租和土地成本高</li>
-<li>交通拥堵使运输成本增加</li>
-<li>缺少建立现代化工厂的空间</li>
-<li>税率高</li>
-<li>技术的变化</li>
-<li>美国西南部和西部地区与之竞争经济中心的地位</li>
-<li>美国经济和社会生活的中心向郊区转移</li>
+<li>按正则表达式匹配( -regex)</li>
 </ol>
-</blockquote>
-<p>上述例子缺乏思考，按照<strong>1.确定该问题的类型，2.将同一类型的思想归类、分组，3.找出各类别思想之间的顺序</strong>的原则，进行问题的归纳梳理如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">find . -regex "*\(\.txt\|\.sh\)$"</div><div class="line">find . -iregex ".*\(\.txt\|\.sh\)$"	#忽略正则表达式的大小写，即可以为TXT，SH</div></pre></td></tr></table></figure>
+<ol>
+<li>按文件类型搜索 ( -type [fldcbsp])</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> find . -type f -print # 查找普通文件</div></pre></td></tr></table></figure>
+<p>Linux中将一切视为文件，只是文件的类型不同，主要的文件类型对应type的参数如下：</p>
 <table>
 <thead>
 <tr>
-<th>问题</th>
-<th style="text-align:center">问题归类</th>
+<th>文件类型</th>
+<th>参数</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>1.工资过高 <br>2.能源、房租、土地承包高<br>3.运输成本高<br>5.税率高</td>
-<td style="text-align:center">一、成本高</td>
+<td>普通文件</td>
+<td>f</td>
 </tr>
 <tr>
-<td>4.缺少建立现代化工厂的空间<br>6.技术变化<br>8.业务联系转移到郊区</td>
-<td style="text-align:center">二、地域不合适</td>
+<td>符号链接</td>
+<td>l</td>
 </tr>
 <tr>
-<td>7.西南部和西部地区成为新的中心</td>
-<td style="text-align:center">三、存在竞争</td>
+<td>目录</td>
+<td>d</td>
+</tr>
+<tr>
+<td>字符设备</td>
+<td>c</td>
+</tr>
+<tr>
+<td>块设备</td>
+<td>b</td>
+</tr>
+<tr>
+<td>套接字</td>
+<td>s</td>
+</tr>
+<tr>
+<td>Fifo</td>
+<td>p</td>
 </tr>
 </tbody>
 </table>
+<ol>
+<li>否定参数(!)</li>
+</ol>
+<p>使用 ! 否定参数，可以查找条件匹配的补集</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> 否定参数，匹配所有不以.txt结尾的文件</div><div class="line">find . ! -name "*.txt" -print</div></pre></td></tr></table></figure>
 <hr>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>无论是在工作还是生活中，对于我们大脑中的思维模式要有一个清晰的认识。当我们在实际生活中遇到需要对思想进行总结或归纳时，思想的逻辑顺序非常重要。在思考的过程中利用时间顺序、结构顺序、程度顺序对思想、观点或问题进行逻辑梳理和检查，能够帮助我们更好地表达思考的本质。</p>
-<hr>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://item.jd.com/11346083.html" target="_blank" rel="external">1.《金字塔原理-思考、表达和解决问题的能力》</a></p>
-<hr>
-<h3 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h3><p>金字塔原理系列文章是对学习该书的过程中的笔记总结、归纳和思考，文章只作整理和学习使用。</p>
+<h3 id="find的高级用法"><a href="#find的高级用法" class="headerlink" title="find的高级用法"></a>find的高级用法</h3><ol>
+<li>按目录深度查找（ -maxdepth, -mindepth）</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span>最大深度，列出最大深度为3的所有普通文件， 不会查找第5级及以下的目录</div><div class="line">find . -maxdepth 3 -type f -print</div><div class="line"></div><div class="line"><span class="meta">#</span> 最小深度，下面的例子指从第2级目录开始查找， -type f 指只查找普通文件</div><div class="line">find . -mindepth 2 -type f -print</div></pre></td></tr></table></figure>
+<ol>
+<li>按文件时间进行查找( -atime, -mtime, -ctime, -newer)</li>
+</ol>
+<ul>
+<li>-atime, -amin : （访问时间）—— 用户最近一次访问文件的时间</li>
+<li>-mtime, -mmin : （修改时间）—— 文件内容最后被修改的时间</li>
+<li>-ctime, -cmin : （变化时间）—— 文件元数据（如权限、所有权）最后一次改变的时间</li>
+</ul>
+<p><strong>atime, mtime 以及 ctime 是以 <strong>天</strong> 为单位计算时间的:</strong></p>
+<p><strong>amin, mmin 以及 cmin 是以 <strong>分钟</strong> 为单位计算时间的:</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">find . -type f -atime -7 -print #打印出7天内访问过的所有文件</div><div class="line">find . -type f -atime 7 -print #打印出恰好7天前访问的所有文件</div><div class="line">find . -type f -atime +7 -print #打印出7天前访问过的所有文件</div><div class="line"></div><div class="line">find . -type f -amin -7 -print</div></pre></td></tr></table></figure>
+<p>区别在于 -7, 7以及 +7, ‘-7’ 表示小于7天， ‘+7’ 表示大于7天， 同理，按分钟查找也类似上面的例子。</p>
+<p>-newer 是一种比较少见的方式，其是找出比参考文件修改时间更长的所有文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find . -type f -newer multi_blackfile.txt -print</div></pre></td></tr></table></figure>
+<ol>
+<li>按文件大小查找( -size)</li>
+</ol>
+<p>按文件大小查找文件，其参数有 k, b, c, w, M, G</p>
+<ul>
+<li>k : kB</li>
+<li>b : 块(512B)</li>
+<li>c : 字节(B)</li>
+<li>w : 字(2B)</li>
+<li>M : MB</li>
+<li>G : GB</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">find . -type f -size +2k # 查找当前文件夹下，文件大小大于2KB的普通文件</div><div class="line">find . -type f -size 2k</div><div class="line">find . -type f -size -2k</div></pre></td></tr></table></figure>
+<ol>
+<li>匹配删除( -delete)</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find . -type f -name "*.swap" -delete</div></pre></td></tr></table></figure>
+<ol>
+<li>根据文件权限或用户名查找( -perm, -user)</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">find . -type f -perm 644 -print</div><div class="line"></div><div class="line"><span class="meta">#</span>找出没有644权限的.sh文件</div><div class="line">find . -type f -name "*.sh" ! -perm 644 -print</div><div class="line"></div><div class="line">find . -type f -user leon -print</div></pre></td></tr></table></figure>
+<ol>
+<li>跳过某个目录查找( -prune)</li>
+</ol>
+<p>例如，我们在git工程中，通常都不会想搜索.git目录下内容，这时可以使用 -prune 参数来忽略 .git 目录：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> find . \( -name ".git" -prune \) -o \( -type f -print \)</div></pre></td></tr></table></figure>
+<h3 id="find与命令结合执行"><a href="#find与命令结合执行" class="headerlink" title="find与命令结合执行"></a>find与命令结合执行</h3><p>find提供了 <strong>-exec</strong> 参数来进行命令组合，并执行其它命令，这个特性使得find更为强大。例如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#</span> &#123;&#125; 是一个特殊的字符串， 其对于每一个匹配的文件，&#123;&#125; 都会被替换成相应的文件名</div><div class="line"></div><div class="line"><span class="meta">$</span> find . -type f -user root -exec chown leon &#123;&#125; \;</div><div class="line"></div><div class="line"><span class="meta">$</span> find . -type f -name "*.sh" -exec cat &#123;&#125; \;&gt; all_sh_file.txt</div><div class="line"></div><div class="line"><span class="meta">$</span> find . -type f -mtime +10 -name "*.txt" -exec cp &#123;&#125; OLD \;</div><div class="line"></div><div class="line"><span class="meta">$</span> find . -type f -name "*.txt" -exec printf "Text file: %s\n" &#123;&#125; \;</div><div class="line"></div><div class="line"><span class="meta">#</span> 将多个命令写入到commands.sh ,执行该脚本, 这样就可以执行多个命令</div><div class="line"><span class="meta">$</span> find . -type f -name "*.txt" -exec ./commands.sh &#123;&#125; \;</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -627,7 +619,7 @@
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://pengxiaolei.com/2018/01/07/think-20180107/" title="金字塔原理-思考的逻辑-应用逻辑顺序">https://pengxiaolei.com/2018/01/07/think-20180107/</a>
+      <a href="https://pengxiaolei.com/2018/07/03/20180703-shell-find/" title="Shell学习之find命令的使用">https://pengxiaolei.com/2018/07/03/20180703-shell-find/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -643,7 +635,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/思维模式/" rel="tag"># 思维模式</a>
+            <a href="/tags/Shell/" rel="tag"># Shell</a>
           
         </div>
       
@@ -656,8 +648,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/03/nlp-data-collection/" rel="next" title="自然语言处理中的语料资源整理">
-                <i class="fa fa-chevron-left"></i> 自然语言处理中的语料资源整理
+              <a href="/2018/07/01/20180701-shell-initial/" rel="next" title="Shell学习之入门篇">
+                <i class="fa fa-chevron-left"></i> Shell学习之入门篇
               </a>
             
           </div>
@@ -665,10 +657,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/01/12/spring-bean-20180112/" rel="prev" title="Spring学习之Bean的装配方式">
-                Spring学习之Bean的装配方式 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -824,7 +812,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#序言"><span class="nav-number">1.</span> <span class="nav-text">序言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用逻辑顺序"><span class="nav-number">2.</span> <span class="nav-text">应用逻辑顺序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#时间顺序"><span class="nav-number">2.1.</span> <span class="nav-text">时间顺序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结构顺序"><span class="nav-number">2.2.</span> <span class="nav-text">结构顺序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#程度顺序"><span class="nav-number">2.3.</span> <span class="nav-text">程度顺序</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#备注"><span class="nav-number">5.</span> <span class="nav-text">备注</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#find的基本用法"><span class="nav-number">1.</span> <span class="nav-text">find的基本用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#find的高级用法"><span class="nav-number">2.</span> <span class="nav-text">find的高级用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#find与命令结合执行"><span class="nav-number">3.</span> <span class="nav-text">find与命令结合执行</span></a></li></ol></div>
             
 
           </div>
