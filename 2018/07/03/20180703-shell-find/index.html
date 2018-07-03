@@ -93,18 +93,18 @@
 
 
 
-<meta name="description" content="find命令是linux shell脚本下使用频率非常高的命令，其功能非常强大，对于我们在linux下对文件进行快速查找来说是一种非常高效的方式。  find的基本用法 打印当前文件下的所有文件和目录  12$ find . -print 		# 以&apos;\n&apos;作为定界符$ find . -print0		# 以&apos;\0&apos;作为定界符  按文件名匹配( -name)  12345find . -name">
+<meta name="description" content="find命令是linux shell脚本下使用频率非常高的命令，其功能非常强大，对于我们在linux下对文件进行快速查找来说是一种非常高效的方式。  find的基本用法1.打印当前文件下的所有文件和目录 12$ find . -print 		# 以&apos;\n&apos;作为定界符$ find . -print0		# 以&apos;\0&apos;作为定界符 2.按文件名匹配( -name) 12345find . -name">
 <meta name="keywords" content="Shell">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Shell学习之find命令的使用">
 <meta property="og:url" content="https://pengxiaolei.com/2018/07/03/20180703-shell-find/index.html">
 <meta property="og:site_name" content="bazingagain">
-<meta property="og:description" content="find命令是linux shell脚本下使用频率非常高的命令，其功能非常强大，对于我们在linux下对文件进行快速查找来说是一种非常高效的方式。  find的基本用法 打印当前文件下的所有文件和目录  12$ find . -print 		# 以&apos;\n&apos;作为定界符$ find . -print0		# 以&apos;\0&apos;作为定界符  按文件名匹配( -name)  12345find . -name">
+<meta property="og:description" content="find命令是linux shell脚本下使用频率非常高的命令，其功能非常强大，对于我们在linux下对文件进行快速查找来说是一种非常高效的方式。  find的基本用法1.打印当前文件下的所有文件和目录 12$ find . -print 		# 以&apos;\n&apos;作为定界符$ find . -print0		# 以&apos;\0&apos;作为定界符 2.按文件名匹配( -name) 12345find . -name">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-03T15:49:28.602Z">
+<meta property="og:updated_time" content="2018-07-03T15:53:08.286Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Shell学习之find命令的使用">
-<meta name="twitter:description" content="find命令是linux shell脚本下使用频率非常高的命令，其功能非常强大，对于我们在linux下对文件进行快速查找来说是一种非常高效的方式。  find的基本用法 打印当前文件下的所有文件和目录  12$ find . -print 		# 以&apos;\n&apos;作为定界符$ find . -print0		# 以&apos;\0&apos;作为定界符  按文件名匹配( -name)  12345find . -name">
+<meta name="twitter:description" content="find命令是linux shell脚本下使用频率非常高的命令，其功能非常强大，对于我们在linux下对文件进行快速查找来说是一种非常高效的方式。  find的基本用法1.打印当前文件下的所有文件和目录 12$ find . -print 		# 以&apos;\n&apos;作为定界符$ find . -print0		# 以&apos;\0&apos;作为定界符 2.按文件名匹配( -name) 12345find . -name">
 
 
 
@@ -422,7 +422,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  987
+                  986
                 </span>
               
 
@@ -457,27 +457,17 @@
       
 
       
-        <p>find命令是linux shell脚本下使用频率非常高的命令，其功能非常强大，对于我们在linux下对文件进行快速查找来说是一种<br>非常高效的方式。</p>
+        <p>find命令是linux shell脚本下使用频率非常高的命令，其功能非常强大，对于我们在linux下对文件进行快速查找来说是一种非常高效的方式。</p>
 <hr>
-<h3 id="find的基本用法"><a href="#find的基本用法" class="headerlink" title="find的基本用法"></a>find的基本用法</h3><ol>
-<li>打印当前文件下的所有文件和目录</li>
-</ol>
+<h3 id="find的基本用法"><a href="#find的基本用法" class="headerlink" title="find的基本用法"></a>find的基本用法</h3><p><strong>1.打印当前文件下的所有文件和目录</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> find . -print 		# 以'\n'作为定界符</div><div class="line"><span class="meta">$</span> find . -print0		# 以'\0'作为定界符</div></pre></td></tr></table></figure>
-<ol>
-<li>按文件名匹配( -name)</li>
-</ol>
+<p><strong>2.按文件名匹配( -name)</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">find . -name "*.txt" -print</div><div class="line">find . -iname "output*" -print	#忽略大小写匹配</div><div class="line"></div><div class="line"><span class="meta">#</span> 匹配多种文件，使用or条件</div><div class="line">find . \( -name "*.txt" -o -name "*.sh" \) -print</div></pre></td></tr></table></figure>
-<ol>
-<li>按路径匹配( -path)</li>
-</ol>
+<p><strong>3.按路径匹配( -path)</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find . -path "*di*" -print</div></pre></td></tr></table></figure>
-<ol>
-<li>按正则表达式匹配( -regex)</li>
-</ol>
+<p><strong>4.按正则表达式匹配( -regex)</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">find . -regex "*\(\.txt\|\.sh\)$"</div><div class="line">find . -iregex ".*\(\.txt\|\.sh\)$"	#忽略正则表达式的大小写，即可以为TXT，SH</div></pre></td></tr></table></figure>
-<ol>
-<li>按文件类型搜索 ( -type [fldcbsp])</li>
-</ol>
+<p><strong>5.按文件类型搜索 ( -type [fldcbsp])</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> find . -type f -print # 查找普通文件</div></pre></td></tr></table></figure>
 <p>Linux中将一切视为文件，只是文件的类型不同，主要的文件类型对应type的参数如下：</p>
 <table>
@@ -518,19 +508,13 @@
 </tr>
 </tbody>
 </table>
-<ol>
-<li>否定参数(!)</li>
-</ol>
+<p><strong>6.否定参数(!)</strong></p>
 <p>使用 ! 否定参数，可以查找条件匹配的补集</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> 否定参数，匹配所有不以.txt结尾的文件</div><div class="line">find . ! -name "*.txt" -print</div></pre></td></tr></table></figure>
 <hr>
-<h3 id="find的高级用法"><a href="#find的高级用法" class="headerlink" title="find的高级用法"></a>find的高级用法</h3><ol>
-<li>按目录深度查找（ -maxdepth, -mindepth）</li>
-</ol>
+<h3 id="find的高级用法"><a href="#find的高级用法" class="headerlink" title="find的高级用法"></a>find的高级用法</h3><p><strong>1.按目录深度查找（ -maxdepth, -mindepth）</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span>最大深度，列出最大深度为3的所有普通文件， 不会查找第5级及以下的目录</div><div class="line">find . -maxdepth 3 -type f -print</div><div class="line"></div><div class="line"><span class="meta">#</span> 最小深度，下面的例子指从第2级目录开始查找， -type f 指只查找普通文件</div><div class="line">find . -mindepth 2 -type f -print</div></pre></td></tr></table></figure>
-<ol>
-<li>按文件时间进行查找( -atime, -mtime, -ctime, -newer)</li>
-</ol>
+<p><strong>2.按文件时间进行查找( -atime, -mtime, -ctime, -newer)</strong></p>
 <ul>
 <li>-atime, -amin : （访问时间）—— 用户最近一次访问文件的时间</li>
 <li>-mtime, -mmin : （修改时间）—— 文件内容最后被修改的时间</li>
@@ -542,9 +526,7 @@
 <p>区别在于 -7, 7以及 +7, ‘-7’ 表示小于7天， ‘+7’ 表示大于7天， 同理，按分钟查找也类似上面的例子。</p>
 <p>-newer 是一种比较少见的方式，其是找出比参考文件修改时间更长的所有文件：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find . -type f -newer multi_blackfile.txt -print</div></pre></td></tr></table></figure>
-<ol>
-<li>按文件大小查找( -size)</li>
-</ol>
+<p><strong>3.按文件大小查找( -size)</strong></p>
 <p>按文件大小查找文件，其参数有 k, b, c, w, M, G</p>
 <ul>
 <li>k : kB</li>
@@ -555,17 +537,11 @@
 <li>G : GB</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">find . -type f -size +2k # 查找当前文件夹下，文件大小大于2KB的普通文件</div><div class="line">find . -type f -size 2k</div><div class="line">find . -type f -size -2k</div></pre></td></tr></table></figure>
-<ol>
-<li>匹配删除( -delete)</li>
-</ol>
+<p><strong>4.匹配删除( -delete)</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find . -type f -name "*.swap" -delete</div></pre></td></tr></table></figure>
-<ol>
-<li>根据文件权限或用户名查找( -perm, -user)</li>
-</ol>
+<p><strong>5.根据文件权限或用户名查找( -perm, -user)</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">find . -type f -perm 644 -print</div><div class="line"></div><div class="line"><span class="meta">#</span>找出没有644权限的.sh文件</div><div class="line">find . -type f -name "*.sh" ! -perm 644 -print</div><div class="line"></div><div class="line">find . -type f -user leon -print</div></pre></td></tr></table></figure>
-<ol>
-<li>跳过某个目录查找( -prune)</li>
-</ol>
+<p><strong>6.跳过某个目录查找( -prune)</strong></p>
 <p>例如，我们在git工程中，通常都不会想搜索.git目录下内容，这时可以使用 -prune 参数来忽略 .git 目录：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> find . \( -name ".git" -prune \) -o \( -type f -print \)</div></pre></td></tr></table></figure>
 <h3 id="find与命令结合执行"><a href="#find与命令结合执行" class="headerlink" title="find与命令结合执行"></a>find与命令结合执行</h3><p>find提供了 <strong>-exec</strong> 参数来进行命令组合，并执行其它命令，这个特性使得find更为强大。例如：</p>
