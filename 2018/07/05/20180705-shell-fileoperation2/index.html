@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Java," />
+  <meta name="keywords" content="Shell," />
 
 
 
@@ -93,18 +93,18 @@
 
 
 
-<meta name="description" content="多线程并发已经是应用开发中常见的需求，而在多线程并发中，保证数据的并发安全性是一个非常重要的技术点，Java针对不同的场景，提供了多种保持线程安全的方法。  原子性在Java中一般使用AtomicLong, AtomicReference等原子变量类型进行变量的原子操作，已保证在多线程环境中，变量的安全：例如： 12345678910111213public class CountingFacto">
-<meta name="keywords" content="Java">
+<meta name="description" content="上一篇在对文本操作有了初步的了解之后，这一节进一步加深Shell对文本操作的理解。由于Linux下一切皆文件，所以涉及到的文件操作也非常多。这一节主要讲解head、tail、diff、patch、tree、commm、dd、mkdir、chattr、ls、ln、readlink、wc等命令。  head, tailhead 读取文件的头部，tail读取文件的尾部，使用频率非常高。其常见的操作如下：">
+<meta name="keywords" content="Shell">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java中的线程安全性">
-<meta property="og:url" content="https://pengxiaolei.com/2018/06/29/20180629-java-threadsafety/index.html">
+<meta property="og:title" content="Shell学习之玩转文本操作-第二篇">
+<meta property="og:url" content="https://pengxiaolei.com/2018/07/05/20180705-shell-fileoperation2/index.html">
 <meta property="og:site_name" content="bazingagain">
-<meta property="og:description" content="多线程并发已经是应用开发中常见的需求，而在多线程并发中，保证数据的并发安全性是一个非常重要的技术点，Java针对不同的场景，提供了多种保持线程安全的方法。  原子性在Java中一般使用AtomicLong, AtomicReference等原子变量类型进行变量的原子操作，已保证在多线程环境中，变量的安全：例如： 12345678910111213public class CountingFacto">
+<meta property="og:description" content="上一篇在对文本操作有了初步的了解之后，这一节进一步加深Shell对文本操作的理解。由于Linux下一切皆文件，所以涉及到的文件操作也非常多。这一节主要讲解head、tail、diff、patch、tree、commm、dd、mkdir、chattr、ls、ln、readlink、wc等命令。  head, tailhead 读取文件的头部，tail读取文件的尾部，使用频率非常高。其常见的操作如下：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-29T03:52:57.219Z">
+<meta property="og:updated_time" content="2018-07-05T15:52:47.062Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java中的线程安全性">
-<meta name="twitter:description" content="多线程并发已经是应用开发中常见的需求，而在多线程并发中，保证数据的并发安全性是一个非常重要的技术点，Java针对不同的场景，提供了多种保持线程安全的方法。  原子性在Java中一般使用AtomicLong, AtomicReference等原子变量类型进行变量的原子操作，已保证在多线程环境中，变量的安全：例如： 12345678910111213public class CountingFacto">
+<meta name="twitter:title" content="Shell学习之玩转文本操作-第二篇">
+<meta name="twitter:description" content="上一篇在对文本操作有了初步的了解之后，这一节进一步加深Shell对文本操作的理解。由于Linux下一切皆文件，所以涉及到的文件操作也非常多。这一节主要讲解head、tail、diff、patch、tree、commm、dd、mkdir、chattr、ls、ln、readlink、wc等命令。  head, tailhead 读取文件的头部，tail读取文件的尾部，使用频率非常高。其常见的操作如下：">
 
 
 
@@ -132,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="https://pengxiaolei.com/2018/06/29/20180629-java-threadsafety/"/>
+  <link rel="canonical" href="https://pengxiaolei.com/2018/07/05/20180705-shell-fileoperation2/"/>
 
 
 
 
 
-  <title> Java中的线程安全性 | bazingagain </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> Shell学习之玩转文本操作-第二篇 | bazingagain </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -306,7 +306,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://pengxiaolei.com/2018/06/29/20180629-java-threadsafety/">
+    <link itemprop="mainEntityOfPage" href="https://pengxiaolei.com/2018/07/05/20180705-shell-fileoperation2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Xiaolei Peng">
@@ -327,7 +327,7 @@
             
             
               
-                Java中的线程安全性
+                Shell学习之玩转文本操作-第二篇
               
             
           </h1>
@@ -342,8 +342,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-29T11:51:14+08:00">
-                2018-06-29
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-05T23:52:06+08:00">
+                2018-07-05
               </time>
             
 
@@ -365,8 +365,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
+                  <a href="/categories/Shell/" itemprop="url" rel="index">
+                    <span itemprop="name">Shell</span>
                   </a>
                 </span>
 
@@ -384,8 +384,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/2018/06/29/20180629-java-threadsafety/#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2018/06/29/20180629-java-threadsafety/" itemprop="commentsCount"></span>
+                <a href="/2018/07/05/20180705-shell-fileoperation2/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2018/07/05/20180705-shell-fileoperation2/" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -393,7 +393,7 @@
 
           
           
-             <span id="/2018/06/29/20180629-java-threadsafety/" class="leancloud_visitors" data-flag-title="Java中的线程安全性">
+             <span id="/2018/07/05/20180705-shell-fileoperation2/" class="leancloud_visitors" data-flag-title="Shell学习之玩转文本操作-第二篇">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -422,7 +422,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  669
+                  1,069
                 </span>
               
 
@@ -438,7 +438,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  3
+                  5
                 </span>
               
             </div>
@@ -457,27 +457,69 @@
       
 
       
-        <p>多线程并发已经是应用开发中常见的需求，而在多线程并发中，保证数据的并发安全性是一个非常重要的技术点，Java针对不同的场景，提供了多种保持线程安全的方法。</p>
+        <p>上一篇在对文本操作有了初步的了解之后，这一节进一步加深Shell对文本操作的理解。由于Linux下一切皆文件，所以涉及到的文件操作也非常多。这一节主要讲解head、tail、diff、patch、tree、commm、dd、mkdir、chattr、ls、ln、readlink、wc等命令。</p>
 <hr>
-<h4 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h4><p>在Java中一般使用<code>AtomicLong, AtomicReference</code>等原子变量类型进行变量的原子操作，已保证在多线程环境中，变量的安全：<br>例如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CountingFactorizer</span> <span class="keyword">implements</span> <span class="title">Servlet</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AtomicLong count = <span class="keyword">new</span> AtomicLong(<span class="number">0</span>);</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> count.get();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(ServletRequest req, ServletResponse resp)</span> </span>&#123;</div><div class="line">        ...</div><div class="line">        count.incrementAndGet();</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>在计算请求次数时，在Servlet是多线程的环境下，count要使用AtomicLong进行原子更新，传统的long count; count++ 在多线程的环境下，会导致变量失效。</p>
+<h3 id="head-tail"><a href="#head-tail" class="headerlink" title="head, tail"></a>head, tail</h3><p>head 读取文件的头部，tail读取文件的尾部，使用频率非常高。其常见的操作如下：</p>
+<blockquote>
+<p>head</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">head number.sh			#默认打印前10行</div><div class="line">cat number.sh | head</div><div class="line"></div><div class="line">head -n 4 number.sh		#打印前4行</div><div class="line"><span class="meta">#</span>head -n -3 number.sh</div><div class="line">seq 11 | head -n 5</div></pre></td></tr></table></figure>
+<blockquote>
+<p>tail</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">tail number.sh			#默认打印后10行</div><div class="line">cat file | tail</div><div class="line">tail -n 5 file			#默认打印后5行</div><div class="line"></div><div class="line"><span class="meta">#</span>tail -n +(N+1)			打印除了前N行之外的所有行</div><div class="line">tail -n +6 version.patch	</div><div class="line">seq 100 | tail -n +6</div><div class="line"></div><div class="line">tail -f growing_file	#随时更新打印</div><div class="line"></div><div class="line"><span class="meta">#</span>指定给定进程，进程结束，tail也结束</div><div class="line">pid=$(pidof getdit)</div><div class="line">tail -f file.txt --pid $PID</div></pre></td></tr></table></figure>
 <hr>
-<h4 id="锁机制"><a href="#锁机制" class="headerlink" title="锁机制"></a>锁机制</h4><p><strong>synchronized</strong></p>
-<p>synchronized是Java中保证线程安全最为常用的方式，synchronized以对象作为锁，其使用方式有如下几种：</p>
-<p>1.使用类的实例作为锁</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//同步方法</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</div><div class="line">...</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//同步代码块</span></div><div class="line">sychronized(<span class="keyword">this</span>) &#123;</div><div class="line">...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>2.使用类的class实例作为锁</p>
-<p>Java中，每个类初始化后都有唯一一个Class实例</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">doSomenthing</span><span class="params">()</span> </span>&#123;</div><div class="line">...</div><div class="line">&#125;</div><div class="line"></div><div class="line">synchrnoized(AClass.class) &#123;</div><div class="line">...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>在使用synchronized时，需要注意的是，对于时间较长的计算或者网络I/O等，不要使用锁。</p>
+<h3 id="diff-patch"><a href="#diff-patch" class="headerlink" title="diff, patch"></a>diff, patch</h3><p>diff命令能够得到文件之间的差别（通常用户版本升级的比较）。而patch则可以根据文件的不同生成patch文件（只保留文件的不同之处），进行补丁更新，非常快捷高效。例如有文件version1.txt,version2.txt:</p>
+<p>version1.txt:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">this is original text</div><div class="line">line2</div><div class="line">line3</div><div class="line">line4</div><div class="line">happy hacking!</div></pre></td></tr></table></figure>
+<p>version2.txt:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">this is original text</div><div class="line">line2</div><div class="line">line4</div><div class="line">happy hacking!</div><div class="line">GNU is not Unix!</div></pre></td></tr></table></figure>
+<p>使用 <code>diff version1.txt version2.txt</code>得到如下结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">3d2</div><div class="line">&lt; line3</div><div class="line">5c4,5</div><div class="line">&lt; happy hacking!</div><div class="line">\ No newline at end of file</div><div class="line">---</div><div class="line"><span class="meta">&gt;</span> happy hacking!</div><div class="line"><span class="meta">&gt;</span> GNU is not Unix!</div><div class="line">\ No newline at end of file</div></pre></td></tr></table></figure>
+<p>将差异信息输出到patch文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">diff -u version1.txt version2.txt &gt; version.patch</div></pre></td></tr></table></figure>
+<p>使用patch文件进行修补：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">patch -p1 version1.txt &lt; version.patch	#执行之后，version1与version2相同</div><div class="line"></div><div class="line">patch -p1 version1.txt &lt; version.patch	#再次执行，则可撤销做出的修改</div></pre></td></tr></table></figure>
+<p>生成目录的差异信息：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">diff -Naur directory1 directory2</div></pre></td></tr></table></figure>
+<p>其中：</p>
+<ul>
+<li>-N : 将所有缺失的文件视为空文件</li>
+<li>-a : 将所有文件视为文本文件</li>
+<li>-u : 生成一体化输出</li>
+<li>-r : 遍历目录下所有文件</li>
+</ul>
 <hr>
-<h4 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h4><p>volatile变量能够确保将变量的更新操作通知到其它线程。<strong>声明为volatile的变量，编译器不会将该变量上的操作与其它内存操作一起进行重排序</strong>,另外，volatile变量比synchronized更轻量级，由于volatile变量只能保证可见性，而不能保证原子性，volatile适用的场景比较有限，当变量的写入操作不依赖变量的当前值，或者能确保只有单个线程更新变量时，才是正确的使用volatile的场合：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">volatile</span> <span class="keyword">boolean</span> asleep;</div><div class="line"></div><div class="line"><span class="keyword">while</span> (!asleep) &#123;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="tree"><a href="#tree" class="headerlink" title="tree"></a>tree</h3><p>tree 能够生成目录的树状图，该命令需要安装（brew install tree）:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">tree .</div><div class="line">tree . -P "*.sh"    #通配符匹配，只匹配.sh文件</div><div class="line">tree -h .           # -h 同时打印目录和文件的大小</div><div class="line">tree . -H http://www.leon.com -o treeout.html   # 生成包含目录树的HTML页面</div></pre></td></tr></table></figure>
 <hr>
-<h4 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h4><p>ThreadLocal类能使线程中的某个值与保存值的对象联系起来，其提供了get与set方法，这些方法为每个使用该变量的线程都存有一份独立的副本，get总是返回当前线程在调用set时设置的最新值：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> ThreadLocal&lt;Connection&gt; connectionHolder = <span class="keyword">new</span> ThreadLocal&lt;Connection&gt;() &#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> Connection <span class="title">initalValue</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> DriverManager.getConnection(DB_URL);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> connectionHolder.get();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>一般，将ThreadLocal声明为全局变量使用（使用static），上面的例子中，每个线程都对应一个Connection对象，不同线程之间的Connection的操作不会影响到其它线程，其并不是进行了变量共享，而是进行了变量的线程内部化来解决线程安全的问题，这种方法在Spring中也有重要应用。</p>
+<h3 id="comm"><a href="#comm" class="headerlink" title="comm"></a>comm</h3><p>comm命令用于比较两个文件，进而我们可以得到它们之间的交集、求差以及差集。例如对于文件A.txt, B.txt:</p>
+<p>A.txt:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">apple</div><div class="line">orange</div><div class="line">gold</div><div class="line">silver</div><div class="line">steel</div><div class="line">iron</div></pre></td></tr></table></figure>
+<p>B.txt:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">orange</div><div class="line">cookies</div><div class="line">carrot</div></pre></td></tr></table></figure>
+<p>使用comm比较二者：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">comm  A.txt B.txt</div></pre></td></tr></table></figure>
+<p>可以得到如下结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">apple</div><div class="line">					orange</div><div class="line">		cookies</div><div class="line">		carrot	</div><div class="line">gold</div><div class="line">silver</div><div class="line">steel</div><div class="line">iron</div></pre></td></tr></table></figure>
+<p>第1列只出现在A中，第2列只出现在B中，第3列是A和B的交集。可以使用comm进行更多操作：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">comm -1 -2 A.txt B.txt		#删除第1，2列</div><div class="line">comm -3  A.txt B.txt | sed 's/^\t//'		#删除第3列，并将12列合成1列</div></pre></td></tr></table></figure>
+<hr>
+<h3 id="dd"><a href="#dd" class="headerlink" title="dd"></a>dd</h3><p>dd 可以生成任意大小的文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dd if=args.txt of=copyargs.txt bs=1k count=1</div></pre></td></tr></table></figure>
+<p>if为输入，如果没有设置，则默认为stdin，of为输出问价，如果没有则默认为stdout，bs为设置块大小，单位为字节，可设置的范围有c、w、b、k、M、G。count为块数量。上面的例子得到1KB的文件</p>
+<hr>
+<h3 id="ln-ls-readlink"><a href="#ln-ls-readlink" class="headerlink" title="ln, ls, readlink"></a>ln, ls, readlink</h3><p>ln 可以设置软链接，readlink可以直接读取软链接的信息，ls主要为列出文件信息：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">ln -s /Volumes/hdd/code/java-workspace/ java-direct</div><div class="line"></div><div class="line"><span class="meta">#</span>输出软链接的相关信息</div><div class="line">ls -l | grep "^l" | awk '&#123; print $9 &#125;'	</div><div class="line">find . -type l -print</div><div class="line">ls -l java-direct | awk '&#123; print $11 &#125;'</div><div class="line"></div><div class="line">readlink java-direct 	#将输出该软链接所指向的目录或文件</div><div class="line"></div><div class="line"><span class="meta">#</span>列出当前路径下的目录</div><div class="line">ls -d */</div><div class="line">ls -F | grep "/$"		#$是行尾标记</div><div class="line">ls -l | grep "^d"		#^是行首标记</div><div class="line">find . -type d -maxdepth 1 -print</div></pre></td></tr></table></figure>
+<hr>
+<h3 id="chattr"><a href="#chattr" class="headerlink" title="chattr"></a>chattr</h3><p>chattr 用于生成不可修改的文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">chattr +i cannotmutifile.txt #设置文件不可修改</div><div class="line">chattr -i cannotmutifile.txt    #移除不可修改属性</div></pre></td></tr></table></figure>
+<hr>
+<h3 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a>mkdir</h3><p>mkdir用于生成目录:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span>创建目录， 忽略已存在的目录，同时创建缺失部分</div><div class="line">mkdir -p /home/leon/test/hello/world</div></pre></td></tr></table></figure>
+<hr>
+<h3 id="wc"><a href="#wc" class="headerlink" title="wc"></a>wc</h3><p>wc用于统计文件行数、单词及字符数等信息：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span>统计行数</div><div class="line">wc -l version1.txt</div><div class="line">cat file | wc -l</div><div class="line"></div><div class="line"><span class="meta">#</span>统计单词数</div><div class="line">wc -w file</div><div class="line">cat file | wc -w</div><div class="line"></div><div class="line"><span class="meta">#</span>统计字符数</div><div class="line">wc -c file</div><div class="line">cat file | wc -c</div><div class="line"></div><div class="line"><span class="meta">#</span>打印行数、单词数、字符数</div><div class="line">wc file</div><div class="line"></div><div class="line">wc file -L #打印最长行的长度</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -527,7 +569,7 @@
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://pengxiaolei.com/2018/06/29/20180629-java-threadsafety/" title="Java中的线程安全性">https://pengxiaolei.com/2018/06/29/20180629-java-threadsafety/</a>
+      <a href="https://pengxiaolei.com/2018/07/05/20180705-shell-fileoperation2/" title="Shell学习之玩转文本操作-第二篇">https://pengxiaolei.com/2018/07/05/20180705-shell-fileoperation2/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -543,7 +585,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Java/" rel="tag"># Java</a>
+            <a href="/tags/Shell/" rel="tag"># Shell</a>
           
         </div>
       
@@ -556,8 +598,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/06/02/20180602-spring-mongodb/" rel="next" title="Spring学习之集成MongoDB">
-                <i class="fa fa-chevron-left"></i> Spring学习之集成MongoDB
+              <a href="/2018/07/04/20180704-shell-fileoperation1/" rel="next" title="Shell学习之玩转文本操作-第一篇">
+                <i class="fa fa-chevron-left"></i> Shell学习之玩转文本操作-第一篇
               </a>
             
           </div>
@@ -565,10 +607,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/07/01/20180701-shell-initial/" rel="prev" title="Shell学习之入门篇">
-                Shell学习之入门篇 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -724,7 +762,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#原子性"><span class="nav-number">1.</span> <span class="nav-text">原子性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#锁机制"><span class="nav-number">2.</span> <span class="nav-text">锁机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#volatile"><span class="nav-number">3.</span> <span class="nav-text">volatile</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ThreadLocal"><span class="nav-number">4.</span> <span class="nav-text">ThreadLocal</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#head-tail"><span class="nav-number">1.</span> <span class="nav-text">head, tail</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#diff-patch"><span class="nav-number">2.</span> <span class="nav-text">diff, patch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tree"><span class="nav-number">3.</span> <span class="nav-text">tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#comm"><span class="nav-number">4.</span> <span class="nav-text">comm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dd"><span class="nav-number">5.</span> <span class="nav-text">dd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ln-ls-readlink"><span class="nav-number">6.</span> <span class="nav-text">ln, ls, readlink</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chattr"><span class="nav-number">7.</span> <span class="nav-text">chattr</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mkdir"><span class="nav-number">8.</span> <span class="nav-text">mkdir</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wc"><span class="nav-number">9.</span> <span class="nav-text">wc</span></a></li></ol></div>
             
 
           </div>
