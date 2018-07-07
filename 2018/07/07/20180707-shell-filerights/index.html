@@ -93,18 +93,18 @@
 
 
 
-<meta name="description" content="在使用shell命令对文件进行的操作中，我们需要有对文件的操作权限，才能执行相应的动作，其涉及到的与文件权限相关的知识也是我们所必须掌握的。本文主要围绕chmod及chown两个命令展开讲解Linux文件权限管理的相关知识。 Linux文件权限的基本知识权限是对操作者是否有权运行相关操作的定义，在linux下，操作者对于文件主要包括读、写、执行三个动作的操作权限。 权限的拥有者又分为以下几种：用户">
+<meta name="description" content="在使用shell命令对文件进行的操作中，我们需要有对文件的操作权限，才能执行相应的动作，其涉及到的与文件权限相关的知识也是我们所必须掌握的。本文主要围绕chmod及chown两个命令展开讲解Linux文件权限管理的相关知识。  Linux文件权限的基本知识权限是对操作者是否有权运行相关操作的定义，在linux下，操作者对于文件主要包括读、写、执行三个动作的操作权限。 权限的拥有者又分为以下几种：用">
 <meta name="keywords" content="Shell">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Shell学习之文件权限管理那些事儿">
 <meta property="og:url" content="https://pengxiaolei.com/2018/07/07/20180707-shell-filerights/index.html">
 <meta property="og:site_name" content="bazingagain">
-<meta property="og:description" content="在使用shell命令对文件进行的操作中，我们需要有对文件的操作权限，才能执行相应的动作，其涉及到的与文件权限相关的知识也是我们所必须掌握的。本文主要围绕chmod及chown两个命令展开讲解Linux文件权限管理的相关知识。 Linux文件权限的基本知识权限是对操作者是否有权运行相关操作的定义，在linux下，操作者对于文件主要包括读、写、执行三个动作的操作权限。 权限的拥有者又分为以下几种：用户">
+<meta property="og:description" content="在使用shell命令对文件进行的操作中，我们需要有对文件的操作权限，才能执行相应的动作，其涉及到的与文件权限相关的知识也是我们所必须掌握的。本文主要围绕chmod及chown两个命令展开讲解Linux文件权限管理的相关知识。  Linux文件权限的基本知识权限是对操作者是否有权运行相关操作的定义，在linux下，操作者对于文件主要包括读、写、执行三个动作的操作权限。 权限的拥有者又分为以下几种：用">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-07T15:58:30.238Z">
+<meta property="og:updated_time" content="2018-07-07T16:43:01.199Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Shell学习之文件权限管理那些事儿">
-<meta name="twitter:description" content="在使用shell命令对文件进行的操作中，我们需要有对文件的操作权限，才能执行相应的动作，其涉及到的与文件权限相关的知识也是我们所必须掌握的。本文主要围绕chmod及chown两个命令展开讲解Linux文件权限管理的相关知识。 Linux文件权限的基本知识权限是对操作者是否有权运行相关操作的定义，在linux下，操作者对于文件主要包括读、写、执行三个动作的操作权限。 权限的拥有者又分为以下几种：用户">
+<meta name="twitter:description" content="在使用shell命令对文件进行的操作中，我们需要有对文件的操作权限，才能执行相应的动作，其涉及到的与文件权限相关的知识也是我们所必须掌握的。本文主要围绕chmod及chown两个命令展开讲解Linux文件权限管理的相关知识。  Linux文件权限的基本知识权限是对操作者是否有权运行相关操作的定义，在linux下，操作者对于文件主要包括读、写、执行三个动作的操作权限。 权限的拥有者又分为以下几种：用">
 
 
 
@@ -422,7 +422,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  291
+                  1,033
                 </span>
               
 
@@ -438,7 +438,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  1
+                  4
                 </span>
               
             </div>
@@ -458,11 +458,48 @@
 
       
         <p>在使用shell命令对文件进行的操作中，我们需要有对文件的操作权限，才能执行相应的动作，其涉及到的与文件权限相关的知识也是我们所必须掌握的。本文主要围绕chmod及chown两个命令展开讲解Linux文件权限管理的相关知识。</p>
+<hr>
 <h3 id="Linux文件权限的基本知识"><a href="#Linux文件权限的基本知识" class="headerlink" title="Linux文件权限的基本知识"></a>Linux文件权限的基本知识</h3><p>权限是对操作者是否有权运行相关操作的定义，在linux下，操作者对于文件主要包括读、写、执行三个动作的操作权限。</p>
 <p>权限的拥有者又分为以下几种：用户（user），用户组（user group），其它用户（other user）。</p>
 <p>使用 <code>ls -l</code>查看某文件的权限如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">-rw-r--r--@ 1 leon  admin   134  7  2 22:57 OLD</div><div class="line">-rw-r--r--@ 1 leon  admin    14  7  3 18:46 args.txt</div><div class="line">drwxr-xr-x  2 leon  admin   204  7  7 11:33 filestore</div><div class="line">lrwxr-xr-x  1 leon  admin    33  7  5 13:26 java-direct -&gt; /Volumes/hdd/code/java-workspace/</div><div class="line">prw-r--r--  1 leon  admin     0  7  2 21:19 scriptfifo</div><div class="line">-rw-r--r--  1 leon  admin    33  6 28 10:39 output.txt</div></pre></td></tr></table></figure>
 <p>其中，第1列的第一个字符表示文件的类型，其对应关系如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">-rw-r--r--@ 1 leon  admin   134  7  2 22:57 OLD</div><div class="line">-rw-r--r--@ 1 leon  admin    14  7  3 18:46 args.txt</div><div class="line">drwxr-xr-x  2 leon  admin   204  7  7 11:33 filestore</div><div class="line">lrwxr-xr-x  1 leon  admin    33  7  5 13:26 java-direct -&gt; /Volumes/hdd/code/java-workspace/</div><div class="line">prw-r--r--  1 leon  admin     0  7  2 21:19 scriptfifo</div><div class="line">-rw-r--r--  1 leon  admin    33  6 28 10:39 output.txt</div></pre></td></tr></table></figure>
+<p>其中，第1列的第一个字符表示文件的类型，其对应关系如下：</p>
+<ul>
+<li>‘-‘ : 普通文件</li>
+<li>‘d’ : 目录文件</li>
+<li>‘c’ : 字符设备 </li>
+<li>‘b’ : 块设备</li>
+<li>‘l’ : 符号链接（软链接）</li>
+<li>‘s’ : 套接字</li>
+<li>‘p’ : 管道</li>
+</ul>
+<p>然后第1列之后的7个字符则是依次对应user、user group及other user的权限设置，特殊的是，在Mac下，还包括一个扩展属性位，上面的<code>@</code>就是，使用 xattr可以查询文件的相关的更多信息。</p>
+<p>以第1行为例，<code>-rw-r--r--@</code>, 表示该文件未普通文件，拥有该文件的用户有读写权限，用户组有读权限，其它用户有读权限，其中<code>-</code>表示无对于权限。</p>
+<p><strong>特使情况：</strong></p>
+<ul>
+<li><p>对user而言，还有一个setuis(S)权限，其设置位在执行权限（x）的位置，该权限运行用户以其拥有者的权限来执行可执行文件。    例如：<code>-rwS------</code>。</p>
+<p>  另外，对于目录的执行权限，表示可以访问目录中的文件和子目录</p>
+</li>
+<li><p>对user group而言，还有一个setgid（S）权限, 允许以同该目录拥有者所在组相同的有效组权限来运行可执行文件。例如: <code>---rwS---</code>。</p>
+</li>
+<li>对于<strong>目录</strong>而言, 其用一个特殊权限叫做sticky bit。当目录设置了sticky bit，只有创建该目录的用户才能删除目录中的文件，即使用户组和其它用户也有写权限。该bit出现在other user权限的执行位（x）中，使用T进行表示。例如：<code>------rT</code>。</li>
+</ul>
+<hr>
+<h3 id="使用chmod-和-chown对文件权限管理"><a href="#使用chmod-和-chown对文件权限管理" class="headerlink" title="使用chmod 和 chown对文件权限管理"></a>使用chmod 和 chown对文件权限管理</h3><p>chmod 和 chown 是文件权限管理最为重要的命令。其中chmod是管理用户（包括用户组、其它用户）对文件的操作权限，chown是对文件的所有权进行管理。就像现实生活中土地的使用权和所有权的分离。</p>
+<h4 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h4><p>常用操作如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">$</span> chmod u=rwx g=rw o=r timing.log # u = user, g = user group, o = other user</div><div class="line"></div><div class="line"><span class="meta">$</span> chmod u-x timing.log		# + 增加权限， -减少权限, 这里去掉用户的执行权限</div><div class="line"></div><div class="line"><span class="meta">$</span> chmod a+x timing.log		#给所有权限类别（用户，用户组，其它用户）增加可执行权限</div><div class="line"></div><div class="line"><span class="meta">$</span> chmod a+t directory_name		#设置粘滞位（粘滞位是一种目录的权限类型）</div></pre></td></tr></table></figure>
+<p>另外，也可使用八进制数设置权限，其中</p>
+<ul>
+<li>r– : 4</li>
+<li>-w- : 2</li>
+<li>–x : 1</li>
+</ul>
+<p>这样就可以使用数字进行权限设置：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> chmod 764 timging.log	  # rwx rw- r--  (rwx 为 7+2=1)</div><div class="line"></div><div class="line"><span class="meta">$</span> chmod 777 . -R #递归方式</div></pre></td></tr></table></figure>
+<h4 id="chown"><a href="#chown" class="headerlink" title="chown"></a>chown</h4><p>常用操作如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span>更改所有权(chown)</div><div class="line"><span class="meta">#</span>chown user.group filename</div><div class="line"></div><div class="line">chown leon.leon test.txt</div><div class="line"></div><div class="line">chown user.group -R	#递归方式</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -705,7 +742,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux文件权限的基本知识"><span class="nav-number">1.</span> <span class="nav-text">Linux文件权限的基本知识</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux文件权限的基本知识"><span class="nav-number">1.</span> <span class="nav-text">Linux文件权限的基本知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用chmod-和-chown对文件权限管理"><span class="nav-number">2.</span> <span class="nav-text">使用chmod 和 chown对文件权限管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#chmod"><span class="nav-number">2.1.</span> <span class="nav-text">chmod</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chown"><span class="nav-number">2.2.</span> <span class="nav-text">chown</span></a></li></ol></li></ol></div>
             
 
           </div>
