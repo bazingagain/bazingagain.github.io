@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Java," />
+  <meta name="keywords" content="Shell," />
 
 
 
@@ -93,18 +93,18 @@
 
 
 
-<meta name="description" content="多线程并发已经是应用开发中常见的需求，而在多线程并发中，保证数据的并发安全性是一个非常重要的技术点，Java针对不同的场景，提供了多种保持线程安全的方法。  原子性在Java中一般使用AtomicLong, AtomicReference等原子变量类型进行变量的原子操作，已保证在多线程环境中，变量的安全：例如： 12345678910111213public class CountingFacto">
-<meta name="keywords" content="Java">
+<meta name="description" content="本节主要讲解grep、egrep、cut、sed、awk、paste、rev及tac的使用。  grep, egrepgrep及egrep是linux下进行文本搜索的核心命令，其接受通配符和正则表达式进行匹配。 使用如下 1234567891011121314151617181920212223242526272829303132333435363738#使用通配符进行匹配grep match_p">
+<meta name="keywords" content="Shell">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java中的线程安全性">
-<meta property="og:url" content="https://pengxiaolei.com/2018/06/29/20180629-java-threadsafety/index.html">
+<meta property="og:title" content="Shell学习之玩转文本操作第三篇">
+<meta property="og:url" content="https://pengxiaolei.com/2018/07/09/20180709-shell-fileoperation3/index.html">
 <meta property="og:site_name" content="bazingagain">
-<meta property="og:description" content="多线程并发已经是应用开发中常见的需求，而在多线程并发中，保证数据的并发安全性是一个非常重要的技术点，Java针对不同的场景，提供了多种保持线程安全的方法。  原子性在Java中一般使用AtomicLong, AtomicReference等原子变量类型进行变量的原子操作，已保证在多线程环境中，变量的安全：例如： 12345678910111213public class CountingFacto">
+<meta property="og:description" content="本节主要讲解grep、egrep、cut、sed、awk、paste、rev及tac的使用。  grep, egrepgrep及egrep是linux下进行文本搜索的核心命令，其接受通配符和正则表达式进行匹配。 使用如下 1234567891011121314151617181920212223242526272829303132333435363738#使用通配符进行匹配grep match_p">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-29T03:52:57.219Z">
+<meta property="og:updated_time" content="2018-07-09T14:52:53.003Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java中的线程安全性">
-<meta name="twitter:description" content="多线程并发已经是应用开发中常见的需求，而在多线程并发中，保证数据的并发安全性是一个非常重要的技术点，Java针对不同的场景，提供了多种保持线程安全的方法。  原子性在Java中一般使用AtomicLong, AtomicReference等原子变量类型进行变量的原子操作，已保证在多线程环境中，变量的安全：例如： 12345678910111213public class CountingFacto">
+<meta name="twitter:title" content="Shell学习之玩转文本操作第三篇">
+<meta name="twitter:description" content="本节主要讲解grep、egrep、cut、sed、awk、paste、rev及tac的使用。  grep, egrepgrep及egrep是linux下进行文本搜索的核心命令，其接受通配符和正则表达式进行匹配。 使用如下 1234567891011121314151617181920212223242526272829303132333435363738#使用通配符进行匹配grep match_p">
 
 
 
@@ -132,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="https://pengxiaolei.com/2018/06/29/20180629-java-threadsafety/"/>
+  <link rel="canonical" href="https://pengxiaolei.com/2018/07/09/20180709-shell-fileoperation3/"/>
 
 
 
 
 
-  <title> Java中的线程安全性 | bazingagain </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> Shell学习之玩转文本操作第三篇 | bazingagain </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -306,7 +306,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://pengxiaolei.com/2018/06/29/20180629-java-threadsafety/">
+    <link itemprop="mainEntityOfPage" href="https://pengxiaolei.com/2018/07/09/20180709-shell-fileoperation3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Xiaolei Peng">
@@ -327,7 +327,7 @@
             
             
               
-                Java中的线程安全性
+                Shell学习之玩转文本操作第三篇
               
             
           </h1>
@@ -342,8 +342,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-29T11:51:14+08:00">
-                2018-06-29
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-09T22:51:16+08:00">
+                2018-07-09
               </time>
             
 
@@ -365,8 +365,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
+                  <a href="/categories/Shell/" itemprop="url" rel="index">
+                    <span itemprop="name">Shell</span>
                   </a>
                 </span>
 
@@ -384,8 +384,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/2018/06/29/20180629-java-threadsafety/#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2018/06/29/20180629-java-threadsafety/" itemprop="commentsCount"></span>
+                <a href="/2018/07/09/20180709-shell-fileoperation3/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2018/07/09/20180709-shell-fileoperation3/" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -393,7 +393,7 @@
 
           
           
-             <span id="/2018/06/29/20180629-java-threadsafety/" class="leancloud_visitors" data-flag-title="Java中的线程安全性">
+             <span id="/2018/07/09/20180709-shell-fileoperation3/" class="leancloud_visitors" data-flag-title="Shell学习之玩转文本操作第三篇">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -422,7 +422,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  669
+                  1,235
                 </span>
               
 
@@ -438,7 +438,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  3
+                  6
                 </span>
               
             </div>
@@ -457,27 +457,24 @@
       
 
       
-        <p>多线程并发已经是应用开发中常见的需求，而在多线程并发中，保证数据的并发安全性是一个非常重要的技术点，Java针对不同的场景，提供了多种保持线程安全的方法。</p>
+        <p>本节主要讲解grep、egrep、cut、sed、awk、paste、rev及tac的使用。</p>
 <hr>
-<h4 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h4><p>在Java中一般使用<code>AtomicLong, AtomicReference</code>等原子变量类型进行变量的原子操作，已保证在多线程环境中，变量的安全：<br>例如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CountingFactorizer</span> <span class="keyword">implements</span> <span class="title">Servlet</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AtomicLong count = <span class="keyword">new</span> AtomicLong(<span class="number">0</span>);</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> count.get();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(ServletRequest req, ServletResponse resp)</span> </span>&#123;</div><div class="line">        ...</div><div class="line">        count.incrementAndGet();</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>在计算请求次数时，在Servlet是多线程的环境下，count要使用AtomicLong进行原子更新，传统的long count; count++ 在多线程的环境下，会导致变量失效。</p>
+<h3 id="grep-egrep"><a href="#grep-egrep" class="headerlink" title="grep, egrep"></a>grep, egrep</h3><p>grep及egrep是linux下进行文本搜索的核心命令，其接受通配符和正则表达式进行匹配。 使用如下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#</span>使用通配符进行匹配</div><div class="line">grep match_pattern filename</div><div class="line">grep match_pattern file1 file2 file3		#在多个文件中进行匹配,返回包含match_pattern的文本行</div><div class="line">grep word filename --color=auto</div><div class="line"></div><div class="line"><span class="meta">#</span>使用正则表达式进行匹配, grep 要使用 -E</div><div class="line">grep -E "[a-z]+"</div><div class="line">egrep "[a-z]+"</div><div class="line"></div><div class="line"><span class="meta">#</span>只输出匹配到的文本部分：</div><div class="line">echo this line is a line. | grep -o -E "[a-z]+\."</div><div class="line">echo this line is a line. | egrep -o "[a-z]+\."</div><div class="line"></div><div class="line">grep -c "text" filename     #统计文件中包含匹配字串的行数</div><div class="line"></div><div class="line">echo -e "1 2 3 4\nhello\n5 6" | egrep -o "[0-9]" | wc -l    #统计匹配项的数目</div><div class="line">grep linux -n filename      #打印出包含匹配字符串的行数</div><div class="line">echo gnu is not unix | grep -b -o "not" #打印样式匹配所位于的字符及字节偏移（从0开始算起）</div><div class="line">grep -l linux file1 file2 #搜索多个文件，并返回匹配文本的文件名</div><div class="line"></div><div class="line">grep "text" . -R -n #在多级目录中对文本进行递归搜索</div><div class="line">grep -i "HELLO" filename    #忽略大小写</div><div class="line"></div><div class="line">grep -e "pattern1" -e "pattern2" -o filename # 匹配多个模式</div><div class="line">grep -f pattern_file filename   #使用样式文件进行多模式的匹配</div><div class="line"></div><div class="line"><span class="meta">#</span> 搜索中包括或排除  </div><div class="line">grep "main()" . -r --include *.&#123;c,cpp&#125; #在当前目录下递归搜素.c,.cpp文件中出现main()的文本部分</div><div class="line">grep "main()" . -r --exclue "README"    #搜索工程中排除所有的README文件</div><div class="line">grep "main()" . -r --exclue-dir ".git"    #搜索工程中排除.git目录</div><div class="line"></div><div class="line">grep "test" file* -lZ | xargs  rm</div><div class="line"></div><div class="line"></div><div class="line">seq 10 | grep 5 -A 3    #打印匹配结果之后的3行</div><div class="line">seq 10 | grep 5 -B 3    #打印匹配结果之前的3行</div><div class="line">seq 10 | grep 5 -C 3    #打印匹配结果之前及之后的3行</div></pre></td></tr></table></figure>
 <hr>
-<h4 id="锁机制"><a href="#锁机制" class="headerlink" title="锁机制"></a>锁机制</h4><p><strong>synchronized</strong></p>
-<p>synchronized是Java中保证线程安全最为常用的方式，synchronized以对象作为锁，其使用方式有如下几种：</p>
-<p>1.使用类的实例作为锁</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//同步方法</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</div><div class="line">...</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//同步代码块</span></div><div class="line">sychronized(<span class="keyword">this</span>) &#123;</div><div class="line">...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>2.使用类的class实例作为锁</p>
-<p>Java中，每个类初始化后都有唯一一个Class实例</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">doSomenthing</span><span class="params">()</span> </span>&#123;</div><div class="line">...</div><div class="line">&#125;</div><div class="line"></div><div class="line">synchrnoized(AClass.class) &#123;</div><div class="line">...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>在使用synchronized时，需要注意的是，对于时间较长的计算或者网络I/O等，不要使用锁。</p>
+<h3 id="cut"><a href="#cut" class="headerlink" title="cut"></a>cut</h3><p>cut 是按列对文件进行切分, 可以指定分割每列的定界符。其使用方式如下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cut -f 2,3 filename					#显示第2，3列，默认\t为定界符</div><div class="line">cut -d : -f 1,7 /etc/passwd		#设置定界符为 -d</div><div class="line">who | cut -c 1-16,26-38				#打印1-16字符集26-38字符</div></pre></td></tr></table></figure>
 <hr>
-<h4 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h4><p>volatile变量能够确保将变量的更新操作通知到其它线程。<strong>声明为volatile的变量，编译器不会将该变量上的操作与其它内存操作一起进行重排序</strong>,另外，volatile变量比synchronized更轻量级，由于volatile变量只能保证可见性，而不能保证原子性，volatile适用的场景比较有限，当变量的写入操作不依赖变量的当前值，或者能确保只有单个线程更新变量时，才是正确的使用volatile的场合：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">volatile</span> <span class="keyword">boolean</span> asleep;</div><div class="line"></div><div class="line"><span class="keyword">while</span> (!asleep) &#123;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="sed"><a href="#sed" class="headerlink" title="sed"></a>sed</h3><p>sed（Stream editor），其配合正则表达式进行使用，一般做文本替换使用。 使用示例如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">echo this thisthisthis | sed 's/this/THIS/'     #只匹配第一个遇到的pattern</div><div class="line">echo this thisthisthis | sed 's/this/THIS/g'    #对每一行都全部匹配</div><div class="line">echo this thisthisthis | sed 's/this/THIS/2g'   #匹配第N及以后的pattern</div><div class="line"></div><div class="line"><span class="meta">#</span>使用任意定界符: 或者 |</div><div class="line">echo this thisthisthis | sed 's:this:THIS:g'</div><div class="line">echo this thisthisthis | sed 's|this|THIS|g'</div><div class="line"></div><div class="line"><span class="meta">#</span>定界符出现在pattern中时，使用 \ 进行转义</div><div class="line">echo 'this thi|sthisthis' | sed 's|thi\|s|THIS|g'</div><div class="line"></div><div class="line">sed '/^$/d' file    #移除空白行， /pattern/d会移除匹配样式的行, 空白行可以使用^$表示</div><div class="line"></div><div class="line"><span class="meta">#</span>字串匹配 \(pattern\), 对于第一个匹配到的字串，其对应标记为 \1, 以此类推，匹配到的第2个字串是 \2</div><div class="line">echo this is digit 7 in a number | sed 's/digit \([0-9]\)/\1/'</div><div class="line">echo apple APPLE | sed 's/\([a-z]\+\) \([A-Z]\+\)/\2 \1/'</div><div class="line"></div><div class="line"><span class="meta">#</span>使用双引号，利用变量</div><div class="line">test=hello</div><div class="line">echo hello world | sed "s/$test/HELLO/"</div><div class="line"></div><div class="line">sed 's/PATTERN/replacement/' -i filename    # -i 将更改保存到原文件</div></pre></td></tr></table></figure>
 <hr>
-<h4 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h4><p>ThreadLocal类能使线程中的某个值与保存值的对象联系起来，其提供了get与set方法，这些方法为每个使用该变量的线程都存有一份独立的副本，get总是返回当前线程在调用set时设置的最新值：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> ThreadLocal&lt;Connection&gt; connectionHolder = <span class="keyword">new</span> ThreadLocal&lt;Connection&gt;() &#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> Connection <span class="title">initalValue</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> DriverManager.getConnection(DB_URL);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> connectionHolder.get();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>一般，将ThreadLocal声明为全局变量使用（使用static），上面的例子中，每个线程都对应一个Connection对象，不同线程之间的Connection的操作不会影响到其它线程，其并不是进行了变量共享，而是进行了变量的线程内部化来解决线程安全的问题，这种方法在Spring中也有重要应用。</p>
+<h3 id="awk"><a href="#awk" class="headerlink" title="awk"></a>awk</h3><p>awk是一个非常强大的命令工具，其能够组合成其他多种命令工具。awk 首先执行BEGIN{command;}中的语句，然后从stdin中每读取一行，就执行pattern{commands;}一次， 重复这个过程知道stdin输入结束，然后执行END{command;}中的语句。awk使用示例如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">awk 'BEGIN &#123; i=0 &#125; &#123; ++i &#125; END &#123; print i &#125;' fileawk</div><div class="line"></div><div class="line">echo -e "lien1\nline2" | awk 'BEGIN &#123;print "start"&#125; &#123;print&#125; END &#123;print "end"&#125;'</div><div class="line">echo | awk '&#123;var1="var1"; var2="var2"; var3="var3"; print var1, var2, var3&#125;'</div><div class="line"></div><div class="line"></div><div class="line">echo -e "line1 f2 f3\nline2 f4 f5\nline3 f6 f7" | awk '&#123;print "Line no:"NR",No of fields:"NF, "$0="$0, "$1="$1, "$2="$2,"$3="$3&#125;'</div><div class="line"></div><div class="line"></div><div class="line">awk '&#123;print $3,$2&#125;' file   #打印文件中每一行的第2和第3个字段</div><div class="line">awk 'END&#123;print NR&#125;' file   #统计文件行数</div><div class="line"></div><div class="line">seq 5 | awk 'BEGIN&#123;sum=0; print "Summation:"&#125; &#123;print $1"+"; sum+=$1&#125; END&#123;print "=="; print sum&#125;'</div><div class="line"></div><div class="line">var=10000</div><div class="line">echo | awk -v VARIABLE=$VAR'&#123;print VARIABLE&#125;'</div><div class="line"></div><div class="line"><span class="meta">#</span>传入多个外部变量</div><div class="line">var1="variable1"; var2="variable2"</div><div class="line">echo | awk '&#123;print v1,v2&#125;' v1=$var1 v2=$var2</div><div class="line"></div><div class="line">awk '&#123;print v1,v2&#125;' v1=$var1 v2=$var2 filename</div><div class="line"></div><div class="line">seq 5 | awk 'BEGIN&#123;getline; print "read first line", $0&#125; &#123;print $0&#125;'</div><div class="line"></div><div class="line">awk 'NR &lt; 5'        #行号 &lt;5</div><div class="line">awk 'NR==1, NR==4'  #行号在1-5之间</div><div class="line">awk 'NR==1, NR==4' filename  </div><div class="line">awk '/linux/'       #包含linux的行</div><div class="line">awk '!/linux/'      #不包含linux的行</div><div class="line"></div><div class="line"><span class="meta">#</span>指定定届符</div><div class="line">awk -F: '&#123;print $NF&#125;' /etc/passwd</div><div class="line">awk 'BEGIN &#123; FS=":"&#125; &#123;print $NF&#125;' /etc/passwd</div><div class="line"></div><div class="line"><span class="meta">#</span> grep root /etc/passwd的输出读入到cmdout， 这里注意管道的使用</div><div class="line">echo | awk '&#123; "grep root /etc/passwd" | getline cmdout; print cmdout&#125;'</div></pre></td></tr></table></figure>
+<p>awk提供了一些<strong>内建函数</strong>供我们使用，其中 awk 常用的内建函数如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">length(string)</div><div class="line">index(string, search_string)</div><div class="line">substr(string, start_point, end_point)</div><div class="line">sub(regex, replacement_str, string)</div><div class="line">gsub(regex, replacement_str, string)</div><div class="line">match(regex, string)</div></pre></td></tr></table></figure>
+<hr>
+<h3 id="paste-rev-tac"><a href="#paste-rev-tac" class="headerlink" title="paste, rev, tac"></a>paste, rev, tac</h3><p>paste能够按列对文本进行拼接，默认定界符为\t, rev 能够对字符串进行反转操作，tac 则是进行行反转：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">paste file1 file2        #按列拼接, 默认定界符是\t</div><div class="line">paste -d "," version1.txt version2.txt	#指定定界符为 ','</div><div class="line"></div><div class="line">echo "hellow world" | rev		# 字符串反转</div><div class="line"></div><div class="line">echo -e "hello\nworld" | tac	# 行反转</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -527,7 +524,7 @@
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://pengxiaolei.com/2018/06/29/20180629-java-threadsafety/" title="Java中的线程安全性">https://pengxiaolei.com/2018/06/29/20180629-java-threadsafety/</a>
+      <a href="https://pengxiaolei.com/2018/07/09/20180709-shell-fileoperation3/" title="Shell学习之玩转文本操作第三篇">https://pengxiaolei.com/2018/07/09/20180709-shell-fileoperation3/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -543,7 +540,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Java/" rel="tag"># Java</a>
+            <a href="/tags/Shell/" rel="tag"># Shell</a>
           
         </div>
       
@@ -556,8 +553,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/06/02/20180602-spring-mongodb/" rel="next" title="Spring学习之集成MongoDB">
-                <i class="fa fa-chevron-left"></i> Spring学习之集成MongoDB
+              <a href="/2018/07/07/20180707-shell-filerights/" rel="next" title="Shell学习之文件权限管理那些事儿">
+                <i class="fa fa-chevron-left"></i> Shell学习之文件权限管理那些事儿
               </a>
             
           </div>
@@ -565,10 +562,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/07/01/20180701-shell-initial/" rel="prev" title="Shell学习之入门篇">
-                Shell学习之入门篇 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -724,7 +717,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#原子性"><span class="nav-number">1.</span> <span class="nav-text">原子性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#锁机制"><span class="nav-number">2.</span> <span class="nav-text">锁机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#volatile"><span class="nav-number">3.</span> <span class="nav-text">volatile</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ThreadLocal"><span class="nav-number">4.</span> <span class="nav-text">ThreadLocal</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#grep-egrep"><span class="nav-number">1.</span> <span class="nav-text">grep, egrep</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cut"><span class="nav-number">2.</span> <span class="nav-text">cut</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sed"><span class="nav-number">3.</span> <span class="nav-text">sed</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#awk"><span class="nav-number">4.</span> <span class="nav-text">awk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#paste-rev-tac"><span class="nav-number">5.</span> <span class="nav-text">paste, rev, tac</span></a></li></ol></div>
             
 
           </div>
