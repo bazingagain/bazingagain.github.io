@@ -93,18 +93,18 @@
 
 
 
-<meta name="description" content="程序员">
+<meta name="description" content="在Linux中，针对网络文件的下载，shell提供了许多非常强大的命令。包括wget、curl等。  wgetwget是进行网络下载的命令之一，其功能非常强大，常用的使用示例如下： 123456789101112wget https://www.baidu.com  #下载页面，输出到stdoutwget url1 url2 url3wget url -O file.img -o logwget">
 <meta name="keywords" content="Shell">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Shell学习之网络管理那些事儿">
+<meta property="og:title" content="Shell学习之网络下载处理">
 <meta property="og:url" content="https://pengxiaolei.com/2018/07/10/20180710-shell-networkmanage/index.html">
 <meta property="og:site_name" content="bazingagain">
-<meta property="og:description" content="程序员">
+<meta property="og:description" content="在Linux中，针对网络文件的下载，shell提供了许多非常强大的命令。包括wget、curl等。  wgetwget是进行网络下载的命令之一，其功能非常强大，常用的使用示例如下： 123456789101112wget https://www.baidu.com  #下载页面，输出到stdoutwget url1 url2 url3wget url -O file.img -o logwget">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-10T15:44:37.373Z">
+<meta property="og:updated_time" content="2018-07-11T15:39:46.714Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Shell学习之网络管理那些事儿">
-<meta name="twitter:description" content="程序员">
+<meta name="twitter:title" content="Shell学习之网络下载处理">
+<meta name="twitter:description" content="在Linux中，针对网络文件的下载，shell提供了许多非常强大的命令。包括wget、curl等。  wgetwget是进行网络下载的命令之一，其功能非常强大，常用的使用示例如下： 123456789101112wget https://www.baidu.com  #下载页面，输出到stdoutwget url1 url2 url3wget url -O file.img -o logwget">
 
 
 
@@ -138,7 +138,7 @@
 
 
 
-  <title> Shell学习之网络管理那些事儿 | bazingagain </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> Shell学习之网络下载处理 | bazingagain </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -327,7 +327,7 @@
             
             
               
-                Shell学习之网络管理那些事儿
+                Shell学习之网络下载处理
               
             
           </h1>
@@ -393,7 +393,7 @@
 
           
           
-             <span id="/2018/07/10/20180710-shell-networkmanage/" class="leancloud_visitors" data-flag-title="Shell学习之网络管理那些事儿">
+             <span id="/2018/07/10/20180710-shell-networkmanage/" class="leancloud_visitors" data-flag-title="Shell学习之网络下载处理">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -422,7 +422,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  0
+                  381
                 </span>
               
 
@@ -438,7 +438,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -457,7 +457,17 @@
       
 
       
-        
+        <p>在Linux中，针对网络文件的下载，shell提供了许多非常强大的命令。包括wget、curl等。</p>
+<hr>
+<h3 id="wget"><a href="#wget" class="headerlink" title="wget"></a>wget</h3><p>wget是进行网络下载的命令之一，其功能非常强大，常用的使用示例如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">wget https://www.baidu.com  #下载页面，输出到stdout</div><div class="line">wget url1 url2 url3</div><div class="line">wget url -O file.img -o log</div><div class="line">wget -t 5 URL   #指定重试次数</div><div class="line"></div><div class="line">wget --limit-rate 20k URL #设置下载最大带宽</div><div class="line">wget -Q 100m URL    #设置下载配额（quota）, 即下载的总容量</div><div class="line">wget -c URL     #断点续传, 从断点开始继续下载</div><div class="line">wget --mirror URL #复制网站镜像，下载一个网站所有页面</div><div class="line">wget -r -N -l DEPTH URL #同上</div><div class="line">wget --user username --password password URL    #访问需要认证的URL</div><div class="line">wget URL --post-data "name1=value1&amp;name2=value2" -O output.html     #wget使用post请求</div></pre></td></tr></table></figure>
+<hr>
+<h3 id="curl"><a href="#curl" class="headerlink" title="curl"></a>curl</h3><p>curl是shell中进行网络下载的另一个常用的命令，其功能比weget更为强大, 其使用案例如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">curl URL &gt; file.html</div><div class="line"></div><div class="line">curl URL --silent -o    #--silent 不显示进度信息，-o 将输出写入到文件</div><div class="line">curl URL --silent -o newfile</div><div class="line">curl URL -o newfile  --progress #显示进度条</div><div class="line"></div><div class="line">curl --referer Reference_URL target_url   #指定referer</div><div class="line"></div><div class="line">curl URL --cookie "user=leon;password=root"     #使用cookie</div><div class="line">curl URL --cookie-jar cookie-file   #将cookie存入cookie-file</div><div class="line"></div><div class="line">curl URL --user-agent "Mozilla/5.0" #使用代理</div><div class="line"></div><div class="line">curl URL --limit-rate 20k    #设置下载最大带宽</div><div class="line">curl URL --max-filesize 100m #设置可下载的最大文件大小</div><div class="line"></div><div class="line">curl -u user:pass URL       # HTTP认证</div><div class="line"></div><div class="line">curl --data "name1=value1&amp;name2=value2" URL -o output.html     #curl使用post请求</div></pre></td></tr></table></figure>
+<hr>
+<h3 id="lynx"><a href="#lynx" class="headerlink" title="lynx"></a>lynx</h3><p>lynx能将网页以ASC II形式下载到本地 :</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">lynx -dump https://news.ycombinator.com/ &gt; webpage.txt</div></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -506,7 +516,7 @@
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://pengxiaolei.com/2018/07/10/20180710-shell-networkmanage/" title="Shell学习之网络管理那些事儿">https://pengxiaolei.com/2018/07/10/20180710-shell-networkmanage/</a>
+      <a href="https://pengxiaolei.com/2018/07/10/20180710-shell-networkmanage/" title="Shell学习之网络下载处理">https://pengxiaolei.com/2018/07/10/20180710-shell-networkmanage/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -592,8 +602,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/avatar.jpg"
@@ -680,6 +699,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#wget"><span class="nav-number">1.</span> <span class="nav-text">wget</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#curl"><span class="nav-number">2.</span> <span class="nav-text">curl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lynx"><span class="nav-number">3.</span> <span class="nav-text">lynx</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
