@@ -1,4 +1,5 @@
-https://pengxiaolei.com/2018/07/10/20180710-shell-networkmanage/
+https://pengxiaolei.com/2018/07/12/20180712-shell-networkmanage/
+https://pengxiaolei.com/2018/07/10/20180710-shell-networkdownload/
 https://pengxiaolei.com/2018/07/09/20180709-shell-fileoperation3/
 https://pengxiaolei.com/2018/07/07/20180707-shell-filerights/
 https://pengxiaolei.com/2018/07/05/20180705-shell-fileoperation2/
