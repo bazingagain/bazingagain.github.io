@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Java,MyBatis," />
+  <meta name="keywords" content="Shell," />
 
 
 
@@ -93,20 +93,18 @@
 
 
 
-<meta name="description" content="MyBatis的框架结构MyBatis的整体框架从上层调用层到底层支持层可以分为三层：接口层、数据处理层、以及基础支持层。 具体分层图如下：  接口层接口层提供具体使用的API接口给外部调用，主要基于Mapper提供的接口，在内部用StatementId识别。 数据处理层数据处理层包括：参数映射，SQL解析，SQL执行，结果映射。  参数映射对参数映射的配置解析以及参数类型解析的过程，底层使用Pa">
-<meta name="keywords" content="Java,MyBatis">
+<meta name="description" content="本节为Shell学习篇的最后一篇，主要讲解磁盘管理du、df，进程管理ps、top、pgrep、kill等，以及任务调度crontab。  du, dfdu (disk usage) 主要是查看文件占用磁盘情况, df（disk free）则是查看磁盘可用空间信息： 123456789101112131415161718192021222324252627282930du args.txt">
+<meta name="keywords" content="Shell">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MyBatis学习第五篇 - MyBatis源码剖析之整体框架">
-<meta property="og:url" content="https://pengxiaolei.com/2017/10/31/mybatis-code-analysis-framework/index.html">
+<meta property="og:title" content="Shell学习之系统管理相关命令">
+<meta property="og:url" content="https://pengxiaolei.com/2018/07/15/20180715-shell-manage/index.html">
 <meta property="og:site_name" content="bazingagain">
-<meta property="og:description" content="MyBatis的框架结构MyBatis的整体框架从上层调用层到底层支持层可以分为三层：接口层、数据处理层、以及基础支持层。 具体分层图如下：  接口层接口层提供具体使用的API接口给外部调用，主要基于Mapper提供的接口，在内部用StatementId识别。 数据处理层数据处理层包括：参数映射，SQL解析，SQL执行，结果映射。  参数映射对参数映射的配置解析以及参数类型解析的过程，底层使用Pa">
+<meta property="og:description" content="本节为Shell学习篇的最后一篇，主要讲解磁盘管理du、df，进程管理ps、top、pgrep、kill等，以及任务调度crontab。  du, dfdu (disk usage) 主要是查看文件占用磁盘情况, df（disk free）则是查看磁盘可用空间信息： 123456789101112131415161718192021222324252627282930du args.txt">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://bazingagain.github.io/images/mybatis/2017_10_31/mybatis-framework.png">
-<meta property="og:updated_time" content="2017-11-01T14:46:16.000Z">
+<meta property="og:updated_time" content="2018-07-15T15:24:50.768Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MyBatis学习第五篇 - MyBatis源码剖析之整体框架">
-<meta name="twitter:description" content="MyBatis的框架结构MyBatis的整体框架从上层调用层到底层支持层可以分为三层：接口层、数据处理层、以及基础支持层。 具体分层图如下：  接口层接口层提供具体使用的API接口给外部调用，主要基于Mapper提供的接口，在内部用StatementId识别。 数据处理层数据处理层包括：参数映射，SQL解析，SQL执行，结果映射。  参数映射对参数映射的配置解析以及参数类型解析的过程，底层使用Pa">
-<meta name="twitter:image" content="https://bazingagain.github.io/images/mybatis/2017_10_31/mybatis-framework.png">
+<meta name="twitter:title" content="Shell学习之系统管理相关命令">
+<meta name="twitter:description" content="本节为Shell学习篇的最后一篇，主要讲解磁盘管理du、df，进程管理ps、top、pgrep、kill等，以及任务调度crontab。  du, dfdu (disk usage) 主要是查看文件占用磁盘情况, df（disk free）则是查看磁盘可用空间信息： 123456789101112131415161718192021222324252627282930du args.txt">
 
 
 
@@ -134,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="https://pengxiaolei.com/2017/10/31/mybatis-code-analysis-framework/"/>
+  <link rel="canonical" href="https://pengxiaolei.com/2018/07/15/20180715-shell-manage/"/>
 
 
 
 
 
-  <title> MyBatis学习第五篇 - MyBatis源码剖析之整体框架 | bazingagain </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> Shell学习之系统管理相关命令 | bazingagain </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -308,7 +306,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://pengxiaolei.com/2017/10/31/mybatis-code-analysis-framework/">
+    <link itemprop="mainEntityOfPage" href="https://pengxiaolei.com/2018/07/15/20180715-shell-manage/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Xiaolei Peng">
@@ -329,7 +327,7 @@
             
             
               
-                MyBatis学习第五篇 - MyBatis源码剖析之整体框架
+                Shell学习之系统管理相关命令
               
             
           </h1>
@@ -344,8 +342,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-31T10:10:38+08:00">
-                2017-10-31
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-15T22:54:34+08:00">
+                2018-07-15
               </time>
             
 
@@ -367,8 +365,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MyBatis/" itemprop="url" rel="index">
-                    <span itemprop="name">MyBatis</span>
+                  <a href="/categories/Shell/" itemprop="url" rel="index">
+                    <span itemprop="name">Shell</span>
                   </a>
                 </span>
 
@@ -386,8 +384,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/2017/10/31/mybatis-code-analysis-framework/#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/10/31/mybatis-code-analysis-framework/" itemprop="commentsCount"></span>
+                <a href="/2018/07/15/20180715-shell-manage/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2018/07/15/20180715-shell-manage/" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -395,7 +393,7 @@
 
           
           
-             <span id="/2017/10/31/mybatis-code-analysis-framework/" class="leancloud_visitors" data-flag-title="MyBatis学习第五篇 - MyBatis源码剖析之整体框架">
+             <span id="/2018/07/15/20180715-shell-manage/" class="leancloud_visitors" data-flag-title="Shell学习之系统管理相关命令">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -424,7 +422,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  492
+                  552
                 </span>
               
 
@@ -459,22 +457,30 @@
       
 
       
-        <h3 id="MyBatis的框架结构"><a href="#MyBatis的框架结构" class="headerlink" title="MyBatis的框架结构"></a>MyBatis的框架结构</h3><p>MyBatis的整体框架从上层调用层到底层支持层可以分为三层：接口层、数据处理层、以及基础支持层。</p>
-<p><a href="http://chenjc-it.iteye.com/blog/1460990" target="_blank" rel="external">具体分层图</a>如下：</p>
-<p><img src="https://bazingagain.github.io/images/mybatis/2017_10_31/mybatis-framework.png" alt="MyBatis框架结构"></p>
-<h4 id="接口层"><a href="#接口层" class="headerlink" title="接口层"></a>接口层</h4><p>接口层提供具体使用的API接口给外部调用，主要基于Mapper提供的接口，在内部用StatementId识别。</p>
-<h4 id="数据处理层"><a href="#数据处理层" class="headerlink" title="数据处理层"></a>数据处理层</h4><p>数据处理层包括：参数映射，SQL解析，SQL执行，结果映射。</p>
+        <p>本节为Shell学习篇的最后一篇，主要讲解磁盘管理du、df，进程管理ps、top、pgrep、kill等，以及任务调度crontab。</p>
+<hr>
+<h3 id="du-df"><a href="#du-df" class="headerlink" title="du, df"></a>du, df</h3><p>du (disk usage) 主要是查看文件占用磁盘情况, df（disk free）则是查看磁盘可用空间信息：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">du args.txt     #默认以字节为计算单位</div><div class="line"></div><div class="line">du -a filestore/    #递归输出目录及文件</div><div class="line"></div><div class="line">du -h args.txt  #以更友好的方式进行打印</div><div class="line"></div><div class="line"><span class="meta">#</span>总计文件占用信息，有一个total汇总信息</div><div class="line">du -c args.txt temp.txt</div><div class="line">du -c filestore/</div><div class="line">du -c *.txt</div><div class="line"></div><div class="line">du -sh filestore/   #-s 合计， 只打印总计信息</div><div class="line"></div><div class="line"><span class="meta">#</span>特定单位打印, b 字节， k kB，m MB</div><div class="line">du -b file      </div><div class="line">du -k file</div><div class="line">du -m file</div><div class="line">du -B BLOACK_SIZE file</div><div class="line"></div><div class="line">du --exclude "*.txt" files  #包括</div><div class="line">du --max-depth 2 filestore/ </div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">#</span>找出文件中最大的10个文件(包含目录)</div><div class="line">du -ak filestore/ | sort -nrk 1 | head</div><div class="line"></div><div class="line"><span class="meta">#</span>找出文件中最大的10个文件(排除目录)</div><div class="line">find . -type f -exec du -k &#123;&#125; \; | sort -nrk 1 | head</div><div class="line"></div><div class="line">df -h   #打印磁盘可用空间信息</div></pre></td></tr></table></figure>
+<hr>
+<h3 id="ps-top"><a href="#ps-top" class="headerlink" title="ps, top"></a>ps, top</h3><p>ps 查看进程相关信息:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">ps -f</div><div class="line">ps -e | head</div><div class="line">ps -eo comm,pcpu | head     #显示需要输出的列</div><div class="line">ps -eo comm,pcpu --sort -pcpu | head</div><div class="line"></div><div class="line">top     #显示进程运行状况</div></pre></td></tr></table></figure>
+<hr>
+<h3 id="kill-killall"><a href="#kill-killall" class="headerlink" title="kill, killall"></a>kill, killall</h3><p>kill 进行给进程发送信号，可以终止线程:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">kill -l</div><div class="line">kill -9 tomcat</div><div class="line"></div><div class="line">killall -9 gedit</div></pre></td></tr></table></figure>
+<hr>
+<h3 id="crontab"><a href="#crontab" class="headerlink" title="crontab"></a>crontab</h3><p>在shell中进行任务调度时，一般使用cron进行任务调度, 其中，cron的每一条目都由6部分组成：</p>
 <ul>
-<li>参数映射对参数映射的配置解析以及参数类型解析的过程，底层使用ParameterHandler来处理</li>
-<li>Sql解析主要包含对SQL语句的配置解析和SQL语句的动态生成，使用SqlSource对Sql语句进行包装</li>
-<li>Sql执行主要是使用SimpleExecutor，BatchExecutor以及ReuseExecutor来调用JDBC执行具体的逻辑</li>
-<li>结果映射层主要包含对结果映射的配置解析，数据转型等工作，底层使用ResultSetHandler处理</li>
+<li>分钟（0-59）</li>
+<li>小时（0-23）</li>
+<li>天（1-31）</li>
+<li>月份（1-12）</li>
+<li>工作日（0-6）</li>
+<li>命令</li>
 </ul>
-<h4 id="基础支持层"><a href="#基础支持层" class="headerlink" title="基础支持层"></a>基础支持层</h4><p>基础支持层提供最为基础和底层服务，包括数据库的连接管理、事务管理、配置加载和缓存管理。它们为上层的逻辑处理提供最根本的支撑。</p>
-<h3 id="MyBatis的主体流程"><a href="#MyBatis的主体流程" class="headerlink" title="MyBatis的主体流程"></a>MyBatis的主体流程</h3><p>MyBatis首先解析MyBatis的XML配置文件，生成相应的配置，再解析Mapper映射文件，生成相应的MaperStatemnt等映射对象，初始化数据库连接、缓存管理、事务管理等机制。生成Sqlsession对象，通过SqlSession对象执行相应的操作。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>MyBatis通过半自动化的ORM机制，提供了对JDBC的灵活的封装，上手简单，内部通过一二级缓存，事务管理，连接池机制提供了更加实用的机制，适用于灵活多变的项目，但其也存在配置比较复杂，配置兼容性低，面向对象程度不够的缺点。</p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="http://chenjc-it.iteye.com/blog/1460990" target="_blank" rel="external">1. MyBatis框架整体设计</a><br><a href="http://blog.csdn.net/luanlouis/article/details/40422941" target="_blank" rel="external">2. MyBatis的架构设计以及实例分析</a></p>
-
+<p>其中（*）指定命令应该在每个阶段都执行命令，</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> task.cron</div><div class="line">00 02 * * * /home/leon/script.sh        #每天凌晨2点执行脚本</div><div class="line">00 5,6,7 * * * /home/leon/script.sh     #每天的5，6，7小时执行脚本</div><div class="line">00 */12 * * 0 /home/leon/script.sh      #每个星期天的没小时执行脚本</div><div class="line"></div><div class="line"><span class="meta">#</span> 运行方式1，（脚本运行）：</div><div class="line"><span class="meta">$</span> crontab task.cron</div><div class="line"></div><div class="line"><span class="meta">#</span> 运行方式2, (行内运行)：</div><div class="line"></div><div class="line">crontab&lt;&lt;EOF</div><div class="line">02 * * * * * /home/leon/script.sh</div><div class="line">EOF</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">#</span>列出crontab中的任务</div><div class="line">crontab -l</div><div class="line">crontab -l -u leon</div><div class="line"></div><div class="line"><span class="meta">#</span>删除crontab中的任务</div><div class="line">crontab -r</div><div class="line">crontab -u leon -r</div></pre></td></tr></table></figure>
+<hr>
+<h3 id="其它一些命令"><a href="#其它一些命令" class="headerlink" title="其它一些命令"></a>其它一些命令</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">time ls</div><div class="line"></div><div class="line">who     #当前用户</div><div class="line">w</div><div class="line">users</div><div class="line">uptime</div><div class="line">last</div><div class="line">watch ls</div><div class="line">watch -n 5 'ls -l'  #每隔5秒输出1次</div><div class="line"></div><div class="line">which ls   #输出命令位置</div><div class="line"></div><div class="line">hostname    #主机名</div><div class="line">uname -n    #当前用户名</div><div class="line">uname -r    #当前系统版本</div><div class="line">uname -m    #当前系统架构</div></pre></td></tr></table></figure>
       
     </div>
 
@@ -523,7 +529,7 @@
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://pengxiaolei.com/2017/10/31/mybatis-code-analysis-framework/" title="MyBatis学习第五篇 - MyBatis源码剖析之整体框架">https://pengxiaolei.com/2017/10/31/mybatis-code-analysis-framework/</a>
+      <a href="https://pengxiaolei.com/2018/07/15/20180715-shell-manage/" title="Shell学习之系统管理相关命令">https://pengxiaolei.com/2018/07/15/20180715-shell-manage/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -539,9 +545,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Java/" rel="tag"># Java</a>
-          
-            <a href="/tags/MyBatis/" rel="tag"># MyBatis</a>
+            <a href="/tags/Shell/" rel="tag"># Shell</a>
           
         </div>
       
@@ -554,8 +558,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/29/mybatis-code-analysis-cache/" rel="next" title="MyBatis学习第四篇 - MyBatis源码剖析之缓存">
-                <i class="fa fa-chevron-left"></i> MyBatis学习第四篇 - MyBatis源码剖析之缓存
+              <a href="/2018/07/12/20180712-shell-networkmanage/" rel="next" title="Shell学习之网络管理相关命令">
+                <i class="fa fa-chevron-left"></i> Shell学习之网络管理相关命令
               </a>
             
           </div>
@@ -563,10 +567,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/11/02/nlp-language-model/" rel="prev" title="自然语言处理-语言模型">
-                自然语言处理-语言模型 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -722,7 +722,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#MyBatis的框架结构"><span class="nav-number">1.</span> <span class="nav-text">MyBatis的框架结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#接口层"><span class="nav-number">1.1.</span> <span class="nav-text">接口层</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据处理层"><span class="nav-number">1.2.</span> <span class="nav-text">数据处理层</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基础支持层"><span class="nav-number">1.3.</span> <span class="nav-text">基础支持层</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MyBatis的主体流程"><span class="nav-number">2.</span> <span class="nav-text">MyBatis的主体流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#du-df"><span class="nav-number">1.</span> <span class="nav-text">du, df</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ps-top"><span class="nav-number">2.</span> <span class="nav-text">ps, top</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kill-killall"><span class="nav-number">3.</span> <span class="nav-text">kill, killall</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#crontab"><span class="nav-number">4.</span> <span class="nav-text">crontab</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其它一些命令"><span class="nav-number">5.</span> <span class="nav-text">其它一些命令</span></a></li></ol></div>
             
 
           </div>
