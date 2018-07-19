@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>https://pengxiaolei.com/2018/07/19/20180719-hive-install/</loc>
+    <lastmod>2018-07-19T17:01:07.364Z</lastmod>
+    <data>
+        <display>
+        <title>Hive学习入门之Hive简介与安装</title>
+        <pubTime>2018-07-19T14:52:14.000Z</pubTime>
+        
+        <tag>Hive</tag>
+         
+         
+           
+             
+              <breadCrumb title="Hive" url="https://pengxiaolei.com/categories/Hive/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://pengxiaolei.com/2018/07/15/20180715-shell-manage/</loc>
     <lastmod>2018-07-15T15:24:50.768Z</lastmod>
     <data>
@@ -475,9 +495,9 @@
         <title>Spring学习之缓存的使用</title>
         <pubTime>2018-03-13T14:39:43.000Z</pubTime>
         
-        <tag>Java</tag>
-         
         <tag>Spring</tag>
+         
+        <tag>Java</tag>
          
          
            
@@ -497,9 +517,9 @@
         <title>Spring学习之整合Redis</title>
         <pubTime>2018-02-07T05:38:48.000Z</pubTime>
         
-        <tag>Java</tag>
-         
         <tag>Spring</tag>
+         
+        <tag>Java</tag>
          
         <tag>Redis</tag>
          
@@ -521,9 +541,9 @@
         <title>Spring学习之AOP</title>
         <pubTime>2018-01-22T02:06:19.000Z</pubTime>
         
-        <tag>Java</tag>
-         
         <tag>Spring</tag>
+         
+        <tag>Java</tag>
          
          
            
@@ -543,9 +563,9 @@
         <title>Spring学习之SpEL表达式</title>
         <pubTime>2018-01-15T08:52:18.000Z</pubTime>
         
-        <tag>Java</tag>
-         
         <tag>Spring</tag>
+         
+        <tag>Java</tag>
          
          
            
@@ -565,9 +585,9 @@
         <title>Spring学习之Bean的高级装配</title>
         <pubTime>2018-01-15T08:03:01.000Z</pubTime>
         
-        <tag>Java</tag>
-         
         <tag>Spring</tag>
+         
+        <tag>Java</tag>
          
          
            
@@ -587,9 +607,9 @@
         <title>Spring学习之Bean的装配方式</title>
         <pubTime>2018-01-12T07:51:46.000Z</pubTime>
         
-        <tag>Java</tag>
-         
         <tag>Spring</tag>
+         
+        <tag>Java</tag>
          
          
            
