@@ -103,7 +103,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://bazingagain.github.io/images/hive/hive_20180719_pic1.png">
 <meta property="og:image" content="https://bazingagain.github.io/images/hive/hive_20180719_pic2.jpg">
-<meta property="og:updated_time" content="2018-07-19T17:01:07.364Z">
+<meta property="og:updated_time" content="2018-07-19T17:05:58.116Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hive学习入门之Hive简介与安装">
 <meta name="twitter:description" content="什么是Hive？Apache Hive 是由Facebook开发的用于查询存储在HDFS上的数据的一个组件，是Apache Hadoop生态系统组件之一。Hive提供SQL-like查询模式，即Hive Query Language(HQL)进行大数据的访问和分析，并被视为Hadoop 数据仓库框架(Data Warehousing Framework)，提供多种分析特性，如windowing 和">
@@ -475,36 +475,22 @@
 <li>可扩展（集群规模扩展方面），（用户自定义函数）</li>
 </ul>
 <hr>
-<h3 id="如何安装Hive？"><a href="#如何安装Hive？" class="headerlink" title="如何安装Hive？"></a>如何安装Hive？</h3><ol>
-<li><p>下载Hive包，点<a href="https://hive.apache.org/downloads.html" target="_blank" rel="external">下载网站</a>进行下载。</p>
-</li>
-<li><p>解压</p>
-</li>
-</ol>
+<h3 id="如何安装Hive？"><a href="#如何安装Hive？" class="headerlink" title="如何安装Hive？"></a>如何安装Hive？</h3><p>1.下载Hive包，点<a href="https://hive.apache.org/downloads.html" target="_blank" rel="external">下载网站</a>进行下载。</p>
+<p>2.解压</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">leon@Xiaolei-Peng:~/bigdata/hive$ tar xzf apache-hive-3.0.0-bin.tar.gz</div></pre></td></tr></table></figure>
-<ol>
-<li>添加环境变量</li>
-</ol>
+<p>3.添加环境变量</p>
 <p>修改 ~/.bash_profile :</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">export HIVE_HOME=/Users/alex/Development/bigdata/hive/apache-hive-3.0.0-bin</div><div class="line">export PATH=$PATH:$HIVE_HOME/bin</div></pre></td></tr></table></figure>
 <p>然后使用命令<code>source ~/.bash_profile</code>生效</p>
-<ol>
-<li>配置hive-site.xml</li>
-</ol>
+<p>4.配置hive-site.xml</p>
 <p>首先生成hive-site.xml</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> cd conf/</div><div class="line"><span class="meta">$</span> cp hive-default.xml.template hive-site.xml</div></pre></td></tr></table></figure>
 <p>然后打开该xml文件，使用mysql作为Metastore存储配置如下：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">property&gt;</div><div class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.metastore.warehouse.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>/Users/alex/Development/bigdata/hive/apache-hive-3.0.0-bin/warehouse<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span>location of default database for the warehouse<span class="tag">&lt;/<span class="name">description</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"> </div><div class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionURL<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>jdbc:mysql://localhost:3306/hive_metastore?characterEncoding=UTF-8<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span>JDBC connect string for a JDBC metastore<span class="tag">&lt;/<span class="name">description</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"> </div><div class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionDriverName<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>com.mysql.jdbc.Driver<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span>Driver class name for a JDBC metastore<span class="tag">&lt;/<span class="name">description</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"> </div><div class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionUserName<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>root<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span>username to use against metastore database<span class="tag">&lt;/<span class="name">description</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"> </div><div class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionPassword<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>root<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span>password to use against metastore database<span class="tag">&lt;/<span class="name">description</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div></pre></td></tr></table></figure>
-<ol>
-<li>添加mysql-connector驱动</li>
-</ol>
+<p>5.添加mysql-connector驱动</p>
 <p>将mysql-connector-java-xxx-bin.jar 拷贝到 $HIVE_HOME/lib/ 目录下</p>
-<ol>
-<li><p>启动mysql，Hadoop服务</p>
-</li>
-<li><p>终端输入命令: <code>hive</code></p>
-</li>
-</ol>
+<p>6.启动mysql，Hadoop服务</p>
+<p>7.终端输入命令: <code>hive</code></p>
 <p>正常情况下，命令行下使用hive就可以运行了，但是实际情况并非如此，我在运行时遇到了如下情况：</p>
 <ul>
 <li><p><strong>SLF4J: Found binding in log4j-slf4j-impl-2.4.1.jar</strong></p>
