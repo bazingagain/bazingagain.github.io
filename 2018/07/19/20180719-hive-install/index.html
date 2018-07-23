@@ -103,7 +103,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://bazingagain.github.io/images/hive/hive_20180719_pic1.png">
 <meta property="og:image" content="https://bazingagain.github.io/images/hive/hive_20180719_pic2.jpg">
-<meta property="og:updated_time" content="2018-07-19T17:05:58.116Z">
+<meta property="og:updated_time" content="2018-07-22T14:31:53.265Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hive学习入门之Hive简介与安装">
 <meta name="twitter:description" content="什么是Hive？Apache Hive 是由Facebook开发的用于查询存储在HDFS上的数据的一个组件，是Apache Hadoop生态系统组件之一。Hive提供SQL-like查询模式，即Hive Query Language(HQL)进行大数据的访问和分析，并被视为Hadoop 数据仓库框架(Data Warehousing Framework)，提供多种分析特性，如windowing 和">
@@ -425,7 +425,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  797
+                  851
                 </span>
               
 
@@ -504,6 +504,10 @@
 <li><p><strong>Relative path in absolute URI: ${system:java.io.tmpdir%7D/$%7Bsystem:user.name%</strong></p>
 <p>  原因：未找到system:java.io.tmpdir 及 system:user.name定义</p>
 <p>  解决方案：在hive安装目录下<code>mkdir tmpdir</code>, 然后将<code>&lt;value&gt;${system:java.io.tmpdir}/${system:user.name}&lt;/value&gt;</code>修改为<code>&lt;value&gt;/Users/alex/Development/bigdata/hive/apache-hive-3.0.0-bin/tempdir/${user.name}&lt;/value&gt;</code></p>
+</li>
+<li><p><strong>使用 show databases;时出现 OPTION SQL_SELECT_LIMIT=DEFAULT 错误</strong></p>
+<p>  原因：mysql-connector版本过低，set OPTION SQL_SELECT_LIMIT=DEFAULT无效果</p>
+<p>  解决方案：下载最新版本的mysql-connector, 放入hive/lib中，替换掉低版本的mysql-connector</p>
 </li>
 </ul>
 <p>在解决了以上问题后，hive最终顺利启动。</p>
@@ -597,6 +601,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/07/23/20180723-hue-install/" rel="prev" title="记录一次在Mac下安装Hue的过程">
+                记录一次在Mac下安装Hue的过程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -669,7 +677,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">47</span>
+                <span class="site-state-item-count">48</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -691,7 +699,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-count">30</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
