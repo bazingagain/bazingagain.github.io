@@ -1,0 +1,1168 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+<meta name="baidu-site-verification" content="25bXybxIfw" />
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|consolas:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="git," />
+
+
+
+
+
+
+
+
+
+<link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+
+
+
+
+<meta name="description" content="主要概念工作区：git init的当前目录，工程的根目录下，对所有文件的信息抽象 版本库：.git目录 stage暂存区：版本库中的stage暂存区，git add会将数据存到stage 分支：一个版本库中有多个分支：master，dev等，每个分支保存文件的修改信息，commit会将文件的修改保存到分支 stash： 保存工作现场 .gitignore: git忽略文件，要忽略某种文件时，可以把">
+<meta name="keywords" content="git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git 常用命令总结">
+<meta property="og:url" content="https://pengxiaolei.com/2018/08/08/20180808-git-command/index.html">
+<meta property="og:site_name" content="bazingagain">
+<meta property="og:description" content="主要概念工作区：git init的当前目录，工程的根目录下，对所有文件的信息抽象 版本库：.git目录 stage暂存区：版本库中的stage暂存区，git add会将数据存到stage 分支：一个版本库中有多个分支：master，dev等，每个分支保存文件的修改信息，commit会将文件的修改保存到分支 stash： 保存工作现场 .gitignore: git忽略文件，要忽略某种文件时，可以把">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-07T18:31:19.466Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git 常用命令总结">
+<meta name="twitter:description" content="主要概念工作区：git init的当前目录，工程的根目录下，对所有文件的信息抽象 版本库：.git目录 stage暂存区：版本库中的stage暂存区，git add会将数据存到stage 分支：一个版本库中有多个分支：master，dev等，每个分支保存文件的修改信息，commit会将文件的修改保存到分支 stash： 保存工作现场 .gitignore: git忽略文件，要忽略某种文件时，可以把">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://pengxiaolei.com/2018/08/08/20180808-git-command/"/>
+
+
+
+
+
+  <title> Git 常用命令总结 | bazingagain </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?fb461a34697287073d7b084456ec83ec";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65562161";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">bazingagain</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">行者常至、为者常成</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://pengxiaolei.com/2018/08/08/20180808-git-command/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xiaolei Peng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="bazingagain">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Git 常用命令总结
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-08T02:30:22+08:00">
+                2018-08-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Git/" itemprop="url" rel="index">
+                    <span itemprop="name">Git</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2018/08/08/20180808-git-command/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2018/08/08/20180808-git-command/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+             <span id="/2018/08/08/20180808-git-command/" class="leancloud_visitors" data-flag-title="Git 常用命令总结">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>访问次数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1,397
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="主要概念"><a href="#主要概念" class="headerlink" title="主要概念"></a>主要概念</h3><p><strong>工作区</strong>：git init的当前目录，工程的根目录下，对所有文件的信息抽象</p>
+<p><strong>版本库</strong>：.git目录</p>
+<p><strong>stage暂存区</strong>：版本库中的stage暂存区，git add会将数据存到stage</p>
+<p><strong>分支</strong>：一个版本库中有多个分支：master，dev等，每个分支保存文件的修改信息，commit会将文件的修改保存到分支</p>
+<p><strong>stash</strong>： 保存工作现场</p>
+<p><strong>.gitignore</strong>: git忽略文件，要忽略某种文件时，可以把要忽略的文件名填进去，注意.gitignore要提交</p>
+<hr>
+<h3 id="基础命令"><a href="#基础命令" class="headerlink" title="基础命令"></a>基础命令</h3><ul>
+<li><p><strong>git init</strong> ：将目录变为仓库</p>
+</li>
+<li><p><strong>git add \<file></file></strong> 添加文件到仓库，可多次使用（实际上是将文件修改存放到stage暂存区）</p>
+</li>
+<li><p><strong>git commit -m “first commit”</strong> 把文件提交到仓库（实际上是将stage的所有内容提交到当前分支）</p>
+</li>
+</ul>
+<hr>
+<h3 id="版本回退、修改管理与撤销"><a href="#版本回退、修改管理与撤销" class="headerlink" title="版本回退、修改管理与撤销"></a>版本回退、修改管理与撤销</h3><ul>
+<li><p><strong>git log [–pretty=oneline]</strong> 显示从最近到最远的提交日志</p>
+</li>
+<li><p><strong>git reset –hard HEAD^</strong> 回退到上一版本（HEAD永远指向当前版本，HEAD^表示上1版本，HEAD^^表示上2版本，HEAD~100表示上100版本）</p>
+</li>
+<li><p><strong>git reset –hard 1094a</strong> 回退到指定的某一版本，1094a为某个commitID（SHA1计算得到）的前几位数，无需写全</p>
+</li>
+<li><p><strong>git reflog</strong> 查看你的每一次操作</p>
+</li>
+<li><p><strong>git status</strong> 查看工作区的状态</p>
+</li>
+<li><p><strong>git diff HEAD – readme.txt</strong> 查看工作区和版本库里面最新版本的区别</p>
+</li>
+<li><p><strong>git checkout – \<file></file></strong></p>
+<ol>
+<li><p>功能：丢弃工作区的修改：如果file修改后还没有放到stage，则撤销修改后就和版本库一模一样；如果file已放到stage，又进行了修改，现在撤销修改则是回到添加到stage后的状态</p>
+</li>
+<li><p><strong><em>误删工作区的文件，想恢复</em></strong>，则使用该命令可将版本库中的文件恢复到工作区</p>
+</li>
+</ol>
+</li>
+</ul>
+<ul>
+<li><p><strong>git reset HEAD \<file></file></strong> 修改已add（添加到了暂存区），但未commit，这时要撤销修改，该命令把暂存区(stage)的修改撤销掉，重新放回工作区</p>
+</li>
+<li><p><strong>git rm \<file></file></strong> 工作区删了file，但是版本库中没有，要保持一致，则使用该命令将版本库中的文件删除， <strong><em>之后需要commit</em></strong></p>
+</li>
+</ul>
+<hr>
+<h3 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h3><ul>
+<li><p><strong>git remote add origin git@github.com:bazingagain/learngit.git</strong></p>
+<p>  本地管理github远程库，将本地仓库内容推送到Github的origin远程库</p>
+</li>
+<li><p><strong>git push -u origin master</strong></p>
+<p>  把本地库当前的master分支的内容推送到远程新的master分支，-u 将本地master与远程master关联, 以后可简化使用 <code>git push origin master</code></p>
+</li>
+<li><p><strong>git clone git@github.com:bazingagain/gitskills.git</strong></p>
+<p>  克隆远程库得到本地库</p>
+</li>
+<li><p><strong>git remote -v</strong> 查看远程库信息</p>
+</li>
+<li><p><strong>git push origin dev</strong> 将本地dev分支内容推送到远程origin库</p>
+</li>
+<li><p><strong>git checkout -b dev origin/dev</strong> 创建远程的dev分支到本地</p>
+</li>
+<li><p><strong>git pull</strong> 把最新的提交从远程分支中拉取下来</p>
+</li>
+<li><p><strong>git branch –set-upstream-to=origin/dev dev</strong> 设置本地dev和远程origin/dev分支连接</p>
+</li>
+</ul>
+<blockquote>
+<p>tips<br>一般而言，我们只需将master和dev分支进行远程同步，而对于bug分支等，只需在本地进行bug修复，就没必要推送到远程了</p>
+</blockquote>
+<hr>
+<h3 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h3><h4 id="常用分支策略"><a href="#常用分支策略" class="headerlink" title="常用分支策略"></a>常用分支策略</h4><ul>
+<li><p><strong>git checkout -b dev</strong>    创建并切换到dev分支， -b表示创建并切换</p>
+</li>
+<li><p><strong>git branch</strong>        查看当前分支，当前分支前有*</p>
+</li>
+<li><p><strong>git branch dev</strong> 创建dev分支</p>
+</li>
+<li><p><strong>git checkout dev</strong> 切换到dev分支</p>
+</li>
+<li><p><strong>git merge dev</strong> </p>
+<p>  把dev分支的开发成果合并到master分支（注意此时是在切换到master分支后，使用该命令）, <strong>如果存在冲突，则需要对冲突的文件（合并到master后，冲突部分会在文件中显示）进行修改，然后add，commit</strong></p>
+</li>
+<li><p><strong>git merge –no-ff -m “merge with no-ff” dev</strong> </p>
+<p>  <strong><em>禁用Fast forward</em></strong>，Git就会在merge时生成一个新的commit，这样从分支历史上就可以看出分支信息（Fast forward的合并，在删除分支后，将丢到分支信息）</p>
+</li>
+<li><p><strong>git branch -d dev</strong>  删除dev分支</p>
+</li>
+<li><p><strong>git log –graph –pretty=oneline –abbrev-commit</strong> 查看分支的合并情况，以分支图的方式</p>
+</li>
+</ul>
+<h4 id="bug分支（stash的使用策略）"><a href="#bug分支（stash的使用策略）" class="headerlink" title="bug分支（stash的使用策略）"></a>bug分支（stash的使用策略）</h4><ul>
+<li><p><strong>git stash</strong> 把当前工作现场“储藏”起来，等以后恢复现场后继续工作</p>
+</li>
+<li><p><strong>git stash pop</strong> 恢复现场, 同时把stash内容也删了</p>
+</li>
+<li><p><strong>git stash apply</strong> 恢复现场, 但不删除stash内容</p>
+</li>
+<li><p><strong>git stash drop</strong> 删除stash中的内容</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">修复master分支的bug方法：</div><div class="line">当前分支: dev</div><div class="line">1.保存现场（即dev的修改）：</div><div class="line">git stash</div><div class="line"></div><div class="line">2.新建bug分支：</div><div class="line">git checkout master</div><div class="line">git checkout -b issue-101</div><div class="line"></div><div class="line">3.修复bug:</div><div class="line">git add readme.txt </div><div class="line">git commit -m "fix bug 101"</div><div class="line"></div><div class="line">4.合并bug分支的修改：</div><div class="line">git checkout master</div><div class="line">git merge --no-ff -m "merged bug fix 101" issue-101</div><div class="line"></div><div class="line">5.继续开发：</div><div class="line">git checkout dev</div><div class="line">git stash list	#查看保存的工作现场</div><div class="line">git stash pop		#恢复现场, 同时把stash内容也删了</div></pre></td></tr></table></figure>
+<h4 id="git-rebase"><a href="#git-rebase" class="headerlink" title="git rebase"></a>git rebase</h4><ul>
+<li><p><strong>git rebase</strong></p>
+<p>  多人协同开发时，git的提交历史会变得复杂，如果想让提交历史变为一条直线，则可以使用git rebase，配合<code>git log --graph --pretty=oneline --abbrev-commit</code>可以看到效果</p>
+</li>
+</ul>
+<h3 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h3><ul>
+<li><p><strong>git tag</strong> 查看所有标签</p>
+</li>
+<li><p><strong>git tag <tagname> [commitID]</tagname></strong> </p>
+<p>  新建一个标签，默认为HEAD, 也可以指定一个commit id: <code>git tag v1.0</code>, <code>git tag v0.9 f52c633</code></p>
+</li>
+<li><p><strong>git show \<tagname></tagname></strong> 查看某个标签信息</p>
+</li>
+<li><p><strong>git tag -a <tagname> -m “blablabla…” [commitID]</tagname></strong> 指定标签信息</p>
+</li>
+<li><p><strong>git tag -d v0.1</strong> 删除标签</p>
+</li>
+<li><p><strong>git push origin \<tagname></tagname></strong> 推送本地标签到远程</p>
+</li>
+<li><p><strong>git push origin –tags</strong> 一次性推送全部尚未推送到远程的本地标签</p>
+</li>
+<li><p><strong>git push origin :refs/tags/<tagname></tagname></strong> 删除一个远程标签（先从本地删除该标签）</p>
+</li>
+</ul>
+<blockquote>
+<p>tips:</p>
+<p> 标签总是和某个commit挂钩</p>
+</blockquote>
+<hr>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="external">1. 廖雪峰：Git教程</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/WeChatQR.jpeg" alt="Xiaolei Peng WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/uploads/AliPayQR.jpeg" alt="Xiaolei Peng Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Xiaolei Peng
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://pengxiaolei.com/2018/08/08/20180808-git-command/" title="Git 常用命令总结">https://pengxiaolei.com/2018/08/08/20180808-git-command/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/git/" rel="tag"># git</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/23/20180723-hue-install/" rel="next" title="记录一次在Mac下安装Hue的过程">
+                <i class="fa fa-chevron-left"></i> 记录一次在Mac下安装Hue的过程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="SOHUCS"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="Xiaolei Peng" />
+          <p class="site-author-name" itemprop="name">Xiaolei Peng</p>
+           
+              <p class="site-description motion-element" itemprop="description">程序员</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">49</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/bazingagain" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-link"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://qinjiangbo.com" title="心灵港" target="_blank">心灵港</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#主要概念"><span class="nav-number">1.</span> <span class="nav-text">主要概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基础命令"><span class="nav-number">2.</span> <span class="nav-text">基础命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#版本回退、修改管理与撤销"><span class="nav-number">3.</span> <span class="nav-text">版本回退、修改管理与撤销</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#远程仓库"><span class="nav-number">4.</span> <span class="nav-text">远程仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分支管理"><span class="nav-number">5.</span> <span class="nav-text">分支管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常用分支策略"><span class="nav-number">5.1.</span> <span class="nav-text">常用分支策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bug分支（stash的使用策略）"><span class="nav-number">5.2.</span> <span class="nav-text">bug分支（stash的使用策略）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#git-rebase"><span class="nav-number">5.3.</span> <span class="nav-text">git rebase</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标签"><span class="nav-number">6.</span> <span class="nav-text">标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiaolei Peng</span>
+</div>
+
+
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?fb461a34697287073d7b084456ec83ec";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问用户
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>访问次数
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cytyQOTCu';
+      var conf = '37484ac6bcb9322a508a48d4bf4c878f';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("6S5WEDrPUzaDfarHnmz74io3-gzGzoHsz", "AFVYQDlsS5XFsBQ3MguKRj4R");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+  
+  
+
+
+  
+
+</body>
+</html>
