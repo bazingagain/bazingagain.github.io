@@ -101,7 +101,7 @@
 <meta property="og:site_name" content="bazingagain">
 <meta property="og:description" content="主要概念工作区：git init的当前目录，工程的根目录下，对所有文件的信息抽象 版本库：.git目录 stage暂存区：版本库中的stage暂存区，git add会将数据存到stage 分支：一个版本库中有多个分支：master，dev等，每个分支保存文件的修改信息，commit会将文件的修改保存到分支 stash： 保存工作现场 .gitignore: git忽略文件，要忽略某种文件时，可以把">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-07T18:31:19.466Z">
+<meta property="og:updated_time" content="2018-08-07T18:39:26.061Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git 常用命令总结">
 <meta name="twitter:description" content="主要概念工作区：git init的当前目录，工程的根目录下，对所有文件的信息抽象 版本库：.git目录 stage暂存区：版本库中的stage暂存区，git add会将数据存到stage 分支：一个版本库中有多个分支：master，dev等，每个分支保存文件的修改信息，commit会将文件的修改保存到分支 stash： 保存工作现场 .gitignore: git忽略文件，要忽略某种文件时，可以把">
@@ -467,7 +467,7 @@
 <h3 id="基础命令"><a href="#基础命令" class="headerlink" title="基础命令"></a>基础命令</h3><ul>
 <li><p><strong>git init</strong> ：将目录变为仓库</p>
 </li>
-<li><p><strong>git add \<file></file></strong> 添加文件到仓库，可多次使用（实际上是将文件修改存放到stage暂存区）</p>
+<li><p><strong>git add <file></file></strong> 添加文件到仓库，可多次使用（实际上是将文件修改存放到stage暂存区）</p>
 </li>
 <li><p><strong>git commit -m “first commit”</strong> 把文件提交到仓库（实际上是将stage的所有内容提交到当前分支）</p>
 </li>
@@ -486,7 +486,7 @@
 </li>
 <li><p><strong>git diff HEAD – readme.txt</strong> 查看工作区和版本库里面最新版本的区别</p>
 </li>
-<li><p><strong>git checkout – \<file></file></strong></p>
+<li><p><strong>git checkout – <file></file></strong></p>
 <ol>
 <li><p>功能：丢弃工作区的修改：如果file修改后还没有放到stage，则撤销修改后就和版本库一模一样；如果file已放到stage，又进行了修改，现在撤销修改则是回到添加到stage后的状态</p>
 </li>
@@ -496,9 +496,9 @@
 </li>
 </ul>
 <ul>
-<li><p><strong>git reset HEAD \<file></file></strong> 修改已add（添加到了暂存区），但未commit，这时要撤销修改，该命令把暂存区(stage)的修改撤销掉，重新放回工作区</p>
+<li><p><strong>git reset HEAD <file></file></strong> 修改已add（添加到了暂存区），但未commit，这时要撤销修改，该命令把暂存区(stage)的修改撤销掉，重新放回工作区</p>
 </li>
-<li><p><strong>git rm \<file></file></strong> 工作区删了file，但是版本库中没有，要保持一致，则使用该命令将版本库中的文件删除， <strong><em>之后需要commit</em></strong></p>
+<li><p><strong>git rm <file></file></strong> 工作区删了file，但是版本库中没有，要保持一致，则使用该命令将版本库中的文件删除， <strong><em>之后需要commit</em></strong></p>
 </li>
 </ul>
 <hr>
@@ -569,13 +569,13 @@
 <li><p><strong>git tag <tagname> [commitID]</tagname></strong> </p>
 <p>  新建一个标签，默认为HEAD, 也可以指定一个commit id: <code>git tag v1.0</code>, <code>git tag v0.9 f52c633</code></p>
 </li>
-<li><p><strong>git show \<tagname></tagname></strong> 查看某个标签信息</p>
+<li><p><strong>git show <tagname></tagname></strong> 查看某个标签信息</p>
 </li>
 <li><p><strong>git tag -a <tagname> -m “blablabla…” [commitID]</tagname></strong> 指定标签信息</p>
 </li>
 <li><p><strong>git tag -d v0.1</strong> 删除标签</p>
 </li>
-<li><p><strong>git push origin \<tagname></tagname></strong> 推送本地标签到远程</p>
+<li><p><strong>git push origin <tagname></tagname></strong> 推送本地标签到远程</p>
 </li>
 <li><p><strong>git push origin –tags</strong> 一次性推送全部尚未推送到远程的本地标签</p>
 </li>
