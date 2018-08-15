@@ -1,0 +1,1048 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+<meta name="baidu-site-verification" content="25bXybxIfw" />
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|consolas:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Scala," />
+
+
+
+
+
+
+
+
+
+<link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+
+
+
+
+<meta name="description" content="Scala 中几乎一切都是表达式 变量与不变量123456//不变量 val 修饰val two = 1 + 1//变量 var 修饰var name = &quot;steve&quot;name = &quot;jobs&quot; 函数定义函数： 1234567891011def addOne(m: Int): Int = m + 1val three = addOne(2)def three() = 1 + 2three()de">
+<meta name="keywords" content="Scala">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Scala School》学习笔记-基础部分">
+<meta property="og:url" content="https://pengxiaolei.com/2018/08/15/20180815-scala-school-1/index.html">
+<meta property="og:site_name" content="bazingagain">
+<meta property="og:description" content="Scala 中几乎一切都是表达式 变量与不变量123456//不变量 val 修饰val two = 1 + 1//变量 var 修饰var name = &quot;steve&quot;name = &quot;jobs&quot; 函数定义函数： 1234567891011def addOne(m: Int): Int = m + 1val three = addOne(2)def three() = 1 + 2three()de">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-15T15:08:39.982Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《Scala School》学习笔记-基础部分">
+<meta name="twitter:description" content="Scala 中几乎一切都是表达式 变量与不变量123456//不变量 val 修饰val two = 1 + 1//变量 var 修饰var name = &quot;steve&quot;name = &quot;jobs&quot; 函数定义函数： 1234567891011def addOne(m: Int): Int = m + 1val three = addOne(2)def three() = 1 + 2three()de">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://pengxiaolei.com/2018/08/15/20180815-scala-school-1/"/>
+
+
+
+
+
+  <title> 《Scala School》学习笔记-基础部分 | bazingagain </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?fb461a34697287073d7b084456ec83ec";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65562161";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">bazingagain</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">行者常至、为者常成</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://pengxiaolei.com/2018/08/15/20180815-scala-school-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xiaolei Peng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="bazingagain">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                《Scala School》学习笔记-基础部分
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-15T23:05:35+08:00">
+                2018-08-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2018/08/15/20180815-scala-school-1/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2018/08/15/20180815-scala-school-1/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+             <span id="/2018/08/15/20180815-scala-school-1/" class="leancloud_visitors" data-flag-title="《Scala School》学习笔记-基础部分">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>访问次数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  726
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>Scala 中几乎一切都是表达式</strong></p>
+<h3 id="变量与不变量"><a href="#变量与不变量" class="headerlink" title="变量与不变量"></a>变量与不变量</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//不变量 val 修饰</span></div><div class="line"><span class="keyword">val</span> two = <span class="number">1</span> + <span class="number">1</span></div><div class="line"></div><div class="line"><span class="comment">//变量 var 修饰</span></div><div class="line"><span class="keyword">var</span> name = <span class="string">"steve"</span></div><div class="line">name = <span class="string">"jobs"</span></div></pre></td></tr></table></figure>
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><p>定义函数：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">addOne</span></span>(m: <span class="type">Int</span>): <span class="type">Int</span> = m + <span class="number">1</span></div><div class="line"><span class="keyword">val</span> three = addOne(<span class="number">2</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">three</span></span>() = <span class="number">1</span> + <span class="number">2</span></div><div class="line">three()</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">timesTwo</span></span>(i: <span class="type">Int</span>): <span class="type">Int</span> = &#123;</div><div class="line">  println(<span class="string">"hello world"</span>)</div><div class="line">  i * <span class="number">2</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>匿名函数：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">(x: <span class="type">Int</span>) =&gt; x + <span class="number">1</span></div><div class="line">res3: <span class="type">Int</span> =&gt; <span class="type">Int</span> = $$<span class="type">Lambda</span>$<span class="number">1066</span>/<span class="number">1463856502</span>@<span class="number">40</span>a84ea8</div><div class="line">res3(<span class="number">1</span>)</div><div class="line"></div><div class="line"><span class="comment">//将匿名函数保存为不变量进行使用：</span></div><div class="line"><span class="keyword">val</span> addOne = (x: <span class="type">Int</span>) =&gt; x + <span class="number">1</span></div><div class="line">addOne(<span class="number">1</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//&#123;&#125;构造匿名函数， 将一个匿名函数作为参数传递时经常用到</span></div><div class="line">&#123; i: <span class="type">Int</span> =&gt;</div><div class="line">  println(<span class="string">"hello world"</span>)</div><div class="line">  i * <span class="number">2</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>部分应用函数：</p>
+<p>使用“_”应用一个函数，将得到另一个函数</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//可以把它看作是一个没有命名的神奇通配符</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">adder</span></span>(m: <span class="type">Int</span>, n: <span class="type">Int</span>) = m + n</div><div class="line"><span class="keyword">val</span> add2 = adder(<span class="number">2</span>, _:<span class="type">Int</span>)</div><div class="line">add2(<span class="number">10</span>)</div><div class="line">add2(<span class="number">10</span>, <span class="number">11</span>)</div><div class="line"><span class="comment">//部分应用参数列表中的任意参数，而不仅仅是最后一个</span></div><div class="line"><span class="keyword">val</span> anotherAdd2 = adder(_:<span class="type">Int</span>, <span class="number">3</span>)</div><div class="line">anotherAdd2(<span class="number">10</span>)</div></pre></td></tr></table></figure>
+<p>科里化函数：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">multiply</span></span>(m: <span class="type">Int</span>)(n: <span class="type">Int</span>): <span class="type">Int</span> = m * n</div><div class="line">multiply(<span class="number">2</span>)(<span class="number">3</span>)</div><div class="line"></div><div class="line"><span class="comment">//填上第一个参数并且部分应用第二个参数</span></div><div class="line"><span class="keyword">val</span> timesTwo = multiply(<span class="number">2</span>) _</div><div class="line">timesTwo(<span class="number">3</span>)</div><div class="line"></div><div class="line"><span class="comment">//对任何多参数函数执行柯里化</span></div><div class="line">(adder _).curried</div></pre></td></tr></table></figure>
+<p>可变长度参数：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//可以向capitalizeAll函数传入任意多个同类型的参数</span></div><div class="line"><span class="comment">//在多个String上执行capitalize</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">capitalizeAll</span></span>(args: <span class="type">String</span>*) = &#123;</div><div class="line">  args.map &#123; arg =&gt;</div><div class="line">    arg.capitalize</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">capitalizeAll(<span class="string">"rarity"</span>, <span class="string">"applejack"</span>)</div></pre></td></tr></table></figure>
+<h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Calculator</span> </span>&#123;</div><div class="line">    <span class="keyword">val</span> brand: <span class="type">String</span> = <span class="string">"HP"</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add</span></span>(m: <span class="type">Int</span>, n: <span class="type">Int</span>): <span class="type">Int</span> = m + n</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">val</span> calc = <span class="keyword">new</span> <span class="type">Calculator</span></div><div class="line">calc.add(<span class="number">1</span>, <span class="number">2</span>)</div><div class="line">cala.brand</div></pre></td></tr></table></figure>
+<p><strong>带构造函数的类</strong></p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Calculator</span>(<span class="params">brand: <span class="type">String</span></span>) </span>&#123;</div><div class="line">  <span class="comment">/**</span></div><div class="line"><span class="comment">   * A constructor.</span></div><div class="line"><span class="comment">   */</span></div><div class="line">  <span class="keyword">val</span> color: <span class="type">String</span> = <span class="keyword">if</span> (brand == <span class="string">"TI"</span>) &#123;</div><div class="line">    <span class="string">"blue"</span></div><div class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (brand == <span class="string">"HP"</span>) &#123;</div><div class="line">    <span class="string">"black"</span></div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="string">"white"</span></div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">// An instance method.</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">add</span></span>(m: <span class="type">Int</span>, n: <span class="type">Int</span>): <span class="type">Int</span> = m + n</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//通过构造器构造实例</span></div><div class="line"><span class="keyword">val</span> calc = <span class="keyword">new</span> <span class="type">Calculator</span>(<span class="string">"HP"</span>)</div><div class="line">calc.color</div></pre></td></tr></table></figure>
+<p>注意上面的<code>add</code>是实例方法，而<code>val color: ..</code>是constructor</p>
+<p><strong>函数与方法的区别：</strong></p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> acc = <span class="number">0</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">minc</span> </span>= &#123; acc += <span class="number">1</span> &#125;</div><div class="line">    <span class="keyword">val</span> finc = &#123; () =&gt; acc += <span class="number">1</span> &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">val</span> c = <span class="keyword">new</span> <span class="type">C</span></div><div class="line">c.minc	<span class="comment">//这是方法，可以不带括号</span></div><div class="line">c.finc() <span class="comment">//c.finc返回的是一个函数，调用的话要加()</span></div></pre></td></tr></table></figure>
+<p><strong>继承</strong></p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ScientificCalculator</span>(<span class="params">brand: <span class="type">String</span></span>) <span class="keyword">extends</span> <span class="title">Calculator</span>(<span class="params">brand</span>) </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">log</span></span>(m: <span class="type">Double</span>, base: <span class="type">Double</span>) = math.log(m) / math.log(base)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>重载</strong></p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">EvenMoreScientificCalculator</span>(<span class="params">brand: <span class="type">String</span></span>) <span class="keyword">extends</span> <span class="title">ScientificCalculator</span>(<span class="params">brand</span>) </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">log</span></span>(m: <span class="type">Int</span>): <span class="type">Double</span> = log(m, math.exp(<span class="number">1</span>))</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>抽象类</strong></p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Shape</span> </span>&#123;</div><div class="line"> 	<span class="function"><span class="keyword">def</span> <span class="title">getArea</span></span>():<span class="type">Int</span>    <span class="comment">// subclass should define this</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Circle</span>(<span class="params">r: <span class="type">Int</span></span>) <span class="keyword">extends</span> <span class="title">Shape</span> </span>&#123;</div><div class="line">   <span class="function"><span class="keyword">def</span> <span class="title">getArea</span></span>():<span class="type">Int</span> = &#123; r * r * <span class="number">3</span> &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">val</span> c = <span class="keyword">new</span> <span class="type">Circle</span>(<span class="number">2</span>)</div></pre></td></tr></table></figure>
+<h3 id="Traits"><a href="#Traits" class="headerlink" title="Traits"></a>Traits</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">trait</span> <span class="title">Car</span> </span>&#123;</div><div class="line">  <span class="keyword">val</span> brand: <span class="type">String</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">trait</span> <span class="title">Shiny</span> </span>&#123;</div><div class="line">  <span class="keyword">val</span> shineRefraction: <span class="type">Int</span></div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">BMW</span> <span class="keyword">extends</span> <span class="title">Car</span> </span>&#123;</div><div class="line">  <span class="keyword">val</span> brand = <span class="string">"BMW"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//一个类可以继承多个Traits</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">BMW</span> <span class="keyword">extends</span> <span class="title">Car</span> <span class="keyword">with</span> <span class="title">Shiny</span> </span>&#123;</div><div class="line">  <span class="keyword">val</span> brand = <span class="string">"BMW"</span></div><div class="line">  <span class="keyword">val</span> shineRefraction = <span class="number">12</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>根据原文：</p>
+<blockquote>
+<p>优先使用特质。一个类扩展多个特质是很方便的，但却只能扩展一个抽象类。</p>
+<p>如果你需要构造函数参数，使用抽象类。因为抽象类可以定义带参数的构造函数，而特质不行。例如，你不能说trait t(i: Int) {}，参数i是非法的。</p>
+</blockquote>
+<p><strong>在使用接口抽象的时候，最好使用trait来实现</strong></p>
+<h3 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">trait</span> <span class="title">Cache</span>[<span class="type">K</span>, <span class="type">V</span>] </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">get</span></span>(key: <span class="type">K</span>): <span class="type">V</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">put</span></span>(key: <span class="type">K</span>, value: <span class="type">V</span>)</div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">delete</span></span>(key: <span class="type">K</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/WeChatQR.jpeg" alt="Xiaolei Peng WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/uploads/AliPayQR.jpeg" alt="Xiaolei Peng Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Xiaolei Peng
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://pengxiaolei.com/2018/08/15/20180815-scala-school-1/" title="《Scala School》学习笔记-基础部分">https://pengxiaolei.com/2018/08/15/20180815-scala-school-1/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Scala/" rel="tag"># Scala</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/08/20180808-git-command/" rel="next" title="Git 常用命令总结">
+                <i class="fa fa-chevron-left"></i> Git 常用命令总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="SOHUCS"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="Xiaolei Peng" />
+          <p class="site-author-name" itemprop="name">Xiaolei Peng</p>
+           
+              <p class="site-description motion-element" itemprop="description">程序员</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/bazingagain" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-link"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://qinjiangbo.com" title="心灵港" target="_blank">心灵港</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#变量与不变量"><span class="nav-number">1.</span> <span class="nav-text">变量与不变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数"><span class="nav-number">2.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类"><span class="nav-number">3.</span> <span class="nav-text">类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Traits"><span class="nav-number">4.</span> <span class="nav-text">Traits</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#泛型"><span class="nav-number">5.</span> <span class="nav-text">泛型</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiaolei Peng</span>
+</div>
+
+
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?fb461a34697287073d7b084456ec83ec";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问用户
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>访问次数
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cytyQOTCu';
+      var conf = '37484ac6bcb9322a508a48d4bf4c878f';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("6S5WEDrPUzaDfarHnmz74io3-gzGzoHsz", "AFVYQDlsS5XFsBQ3MguKRj4R");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+  
+  
+
+
+  
+
+</body>
+</html>
