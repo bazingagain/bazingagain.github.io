@@ -473,7 +473,7 @@
 <h3 id="Hadoop安装与运行"><a href="#Hadoop安装与运行" class="headerlink" title="Hadoop安装与运行"></a>Hadoop安装与运行</h3><p>本文所讲述的是在Mac上进行的安装，linux类似，Hadoop需要JDK的支持，在安装之前请确保以及安装JDK。</p>
 <h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>首先下载Hadoop，有两种方式，一是直接使用brew命令安装，另一种是直接官网下载压缩包安装：</p>
 <p><strong>brew命令安装</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span>&gt; brew install Hadoop</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash">&gt; brew install Hadoop</span></div></pre></td></tr></table></figure>
 <p><strong>Hadoop压缩包安装</strong></p>
 <p>进入官网的<a href="http://hadoop.apache.org/releases.html" target="_blank" rel="external">下载页面</a>,到其mirror site下选择下载，得到hadoop-3.1.0.tar.gz， 解压并放入你想要放入的目录中。</p>
 <h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>在安装好之后，进行Hadoop文件的配置</p>
@@ -492,7 +492,7 @@
 <p>加入以下代码：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_31.jdk/Contents/Home</div></pre></td></tr></table></figure>
 <p>source命令使环境变量生效：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span>&gt; source ~/.bash_profile</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash">&gt; <span class="built_in">source</span> ~/.bash_profile</span></div></pre></td></tr></table></figure>
 <p><strong>4. 配置 core-site.xml</strong></p>
 <p>配置如下：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></div><div class="line">   <span class="comment">&lt;!-- 指定HDFS（namenode）的通信地址 --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.defaultFS<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://localhost:9000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!-- 指定hadoop运行时产生文件的存储路径 --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.tmp.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>/Users/alex/Development/hadoop-3.1.0/tmp<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></div></pre></td></tr></table></figure>
@@ -505,26 +505,26 @@
 <p>配置如下：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span>  </div><div class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.aux-services<span class="tag">&lt;/<span class="name">name</span>&gt;</span>  </div><div class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>mapreduce_shuffle<span class="tag">&lt;/<span class="name">value</span>&gt;</span>  </div><div class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span>  </div><div class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></div></pre></td></tr></table></figure>
 <h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><p>初始化namenode：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span>&gt; hdfs namenode -format</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash">&gt; hdfs namenode -format</span></div></pre></td></tr></table></figure>
 <p>启动、停止hdfs：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span>&gt; start-dfs.sh</div><div class="line"><span class="meta">$</span>&gt; stop-dfs.sh</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash">&gt; start-dfs.sh</span></div><div class="line"><span class="meta">$</span><span class="bash">&gt; stop-dfs.sh</span></div></pre></td></tr></table></figure>
 <p>启动、停止yarn:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span>&gt; start-yarn.sh</div><div class="line"><span class="meta">$</span>&gt; stop-yarn.sh</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash">&gt; start-yarn.sh</span></div><div class="line"><span class="meta">$</span><span class="bash">&gt; stop-yarn.sh</span></div></pre></td></tr></table></figure>
 <p>运行效果：</p>
 <p>访问启动hdfs之后的效果: <a href="http://localhost:50070" target="_blank" rel="external">http://localhost:50070</a></p>
 <p><img src="https://bazingagain.github.io/images/hadoop/hadoop_20180427_pic1.png" alt=""></p>
 <p>访问启动yarn之后的效果：<a href="http://localhost:8088" target="_blank" rel="external">http://localhost:8088</a></p>
 <p><img src="https://bazingagain.github.io/images/hadoop/hadoop_20180427_pic2.png" alt=""></p>
 <h4 id="运行Hadoop实例"><a href="#运行Hadoop实例" class="headerlink" title="运行Hadoop实例"></a>运行Hadoop实例</h4><p>在hdfs上创建你的用户目录:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span>&gt; hdfs dfs -mkdir -p /user/yourusername/input</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash">&gt; hdfs dfs -mkdir -p /user/yourusername/input</span></div></pre></td></tr></table></figure>
 <p>查看目录是否在hdfs上创建成功:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span>&gt; hadoop fs -ls /user/yourusername/input</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash">&gt; hadoop fs -ls /user/yourusername/input</span></div></pre></td></tr></table></figure>
 <p>上传统计文件到hdfs目录：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span>&gt; hdfs dfs -put $HADOOP_HOME/etc/hadoop/*.xml /user/yourusername/input</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash">&gt; hdfs dfs -put <span class="variable">$HADOOP_HOME</span>/etc/hadoop/*.xml /user/yourusername/input</span></div></pre></td></tr></table></figure>
 <p>运行测试jar：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span>&gt; hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-3.1.0.jar grep input output 'dfs[a-z.]+'</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash">&gt; hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-3.1.0.jar grep input output <span class="string">'dfs[a-z.]+'</span></span></div></pre></td></tr></table></figure>
 <p>查看效果：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span>&gt; hdfs dfs -cat output/part-r-00000</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash">&gt; hdfs dfs -cat output/part-r-00000</span></div></pre></td></tr></table></figure>
 <p>效果如下：</p>
 <p><img src="https://bazingagain.github.io/images/hadoop/hadoop_20180427_pic3.png" alt=""></p>
 <hr>
@@ -696,7 +696,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-count">51</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
