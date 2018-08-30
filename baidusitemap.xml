@@ -4,8 +4,30 @@
 
     
   <url>
+    <loc>https://pengxiaolei.com/2018/08/31/20180831-hadoop-hdfs/</loc>
+    <lastmod>2018-08-30T16:33:17.543Z</lastmod>
+    <data>
+        <display>
+        <title>Hadoop HDFS</title>
+        <pubTime>2018-08-30T16:32:15.000Z</pubTime>
+        
+        <tag>Hadoop</tag>
+         
+        <tag>HDFS</tag>
+         
+         
+           
+             
+              <breadCrumb title="Hadoop" url="https://pengxiaolei.com/categories/Hadoop/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://pengxiaolei.com/2018/08/25/20180825-hive-join/</loc>
-    <lastmod>2018-08-25T14:53:43.297Z</lastmod>
+    <lastmod>2018-08-25T14:55:56.799Z</lastmod>
     <data>
         <display>
         <title>Hive的几种Join方式</title>
