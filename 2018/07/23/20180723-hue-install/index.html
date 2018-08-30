@@ -464,28 +464,28 @@
 <h3 id="安装Hue"><a href="#安装Hue" class="headerlink" title="安装Hue"></a>安装Hue</h3><p>1.下载Hue安装包</p>
 <p><a href="http://gethue.com/hue-4-2-and-its-self-service-bi-improvements-are-out/" target="_blank" rel="external">Hue官网下载</a>进行下载</p>
 <p>2.解压Hue安装包到安装目录</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> tar -xzvf hue-4.2.0.tgz</span></div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> tar -xzvf hue-4.2.0.tgz</div></pre></td></tr></table></figure>
 <p>3.准备安装前的环境</p>
 <blockquote>
 <p>安装xcode-select(非必须):</p>
 </blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> xcode-select --install</span></div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> xcode-select --install</div></pre></td></tr></table></figure>
 <blockquote>
 <p>安装Java环境</p>
 </blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> java -version <span class="comment">#检查是否安装</span></span></div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> java -version #检查是否安装</div></pre></td></tr></table></figure>
 <blockquote>
 <p>安装maven</p>
 </blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> brew install maven</span></div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> brew install maven</div></pre></td></tr></table></figure>
 <blockquote>
 <p>安装mysql</p>
 </blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> brew install mysql</span></div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> brew install mysql</div></pre></td></tr></table></figure>
 <blockquote>
 <p>安装gmp</p>
 </blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> brew install gmp</span></div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> brew install gmp</div></pre></td></tr></table></figure>
 <blockquote>
 <p>对于El Capitan and Sierra版本的Mac OS，需设置环境变量：</p>
 </blockquote>
@@ -497,7 +497,7 @@
 <blockquote>
 <p>启动运行</p>
 </blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> ./build/env/bin/hue runserver <span class="comment"># 打开http://localhost:8000即可看到Hue的界面</span></span></div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> ./build/env/bin/hue runserver # 打开http://localhost:8000即可看到Hue的界面</div></pre></td></tr></table></figure>
 <p>运行效果：</p>
 <p><img src="https://bazingagain.github.io/images/hive/hive_20180723_pic1.png" alt=""></p>
 <hr>

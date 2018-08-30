@@ -101,7 +101,7 @@
 <meta property="og:site_name" content="bazingagain">
 <meta property="og:description" content="Hdfs (Hadoop Distributed Filesystem) 是Hadoop自带的分布式文件系统，它设计用于提供对大规模文件的流式数据访问的能力，运行于由廉价的机器所组成的集群中。 Hdfs的优缺点优点  能存储大规模文件   即能存储数百MB,GB,TB设置PB的数据  流式数据访问   Hdfs提供于一次写入，多次读取的模式  商品性的硬件   Hadoop不需要昂贵、高可靠的硬件">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-30T16:33:17.543Z">
+<meta property="og:updated_time" content="2018-08-30T16:37:19.547Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hadoop HDFS">
 <meta name="twitter:description" content="Hdfs (Hadoop Distributed Filesystem) 是Hadoop自带的分布式文件系统，它设计用于提供对大规模文件的流式数据访问的能力，运行于由廉价的机器所组成的集群中。 Hdfs的优缺点优点  能存储大规模文件   即能存储数百MB,GB,TB设置PB的数据  流式数据访问   Hdfs提供于一次写入，多次读取的模式  商品性的硬件   Hadoop不需要昂贵、高可靠的硬件">
@@ -422,7 +422,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  1,627
+                  1,626
                 </span>
               
 
@@ -496,12 +496,11 @@
 <p><strong>NameNode的数据备份</strong><br>由于NameNode存储整个文件系统的元数据进行，要是NameNode挂了，则所有的文件都找不到了，所以要做容错措施。其方式主要由以下几种：</p>
 <p><strong>1.将持久状态写入多个文件系统（写入方式为synchronized其atomic），例如写入本地文件系统或者远程的NFS</strong></p>
 <p><strong>2.使用Second NameNode</strong></p>
-<pre><code>Secondary NameNode定期合并NameNode的namespace image和edit log，以防止edit log过大，将合并的文件保存为新的namespace image。
-但是要注意的是，这里存在数据丢失的风险（由于Second NameNode并不是实时同步NameNode的数据，所有从上次同步到NameNode挂掉的时间段内，这段时间的数据会丢失）。这种情况下，通常要将NFS（即实时备份数据）中的元数据信息拷贝到Secondary NameNode,并启动它将之设为master。
-</code></pre><p><strong>3.使用HA（High Availiability）模式</strong><br>    可以使用HA模式来保证，具体请看下面对HA的阐述。</p>
+<p>Secondary NameNode定期合并NameNode的namespace image和edit log，以防止edit log过大，将合并的文件保存为新的namespace image。<br>但是要注意的是，这里存在数据丢失的风险（由于Second NameNode并不是实时同步NameNode的数据，所有从上次同步到NameNode挂掉的时间段内，这段时间的数据会丢失）。这种情况下，通常要将NFS（即实时备份数据）中的元数据信息拷贝到Secondary NameNode,并启动它将之设为master。</p>
+<p><strong>3.使用HA（High Availiability）模式</strong><br>    可以使用HA模式来保证，具体请看下面对HA的阐述。</p>
 <h4 id="Block-Cacheing"><a href="#Block-Cacheing" class="headerlink" title="Block Cacheing"></a>Block Cacheing</h4><p>对于频繁读取的文件的block，DataNode通常会将这些blocks缓存到内存中，以提高读取性能。用户通过向缓存池添加缓存指令来指示namenode缓存哪些文件（以及缓存多长时间）。缓存池是用于管理缓存权限和资源使用情况的管理分组</p>
 <h4 id="HA（High-Availiability）模式"><a href="#HA（High-Availiability）模式" class="headerlink" title="HA（High Availiability）模式"></a>HA（High Availiability）模式</h4><p>Secondary NameNode模式并不能提供高可用的文件系统，它仍然存在单点失败（single point of failure），这会导致mapreduce程序失效。当主NameNode失效时，需要重新恢复一个新的NameNode，一般需要以下步骤：</p>
-<p>1)加载namespace image到内存<br>2)重放弃edit log<br>3)接收足够的来自datanode的block信息以离开安全模式</p>
+<p>1)加载namespace image到内存<br>2)重放edit log<br>3)接收足够的来自datanode的block信息以离开安全模式</p>
 <p>而这往往需要花费很长时间（30min以上）。</p>
 <p>Hadoop 为了解决该问题，其增加了HDFS high availibility(HA)支持。<strong>其包含一对NameNode，以主备(active-standby)的方式配置，当主NameNode失效时，备NameNode则承担其责任并继续提供服务给客户端</strong>，为了达到这种效果，必须进行如下设置：</p>
 <ul>
