@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>https://pengxiaolei.com/2018/09/09/20180909-hadoop-dataflow/</loc>
+    <lastmod>2018-09-08T16:29:45.308Z</lastmod>
+    <data>
+        <display>
+        <title>Hadoop 的 DataFlow（数据流）与一致性模型</title>
+        <pubTime>2018-09-08T16:24:27.000Z</pubTime>
+        
+        <tag>Hadoop</tag>
+         
+         
+           
+             
+              <breadCrumb title="Hadoop" url="https://pengxiaolei.com/categories/Hadoop/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://pengxiaolei.com/2018/09/01/20180901-hive-udf/</loc>
     <lastmod>2018-09-01T06:50:28.957Z</lastmod>
     <data>

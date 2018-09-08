@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hadoop,HDFS," />
+  <meta name="keywords" content="Hadoop," />
 
 
 
@@ -93,18 +93,22 @@
 
 
 
-<meta name="description" content="Hdfs (Hadoop Distributed Filesystem) 是Hadoop自带的分布式文件系统，它设计用于提供对大规模文件的流式数据访问的能力，运行于由廉价的机器所组成的集群中。 Hdfs的优缺点优点  能存储大规模文件   即能存储数百MB,GB,TB设置PB的数据  流式数据访问   Hdfs提供于一次写入，多次读取的模式  商品性的硬件   Hadoop不需要昂贵、高可靠的硬件">
-<meta name="keywords" content="Hadoop,HDFS">
+<meta name="description" content="Hadoop读文件的数据流Hadoop文件的读取数据流如下图所示：  详细步骤如下：  （1）通过FileSystem的open()方法读取文件，对于HDFS来说是DistributedFileSystem的一个实例 （2）DistributedFileSystem使用RPC调用namenode，得到文件block的位置，namenode返回每个block在datanode的地址，并且datano">
+<meta name="keywords" content="Hadoop">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hadoop HDFS">
-<meta property="og:url" content="https://pengxiaolei.com/2018/08/31/20180831-hadoop-hdfs/index.html">
+<meta property="og:title" content="Hadoop 的 DataFlow（数据流）与一致性模型">
+<meta property="og:url" content="https://pengxiaolei.com/2018/09/09/20180909-hadoop-dataflow/index.html">
 <meta property="og:site_name" content="bazingagain">
-<meta property="og:description" content="Hdfs (Hadoop Distributed Filesystem) 是Hadoop自带的分布式文件系统，它设计用于提供对大规模文件的流式数据访问的能力，运行于由廉价的机器所组成的集群中。 Hdfs的优缺点优点  能存储大规模文件   即能存储数百MB,GB,TB设置PB的数据  流式数据访问   Hdfs提供于一次写入，多次读取的模式  商品性的硬件   Hadoop不需要昂贵、高可靠的硬件">
+<meta property="og:description" content="Hadoop读文件的数据流Hadoop文件的读取数据流如下图所示：  详细步骤如下：  （1）通过FileSystem的open()方法读取文件，对于HDFS来说是DistributedFileSystem的一个实例 （2）DistributedFileSystem使用RPC调用namenode，得到文件block的位置，namenode返回每个block在datanode的地址，并且datano">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-30T16:37:19.547Z">
+<meta property="og:image" content="https://bazingagain.github.io/images/hadoop/hadoop_20180909_pic1.png">
+<meta property="og:image" content="https://bazingagain.github.io/images/hadoop/hadoop_20180909_pic2.png">
+<meta property="og:image" content="https://bazingagain.github.io/images/hadoop/hadoop_20180909_pic3.png">
+<meta property="og:updated_time" content="2018-09-08T16:29:45.308Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hadoop HDFS">
-<meta name="twitter:description" content="Hdfs (Hadoop Distributed Filesystem) 是Hadoop自带的分布式文件系统，它设计用于提供对大规模文件的流式数据访问的能力，运行于由廉价的机器所组成的集群中。 Hdfs的优缺点优点  能存储大规模文件   即能存储数百MB,GB,TB设置PB的数据  流式数据访问   Hdfs提供于一次写入，多次读取的模式  商品性的硬件   Hadoop不需要昂贵、高可靠的硬件">
+<meta name="twitter:title" content="Hadoop 的 DataFlow（数据流）与一致性模型">
+<meta name="twitter:description" content="Hadoop读文件的数据流Hadoop文件的读取数据流如下图所示：  详细步骤如下：  （1）通过FileSystem的open()方法读取文件，对于HDFS来说是DistributedFileSystem的一个实例 （2）DistributedFileSystem使用RPC调用namenode，得到文件block的位置，namenode返回每个block在datanode的地址，并且datano">
+<meta name="twitter:image" content="https://bazingagain.github.io/images/hadoop/hadoop_20180909_pic1.png">
 
 
 
@@ -132,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="https://pengxiaolei.com/2018/08/31/20180831-hadoop-hdfs/"/>
+  <link rel="canonical" href="https://pengxiaolei.com/2018/09/09/20180909-hadoop-dataflow/"/>
 
 
 
 
 
-  <title> Hadoop HDFS | bazingagain </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> Hadoop 的 DataFlow（数据流）与一致性模型 | bazingagain </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -306,7 +310,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://pengxiaolei.com/2018/08/31/20180831-hadoop-hdfs/">
+    <link itemprop="mainEntityOfPage" href="https://pengxiaolei.com/2018/09/09/20180909-hadoop-dataflow/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Xiaolei Peng">
@@ -327,7 +331,7 @@
             
             
               
-                Hadoop HDFS
+                Hadoop 的 DataFlow（数据流）与一致性模型
               
             
           </h1>
@@ -342,8 +346,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-31T00:32:15+08:00">
-                2018-08-31
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-09T00:24:27+08:00">
+                2018-09-09
               </time>
             
 
@@ -384,8 +388,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/2018/08/31/20180831-hadoop-hdfs/#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2018/08/31/20180831-hadoop-hdfs/" itemprop="commentsCount"></span>
+                <a href="/2018/09/09/20180909-hadoop-dataflow/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2018/09/09/20180909-hadoop-dataflow/" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -393,7 +397,7 @@
 
           
           
-             <span id="/2018/08/31/20180831-hadoop-hdfs/" class="leancloud_visitors" data-flag-title="Hadoop HDFS">
+             <span id="/2018/09/09/20180909-hadoop-dataflow/" class="leancloud_visitors" data-flag-title="Hadoop 的 DataFlow（数据流）与一致性模型">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -422,7 +426,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  1,626
+                  1,066
                 </span>
               
 
@@ -438,7 +442,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  6
+                  4
                 </span>
               
             </div>
@@ -457,66 +461,34 @@
       
 
       
-        <p>Hdfs (Hadoop Distributed Filesystem) 是Hadoop自带的分布式文件系统，它设计用于提供对大规模文件的流式数据访问的能力，运行于由廉价的机器所组成的集群中。</p>
-<h3 id="Hdfs的优缺点"><a href="#Hdfs的优缺点" class="headerlink" title="Hdfs的优缺点"></a>Hdfs的优缺点</h3><p><strong>优点</strong></p>
+        <h3 id="Hadoop读文件的数据流"><a href="#Hadoop读文件的数据流" class="headerlink" title="Hadoop读文件的数据流"></a>Hadoop读文件的数据流</h3><p>Hadoop文件的读取数据流如下图所示：</p>
+<p><img src="https://bazingagain.github.io/images/hadoop/hadoop_20180909_pic1.png" alt=""></p>
+<p>详细步骤如下：</p>
 <ul>
-<li><p><strong>能存储大规模文件</strong></p>
-<p>  即能存储数百MB,GB,TB设置PB的数据</p>
-</li>
-<li><p><strong>流式数据访问</strong></p>
-<p>  Hdfs提供于一次写入，多次读取的模式</p>
-</li>
-<li><p><strong>商品性的硬件</strong></p>
-<p>  Hadoop不需要昂贵、高可靠的硬件，它设计运行与商品性的硬件中。</p>
-</li>
+<li>（1）<strong>通过FileSystem的open()方法读取文件，对于HDFS来说是DistributedFileSystem的一个实例</strong></li>
+<li>（2）<strong>DistributedFileSystem使用RPC调用namenode，得到文件block的位置，namenode返回每个block在datanode的地址，并且datanode会根据与client的距离进行排序，如果client本身就是一个datanode，且该datanode上有block的副本时，就会直接从本地datanode中读取数据</strong></li>
+<li>（3）<strong>DistributedFileSystem返回一个FSDataInputStream对象给client以读取数据，FSDataInputStream封装了DFSInputStream对象，其管理datanode和namenode的IO</strong></li>
+<li>（4）<strong>client调用read()方法, 对于block，DFSInputStream连接最近的datanode进行读取</strong></li>
+<li>（5）<strong>读取完则关闭与该datanode的连接，并对下一个block寻找最近的datanode进行读取</strong></li>
+<li>（6）<strong>当文件读取完毕时，FSDataInputStream调用close()方法</strong></li>
 </ul>
-<p><strong>缺点</strong></p>
-<ul>
-<li><p><strong>不能进行实时数据访问</strong></p>
-</li>
-<li><p><strong>很多小文件的情况有限制</strong></p>
-<p>  Hadoop的NameNode将文件的元数据（metadata）存储于内存中，这样所能存储的文件的数量就会受到NameNode的内存大小的限制。</p>
-</li>
-<li><p><strong>多个writer进行任意修改</strong></p>
-<p>  不支持多个writer在文件的任意偏移（offset）处进行修改</p>
-</li>
-</ul>
-<h3 id="HDFS的一些关键概念"><a href="#HDFS的一些关键概念" class="headerlink" title="HDFS的一些关键概念"></a>HDFS的一些关键概念</h3><h4 id="Blocks"><a href="#Blocks" class="headerlink" title="Blocks"></a>Blocks</h4><p>磁盘也有Block size，block是读写数据的最小单位，一般为512字节。同样，HDFS也有block的概念，但其默认大小为128MB，在HDFS中的文件将被划分为block-size的chunk。</p>
-<p>不同与单一磁盘的文件系统，HDFS中文件大小小于block-size时，并不会占用多余的空间（1MB的文件只会占用1MB，而不会占用128MB）</p>
-<p>采用Block的机制有以下好处：</p>
-<ul>
-<li>一个文件可以很大，比如在单个磁盘中的文件会首磁盘空间的限制，而HDFS中文件则可以大很多。</li>
-<li>使用block抽象而不是文件简化存储子系统。一是block方便管理（固定大小），二是不需要关心元数据（metadata不和block一起存储）</li>
-<li>block能够很好地适应replication（复制）机制，其提供了fault tolerance（容错处理）和高可用的特性。（每一个block都会被复制为多份，存储于不同的地方）</li>
-</ul>
-<p>我们可以使用<code>hdfs fsck / -files -blocks</code>查看文件系统中每个文件的block的信息</p>
-<h4 id="NameNode和DataNode即Secondary-NameNode"><a href="#NameNode和DataNode即Secondary-NameNode" class="headerlink" title="NameNode和DataNode即Secondary NameNode"></a>NameNode和DataNode即Secondary NameNode</h4><p>HDFS采用master-worker的模式：NameNode为Master，DataNode为worker。</p>
-<p>NameNode维持filesystem tree，并保存tree中的所有文件的元数据和目录。这些信息存储在本地磁盘的两个文件中：namespace image 和 edit log。NameNode知道对于给定的文件，其知道该文件所有的block存储在哪些DataNode的具体位置。</p>
-<p>DataNode存储具体的blocks，并将block list报告给NameNode。</p>
-<p><strong>NameNode的数据备份</strong><br>由于NameNode存储整个文件系统的元数据进行，要是NameNode挂了，则所有的文件都找不到了，所以要做容错措施。其方式主要由以下几种：</p>
-<p><strong>1.将持久状态写入多个文件系统（写入方式为synchronized其atomic），例如写入本地文件系统或者远程的NFS</strong></p>
-<p><strong>2.使用Second NameNode</strong></p>
-<p>Secondary NameNode定期合并NameNode的namespace image和edit log，以防止edit log过大，将合并的文件保存为新的namespace image。<br>但是要注意的是，这里存在数据丢失的风险（由于Second NameNode并不是实时同步NameNode的数据，所有从上次同步到NameNode挂掉的时间段内，这段时间的数据会丢失）。这种情况下，通常要将NFS（即实时备份数据）中的元数据信息拷贝到Secondary NameNode,并启动它将之设为master。</p>
-<p><strong>3.使用HA（High Availiability）模式</strong><br>    可以使用HA模式来保证，具体请看下面对HA的阐述。</p>
-<h4 id="Block-Cacheing"><a href="#Block-Cacheing" class="headerlink" title="Block Cacheing"></a>Block Cacheing</h4><p>对于频繁读取的文件的block，DataNode通常会将这些blocks缓存到内存中，以提高读取性能。用户通过向缓存池添加缓存指令来指示namenode缓存哪些文件（以及缓存多长时间）。缓存池是用于管理缓存权限和资源使用情况的管理分组</p>
-<h4 id="HA（High-Availiability）模式"><a href="#HA（High-Availiability）模式" class="headerlink" title="HA（High Availiability）模式"></a>HA（High Availiability）模式</h4><p>Secondary NameNode模式并不能提供高可用的文件系统，它仍然存在单点失败（single point of failure），这会导致mapreduce程序失效。当主NameNode失效时，需要重新恢复一个新的NameNode，一般需要以下步骤：</p>
-<p>1)加载namespace image到内存<br>2)重放edit log<br>3)接收足够的来自datanode的block信息以离开安全模式</p>
-<p>而这往往需要花费很长时间（30min以上）。</p>
-<p>Hadoop 为了解决该问题，其增加了HDFS high availibility(HA)支持。<strong>其包含一对NameNode，以主备(active-standby)的方式配置，当主NameNode失效时，备NameNode则承担其责任并继续提供服务给客户端</strong>，为了达到这种效果，必须进行如下设置：</p>
-<ul>
-<li><strong>namenode必须使用高可用的共享存储(shared storage)来共享edit log，当备NameNode启动时，它读取edit log以同步active namenode的状态，并且继续读取active namenode往其中写的内容</strong></li>
-<li><strong>datenode必须将block report发送到active namenode和standby namenode，因为block mapping是存储在namnode的内存而不是磁盘中的</strong></li>
-<li><strong>客户端必须配置namenode失效处理，并对客户端透明</strong></li>
-<li><strong>standby namenode仍然包括secondary namenode的角色，其同样采用active namenode的定期检测点(periodic check point)</strong></li>
-</ul>
-<p>对于高可用的共享存储有两种方式：NFS 文件、QJM(quorum journal manager), QJM专为HDFS共享edit log而实现，推荐使用QJM。QJM 简介如下</p>
-<blockquote>
-<p>The QJM runs as a group of journal nodes, and each edit must be written to a majority of the journal nodes. Typically, there are three journal nodes, so the system can tolerate the loss of one of them. This arrangement is similar to the way ZooKeeper works, although it is important to realize that the QJM implementation does not use ZooKeeper. (Note, however, that HDFS HA does use ZooKeeper for electing the active namenode.)</p>
-</blockquote>
-<p>其一般采用三个journal节点，类似zookeeper，QJM一次只允许一个namenode写edit log。</p>
-<h4 id="故障切换"><a href="#故障切换" class="headerlink" title="故障切换"></a>故障切换</h4><p>从active namenode过渡到standby node的过程由<strong>failover controller</strong>管理，一般有多重failover controller的实现，默认是Zookeeper，其保证只有一个namenode是active状态。任意一个namenode都运行有一个轻量级的failover controller进程，用来监控namenode的失效（使用心跳机制），当namenode失效时触发failover（故障切换）。</p>
-<p>有时候，我们需要手动切换namenode，一般这个操作成为graceful failover。在ungraceful failover中，难以保证失效的namenode停止运行，例如慢网络触发failover transition时。怎么办呢？HA为我们提供了fencing机制以阻止先前的active namenode任何有危害性的动作。</p>
-<p>客户端的failover transition是怎么做的呢？很简单，客户端定义的HDFS URL使用一个域名，而这个域名会映射到一对namenode，尝试对每个namenode进行访问直到成功为止。</p>
+<p>另外，当DFSInputStream与datanode通信出问题时，会从这个block的其它最近的datanode中读取数据，并记住该错误的datanode，保证后续不读取该节点的后续的block。<br>namenode将block的地址映射信息存放在内存中，这样就能够快速响应client的请求，非常高效。</p>
+<h3 id="Hadoop写文件的数据流"><a href="#Hadoop写文件的数据流" class="headerlink" title="Hadoop写文件的数据流"></a>Hadoop写文件的数据流</h3><p>Hadoop文件的写数据流如下图所示：</p>
+<p><img src="https://bazingagain.github.io/images/hadoop/hadoop_20180909_pic2.png" alt=""></p>
+<p>详细步骤如下：<br>-（1）<strong>client通过DistributedFileSystem调用create()方法</strong><br>-（2）<strong>DistributedFileSystem向namenode发送PRC请求，在namespace中创建一个新文件，之后DistributeFileSystem向cleint返回一个FSDataOutputStream对象，FSDataOutputStream封装了DFSOutputStream, 其负责与namenode和datanode的通信</strong><br>-（3）<strong>client开始写文件</strong><br>-（4）<strong>DFSOutputStream将数据分成一个个的packet（数据包），并写入内部的数据队列（data queue），该data queue被DataStreamer消费，它的职责是请求namenode分配一个新的block，并选取一系列的datanode来存储该block的副本，这一系列的datanode构成一个pipeline，DataStreamer以流的方式先将pacet发送到pipeline中的第一个datanode，该datanode存储数据，并将其发送到pipeline的第2个datanode，依次类推，直到pipeline的最后一个datanode为止</strong><br>-（5）<strong>DFSOutputStream 维护着一个内部的”ack queue”来等待datanode的确认回复，收到pipeline中所有datanode的确认回复后，数据才会从ack queue中删除</strong><br>-（6）<strong>完成写入后，调用close()方法关闭数据流，其将剩余的所有packet写入datanode pipeline</strong><br>-（7）<strong>在联系到namenode且发送文件写入完成的信号之前，一直等待确认</strong></p>
+<h3 id="Hadoop的数据一致性模型"><a href="#Hadoop的数据一致性模型" class="headerlink" title="Hadoop的数据一致性模型"></a>Hadoop的数据一致性模型</h3><p>在文件系统中，写入文件的内容并不能保证立即可见，即使数据流已经flush，例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Path p = <span class="keyword">new</span> Path(<span class="string">"p"</span>); </div><div class="line">OutputStream out = fs.create(p);</div><div class="line">out.write(<span class="string">"content"</span>.getBytes(<span class="string">"UTF-8"</span>)); </div><div class="line">out.flush(); </div><div class="line">assertThat(fs.getFileStatus(p).getLen(), is(<span class="number">0L</span>));</div></pre></td></tr></table></figure>
+<p>文件的长度返回0。</p>
+<p>当写入的数据超过一个block时，第一个block对新的reader是可见的，之后也一样，而正在写入的block对其它reader是不可见的。</p>
+<p>HDFS提供<code>hflush()</code>方法将buffer中的内容强制flush到datanode中，当hflush()方法返回success时，对新的reader而言，HDFS能够保证目前为止，所有写入的数据均到达所有datanode的pipeline，并对所有新的reader可见：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Path p = <span class="keyword">new</span> Path(<span class="string">"p"</span>); </div><div class="line">FSDataOutputStream out = fs.create(p); </div><div class="line">out.write(<span class="string">"content"</span>.getBytes(<span class="string">"UTF-8"</span>)); </div><div class="line">out.hflush(); </div><div class="line">assertThat(fs.getFileStatus(p).getLen(), is(((<span class="keyword">long</span>) <span class="string">"content"</span>.length())));</div></pre></td></tr></table></figure>
+<p>要注意的是，hflush并不能保证datanode将数据写入到磁盘，它只能保证数据已经传到了datanode的内存中（此时如果断电了，数据就会丢失），为了保证数据存储，可以使用<code>hsync()</code>方法替代。</p>
+<p>另外，OutputStream的close()方法本身会执行hflush()方法:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Path p = <span class="keyword">new</span> Path(<span class="string">"p"</span>);</div><div class="line">OutputStream out = fs.create(p); </div><div class="line">out.write(<span class="string">"content"</span>.getBytes(<span class="string">"UTF-8"</span>)); </div><div class="line">out.close(); </div><div class="line">assertThat(fs.getFileStatus(p).getLen(), is(((<span class="keyword">long</span>) <span class="string">"content"</span>.length())));</div></pre></td></tr></table></figure>
+<h3 id="Hadoop中Block副本（replication）的存放策略"><a href="#Hadoop中Block副本（replication）的存放策略" class="headerlink" title="Hadoop中Block副本（replication）的存放策略"></a>Hadoop中Block副本（replication）的存放策略</h3><p>Hadoop默认的block副本存放策略如图所示：</p>
+<p><img src="https://bazingagain.github.io/images/hadoop/hadoop_20180909_pic3.png" alt=""></p>
+<p>Hadoop在client运行的datanode上存放第一个副本（如果client不是运行在集群中，则随机选择一个datanode存放，系统会避免挑选太忙或太慢的节点），第2个副本存放在与第1个不同机架的节点（随机选择），第3个副本存放在与第2个副本的同一个机架的不同节点中。</p>
+<p>这种方式提供了很好的稳健性和负载均衡（数据在两个机架中，写操作只需遍历一个交换机，读取可从两个机架中读取）</p>
 
       
     </div>
@@ -566,7 +538,7 @@
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://pengxiaolei.com/2018/08/31/20180831-hadoop-hdfs/" title="Hadoop HDFS">https://pengxiaolei.com/2018/08/31/20180831-hadoop-hdfs/</a>
+      <a href="https://pengxiaolei.com/2018/09/09/20180909-hadoop-dataflow/" title="Hadoop 的 DataFlow（数据流）与一致性模型">https://pengxiaolei.com/2018/09/09/20180909-hadoop-dataflow/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -584,8 +556,6 @@
           
             <a href="/tags/Hadoop/" rel="tag"># Hadoop</a>
           
-            <a href="/tags/HDFS/" rel="tag"># HDFS</a>
-          
         </div>
       
 
@@ -597,8 +567,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/08/25/20180825-hive-join/" rel="next" title="Hive的几种Join方式">
-                <i class="fa fa-chevron-left"></i> Hive的几种Join方式
+              <a href="/2018/09/01/20180901-hive-udf/" rel="next" title="Hive构建UDF（User-Defined Function）">
+                <i class="fa fa-chevron-left"></i> Hive构建UDF（User-Defined Function）
               </a>
             
           </div>
@@ -606,10 +576,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/09/01/20180901-hive-udf/" rel="prev" title="Hive构建UDF（User-Defined Function）">
-                Hive构建UDF（User-Defined Function） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -765,7 +731,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hdfs的优缺点"><span class="nav-number">1.</span> <span class="nav-text">Hdfs的优缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HDFS的一些关键概念"><span class="nav-number">2.</span> <span class="nav-text">HDFS的一些关键概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Blocks"><span class="nav-number">2.1.</span> <span class="nav-text">Blocks</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NameNode和DataNode即Secondary-NameNode"><span class="nav-number">2.2.</span> <span class="nav-text">NameNode和DataNode即Secondary NameNode</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Block-Cacheing"><span class="nav-number">2.3.</span> <span class="nav-text">Block Cacheing</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HA（High-Availiability）模式"><span class="nav-number">2.4.</span> <span class="nav-text">HA（High Availiability）模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#故障切换"><span class="nav-number">2.5.</span> <span class="nav-text">故障切换</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hadoop读文件的数据流"><span class="nav-number">1.</span> <span class="nav-text">Hadoop读文件的数据流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hadoop写文件的数据流"><span class="nav-number">2.</span> <span class="nav-text">Hadoop写文件的数据流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hadoop的数据一致性模型"><span class="nav-number">3.</span> <span class="nav-text">Hadoop的数据一致性模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hadoop中Block副本（replication）的存放策略"><span class="nav-number">4.</span> <span class="nav-text">Hadoop中Block副本（replication）的存放策略</span></a></li></ol></div>
             
 
           </div>
