@@ -467,10 +467,10 @@
 <li><p>编译打包成jar（依赖的类也要打包近jar）</p>
 </li>
 <li><p>将jar包注册到Hive中并查看</p>
-  <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">hive&gt;</span> ADD JAR /opt/myudf.jar;</div><div class="line"><span class="meta">hive&gt;</span> LIST JARS</div></pre></td></tr></table></figure>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">hive&gt;</span><span class="bash"> ADD JAR /opt/myudf.jar;</span></div><div class="line"><span class="meta">hive&gt;</span><span class="bash"> LIST JARS</span></div></pre></td></tr></table></figure>
 </li>
 <li><p>创建函数指向UDF类：</p>
-  <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;</span>hive CREATE FUCTION string_reverse AS 'com.leon.learnhive.ReverseString';</div></pre></td></tr></table></figure>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;</span><span class="bash">hive CREATE FUCTION string_reverse AS <span class="string">'com.leon.learnhive.ReverseString'</span>;</span></div></pre></td></tr></table></figure>
 </li>
 </ul>
 <ul>
@@ -641,7 +641,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">55</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -652,7 +652,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -663,7 +663,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

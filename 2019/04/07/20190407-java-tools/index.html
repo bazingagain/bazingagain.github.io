@@ -1,0 +1,1112 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+<meta name="baidu-site-verification" content="25bXybxIfw" />
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|consolas:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java," />
+
+
+
+
+
+
+
+
+
+<link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+
+
+
+
+<meta name="description" content="JVM常用工具在JDK的/bin目录中，Java提供了一些非常有用的工具包，供我们使用。主要包括基础工具、安全工具、国际化工具、RMI（远程方法调用）工具、Java IDL工具、Java部署工具、Java Web Start工具、Java故障排查检测及监控管理工具、JavaWeb服务工具，监控工具、故障排查工具及脚本工具。 基础工具 appletviewer 在浏览器外运行调试applet ext">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="20190407-java-tools">
+<meta property="og:url" content="https://pengxiaolei.com/2019/04/07/20190407-java-tools/index.html">
+<meta property="og:site_name" content="bazingagain">
+<meta property="og:description" content="JVM常用工具在JDK的/bin目录中，Java提供了一些非常有用的工具包，供我们使用。主要包括基础工具、安全工具、国际化工具、RMI（远程方法调用）工具、Java IDL工具、Java部署工具、Java Web Start工具、Java故障排查检测及监控管理工具、JavaWeb服务工具，监控工具、故障排查工具及脚本工具。 基础工具 appletviewer 在浏览器外运行调试applet ext">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-04-07T07:21:07.303Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="20190407-java-tools">
+<meta name="twitter:description" content="JVM常用工具在JDK的/bin目录中，Java提供了一些非常有用的工具包，供我们使用。主要包括基础工具、安全工具、国际化工具、RMI（远程方法调用）工具、Java IDL工具、Java部署工具、Java Web Start工具、Java故障排查检测及监控管理工具、JavaWeb服务工具，监控工具、故障排查工具及脚本工具。 基础工具 appletviewer 在浏览器外运行调试applet ext">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://pengxiaolei.com/2019/04/07/20190407-java-tools/"/>
+
+
+
+
+
+  <title> 20190407-java-tools | bazingagain </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?fb461a34697287073d7b084456ec83ec";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65562161";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">bazingagain</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">行者常至、为者常成</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://pengxiaolei.com/2019/04/07/20190407-java-tools/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xiaolei Peng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="bazingagain">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                20190407-java-tools
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-07T15:20:35+08:00">
+                2019-04-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2019/04/07/20190407-java-tools/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2019/04/07/20190407-java-tools/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+             <span id="/2019/04/07/20190407-java-tools/" class="leancloud_visitors" data-flag-title="20190407-java-tools">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>访问次数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1,161
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="JVM常用工具"><a href="#JVM常用工具" class="headerlink" title="JVM常用工具"></a>JVM常用工具</h3><p>在JDK的/bin目录中，Java提供了一些非常有用的工具包，供我们使用。主要包括基础工具、安全工具、国际化工具、RMI（远程方法调用）工具、Java IDL工具、Java部署工具、Java Web Start工具、Java故障排查检测及监控管理工具、JavaWeb服务工具，监控工具、故障排查工具及脚本工具。</p>
+<h4 id="基础工具"><a href="#基础工具" class="headerlink" title="基础工具"></a>基础工具</h4><ul>
+<li>appletviewer 在浏览器外运行调试applet</li>
+<li>extcheck  检测Jar包版本冲突工具，与当前安装的扩展Jar比较(jre/lib/ext)</li>
+<li><strong>jar</strong>    创建与管理Jar文件</li>
+<li><strong>java</strong>    运行Java应用命令，可附加许多常用启动参数</li>
+<li><strong>javac</strong>    Java编译器</li>
+<li><strong>javadoc</strong>   API文档生成命令</li>
+<li><strong>javah</strong>    将Java文件转换为C文件</li>
+<li><strong>javap</strong>   反汇编Java Class文件</li>
+<li><strong>jdb</strong>    Java Debugger</li>
+<li><strong>jdeps</strong>    Java class依赖分析器</li>
+</ul>
+<h4 id="安全工具"><a href="#安全工具" class="headerlink" title="安全工具"></a>安全工具</h4><ul>
+<li><strong>keytool</strong>   管理keystores和证书</li>
+<li><strong>jarsigner</strong>    生产和验证jar文件签名</li>
+<li><strong>pollicytool</strong>    管理policy文件的GUI工具</li>
+<li><strong>kinit</strong>    获取kerberos v5 tickets</li>
+<li><strong>klist</strong>    列出entries in credential cache and keytab</li>
+<li><strong>ktab</strong> 管理entries in the keytab</li>
+</ul>
+<h4 id="国际化工具"><a href="#国际化工具" class="headerlink" title="国际化工具"></a>国际化工具</h4><ul>
+<li><strong>native2ascii</strong> 将文本转换为Unicode Latin-1</li>
+</ul>
+<h4 id="RMI工具"><a href="#RMI工具" class="headerlink" title="RMI工具"></a>RMI工具</h4><ul>
+<li><strong>rmic</strong>  为远程对象生成存根，框架和绑定类</li>
+<li><strong>rmiregistry</strong> 远程对象注册服务</li>
+<li><strong>rmid</strong>  RMI系统后台激活</li>
+<li><strong>serialver</strong>    返回Class的serialVersionUID</li>
+</ul>
+<h4 id="Java-IDL工具"><a href="#Java-IDL工具" class="headerlink" title="Java IDL工具"></a>Java IDL工具</h4><ul>
+<li><strong>tnameserv</strong>  提供访问命名服务(naming service)</li>
+<li><strong>idlj</strong>  生成映射OMG IDL接口的.java文件，并使用Java编程语言编写的应用程序能够使用CORBA功能</li>
+<li><strong>orbd</strong>    为客户端提供支持，以便在CORBA环境中透明地定位和调用服务器上的持久对象</li>
+<li><strong>servertool</strong>    为开发者提供易用的注册、注销、启动、关闭服务的接口</li>
+</ul>
+<h4 id="Java部署工具"><a href="#Java部署工具" class="headerlink" title="Java部署工具"></a>Java部署工具</h4><ul>
+<li><strong>javapackager</strong>   执行与打包和签名Java和JavaFX应用程序相关的任务</li>
+<li><strong>pack200</strong>  将jar文件转换为使用Java gzip压缩器压缩的pack200文件</li>
+<li><strong>unpack200</strong>  将pack200文件转换为jar文件</li>
+</ul>
+<h4 id="Java-Web-Start工具"><a href="#Java-Web-Start工具" class="headerlink" title="Java Web Start工具"></a>Java Web Start工具</h4><ul>
+<li><strong>javaws</strong>  加载Java Web Start和设置变量的命令行工具</li>
+</ul>
+<h4 id="Java故障排查检测及监控管理工具（重点掌握）"><a href="#Java故障排查检测及监控管理工具（重点掌握）" class="headerlink" title="Java故障排查检测及监控管理工具（重点掌握）"></a>Java故障排查检测及监控管理工具（重点掌握）</h4><ul>
+<li><strong>jcmd</strong>  JVM诊断命令工具 - 将诊断命令请求发送到正在运行的Java虚拟机。</li>
+<li><strong>jconsole</strong>  符合JMX的图形工具，用于监视Java虚拟机。 它可以监视本地和远程JVM。 它还可以监视和管理应用程序</li>
+<li><strong>jmc</strong>  Java Mission Control（JMC）客户端包括监视和管理Java应用程序的工具，而不会引入通常与这些类型的工具相关联的性能开销。</li>
+<li><strong>jvisualvm</strong>  一种图形工具，可在Java虚拟机中运行时提供有关基于Java技术的应用程序（Java应用程序）的详细信息。 Java VisualVM提供内存和CPU分析，堆转储分析，内存泄漏检测，MBean访问和垃圾回收</li>
+</ul>
+<h4 id="Java-Web服务工具"><a href="#Java-Web服务工具" class="headerlink" title="Java Web服务工具"></a>Java Web服务工具</h4><ul>
+<li><strong>schemagen</strong> 用于XML绑定的Java体系结构的模式生成器</li>
+<li><strong>wsgen</strong>  生成JAX-WS可移植组件的工具</li>
+<li><strong>wsimport</strong>  生成JAX-WS可移植组件的工具</li>
+<li><strong>xjc</strong>  用于XML绑定的Java体系结构的绑定编译器</li>
+</ul>
+<h4 id="监控工具"><a href="#监控工具" class="headerlink" title="监控工具"></a>监控工具</h4><ul>
+<li><strong>jsp</strong>  实验性的，JVM进程状态工具 - 列出目标系统上已检测的HotSpot Java虚拟机</li>
+<li><strong>jstat</strong>  实验性的，JVM统计监视工具 - 连接到已检测的HotSpot Java虚拟机，并收集和记录命令行选项指定的性能统计信息</li>
+<li><strong>jstatd</strong>  实验性的，JVM jstat守护程序 - 启动一个RMI服务器应用程序，该应用程序监视已检测的HotSpot Java虚拟机的创建和终止，并提供一个接口，允许远程监视工具连接到在本地系统上运行的Java虚拟机。</li>
+</ul>
+<h4 id="故障排查工具"><a href="#故障排查工具" class="headerlink" title="故障排查工具"></a>故障排查工具</h4><ul>
+<li><strong>jinfo</strong>  实验性的，Java的配置信息 - 打印给定进程或核心文件或远程调试服务器的配置信息</li>
+<li><strong>jhat</strong>  实验性的，堆转储浏览器 - 在堆转储文件上启动Web服务器（例如，由jmap -dump生成），允许浏览堆</li>
+<li><strong>jmap</strong>  实验性的，Java的内存映射 - 打印给定进程或核心文件或远程调试服务器的共享对象内存映射或堆内存详细信息。</li>
+<li><strong>jsadebugd</strong>  实验性的，适用于Java的可维护性代理调试守护程序 - 附加到进程或核心文件并充当调试服务器。</li>
+<li><strong>jstack</strong> 实验性的，用于Java的堆栈跟踪 - 为给定进程或核心文件或远程调试服务器打印堆栈跟踪线程。</li>
+</ul>
+<h4 id="脚本工具"><a href="#脚本工具" class="headerlink" title="脚本工具"></a>脚本工具</h4><ul>
+<li><strong>jjs</strong>  运行Nashorn命令行脚本shell。</li>
+<li><strong>jrunscript</strong>  实验性的，Java脚本shell用于运行脚本</li>
+</ul>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ol>
+<li><a href="https://docs.oracle.com/javase/8/docs/technotes/tools/" target="_blank" rel="external">Java8 JDK Tools and Utilities</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/WeChatQR.jpeg" alt="Xiaolei Peng WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/uploads/AliPayQR.jpeg" alt="Xiaolei Peng Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Xiaolei Peng
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://pengxiaolei.com/2019/04/07/20190407-java-tools/" title="20190407-java-tools">https://pengxiaolei.com/2019/04/07/20190407-java-tools/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/31/20190331-docker-cmd/" rel="next" title="常用Docker命令整理">
+                <i class="fa fa-chevron-left"></i> 常用Docker命令整理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="SOHUCS"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="Xiaolei Peng" />
+          <p class="site-author-name" itemprop="name">Xiaolei Peng</p>
+           
+              <p class="site-description motion-element" itemprop="description">程序员</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/bazingagain" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-link"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://qinjiangbo.com" title="心灵港" target="_blank">心灵港</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#JVM常用工具"><span class="nav-number">1.</span> <span class="nav-text">JVM常用工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基础工具"><span class="nav-number">1.1.</span> <span class="nav-text">基础工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全工具"><span class="nav-number">1.2.</span> <span class="nav-text">安全工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#国际化工具"><span class="nav-number">1.3.</span> <span class="nav-text">国际化工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RMI工具"><span class="nav-number">1.4.</span> <span class="nav-text">RMI工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java-IDL工具"><span class="nav-number">1.5.</span> <span class="nav-text">Java IDL工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java部署工具"><span class="nav-number">1.6.</span> <span class="nav-text">Java部署工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java-Web-Start工具"><span class="nav-number">1.7.</span> <span class="nav-text">Java Web Start工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java故障排查检测及监控管理工具（重点掌握）"><span class="nav-number">1.8.</span> <span class="nav-text">Java故障排查检测及监控管理工具（重点掌握）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java-Web服务工具"><span class="nav-number">1.9.</span> <span class="nav-text">Java Web服务工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#监控工具"><span class="nav-number">1.10.</span> <span class="nav-text">监控工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#故障排查工具"><span class="nav-number">1.11.</span> <span class="nav-text">故障排查工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#脚本工具"><span class="nav-number">1.12.</span> <span class="nav-text">脚本工具</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiaolei Peng</span>
+</div>
+
+
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?fb461a34697287073d7b084456ec83ec";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问用户
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>访问次数
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cytyQOTCu';
+      var conf = '37484ac6bcb9322a508a48d4bf4c878f';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("6S5WEDrPUzaDfarHnmz74io3-gzGzoHsz", "AFVYQDlsS5XFsBQ3MguKRj4R");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+  
+  
+
+
+  
+
+</body>
+</html>
