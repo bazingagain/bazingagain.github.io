@@ -4,19 +4,19 @@
 
     
   <url>
-    <loc>https://pengxiaolei.com/2019/04/07/20190407-java-tools/</loc>
-    <lastmod>2019-04-07T07:22:46.937Z</lastmod>
+    <loc>https://pengxiaolei.com/2018/07/19/20180719-hive-install/</loc>
+    <lastmod>2019-04-22T16:06:42.843Z</lastmod>
     <data>
         <display>
-        <title>Java JDK工具简介</title>
-        <pubTime>2019-04-07T07:20:35.000Z</pubTime>
+        <title>Hive学习入门之Hive简介与安装</title>
+        <pubTime>2018-07-19T14:52:14.000Z</pubTime>
         
-        <tag>Java</tag>
+        <tag>Hive</tag>
          
          
            
              
-              <breadCrumb title="Java" url="https://pengxiaolei.com/categories/Java/"/>
+              <breadCrumb title="Hive" url="https://pengxiaolei.com/categories/Hive/"/>
           
         </display>
     </data>
@@ -25,7 +25,7 @@
     
   <url>
     <loc>https://pengxiaolei.com/2019/03/31/20190331-docker-cmd/</loc>
-    <lastmod>2019-04-07T07:19:56.162Z</lastmod>
+    <lastmod>2019-04-07T12:09:41.806Z</lastmod>
     <data>
         <display>
         <title>常用Docker命令整理</title>
@@ -37,6 +37,26 @@
            
              
               <breadCrumb title="Docker" url="https://pengxiaolei.com/categories/Docker/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://pengxiaolei.com/2019/04/07/20190407-java-tools/</loc>
+    <lastmod>2019-04-07T11:30:31.956Z</lastmod>
+    <data>
+        <display>
+        <title>Java JDK工具简介</title>
+        <pubTime>2019-04-07T07:20:35.000Z</pubTime>
+        
+        <tag>Java</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="https://pengxiaolei.com/categories/Java/"/>
           
         </display>
     </data>
@@ -191,26 +211,6 @@
         <pubTime>2018-07-23T15:29:57.000Z</pubTime>
         
         <tag>Hue, Hive</tag>
-         
-         
-           
-             
-              <breadCrumb title="Hive" url="https://pengxiaolei.com/categories/Hive/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://pengxiaolei.com/2018/07/19/20180719-hive-install/</loc>
-    <lastmod>2018-07-22T14:31:52.000Z</lastmod>
-    <data>
-        <display>
-        <title>Hive学习入门之Hive简介与安装</title>
-        <pubTime>2018-07-19T14:52:14.000Z</pubTime>
-        
-        <tag>Hive</tag>
          
          
            
