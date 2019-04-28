@@ -102,7 +102,7 @@
 <meta property="og:description" content="什么是Hue？Hue是一个轻量级的自助服务BI的分析工作台，其有一个开源的图形用户界面，提供用户开发和操作应用以分析数据，能够结合Hive、Impala、Spark、Pig、Java等，进行数据的分析查询和程序执行。  安装Hue1.下载Hue安装包 Hue官网下载进行下载 2.解压Hue安装包到安装目录 1$ tar -xzvf hue-4.2.0.tgz 3.准备安装前的环境  安装xcode">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://bazingagain.github.io/images/hive/hive_20180723_pic1.png">
-<meta property="og:updated_time" content="2018-07-23T15:38:52.000Z">
+<meta property="og:updated_time" content="2019-04-28T14:54:10.883Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记录一次在Mac下安装Hue的过程">
 <meta name="twitter:description" content="什么是Hue？Hue是一个轻量级的自助服务BI的分析工作台，其有一个开源的图形用户界面，提供用户开发和操作应用以分析数据，能够结合Hive、Impala、Spark、Pig、Java等，进行数据的分析查询和程序执行。  安装Hue1.下载Hue安装包 Hue官网下载进行下载 2.解压Hue安装包到安装目录 1$ tar -xzvf hue-4.2.0.tgz 3.准备安装前的环境  安装xcode">
@@ -424,7 +424,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  427
+                  624
                 </span>
               
 
@@ -440,7 +440,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  2
+                  3
                 </span>
               
             </div>
@@ -508,7 +508,12 @@
 3. 再次make，还是报错，但MacOSX10.13.sdk是有openssll的
 4. 进入把系统自带的python2.7卸载，打算用python3进行编译，依然有问题（此时报python image问题），再次装上python2.7：`brew install python@2`
 4. 删掉hive包，重新解压并使用make apps编译，成功
-</code></pre>
+</code></pre><p><strong>Failed to open new session: java.lang.RuntimeException: org.apache.hadoop.ipc.RemoteException(org.apache.hadoop.security.authorize.AuthorizationException): User: root is not allowed to impersonate (state=08S01,code=0)</strong></p>
+<p>设置hadoop的core-site.xml<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.proxyuser.root.hosts<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>*<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.proxyuser.root.groups<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>*<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>当前是什么用户，就用什么用户替代，设置之后，一定要重启hdfs，yarn，以及hiveserver2，及Hue，关闭之前的进程，</p>
+<p>其中，最好将hue的元数据存储到Mysql，自带的sqlite会存在db锁的问题。</p>
+<p>参考解决方案：<br>1.<a href="https://blog.csdn.net/sunnyyoona/article/details/51648871" target="_blank" rel="external">https://blog.csdn.net/sunnyyoona/article/details/51648871</a><br>2.<a href="https://yq.aliyun.com/articles/600170" target="_blank" rel="external">https://yq.aliyun.com/articles/600170</a><br>3.<a href="https://www.cnblogs.com/zlslch/p/6819622.html?utm_source=itdadao&amp;utm_medium=referral" target="_blank" rel="external">https://www.cnblogs.com/zlslch/p/6819622.html?utm_source=itdadao&amp;utm_medium=referral</a><br>4.<a href="https://www.cnblogs.com/one--way/p/5687857.html" target="_blank" rel="external">https://www.cnblogs.com/one--way/p/5687857.html</a><br>5.<a href="https://guoyunsky.iteye.com/blog/1257521" target="_blank" rel="external">https://guoyunsky.iteye.com/blog/1257521</a><br>6.<a href="https://blog.csdn.net/sunnyyoona/article/details/51648871" target="_blank" rel="external">https://blog.csdn.net/sunnyyoona/article/details/51648871</a><br>7.<a href="https://cloud.tencent.com/developer/article/1400310" target="_blank" rel="external">https://cloud.tencent.com/developer/article/1400310</a><br>8.<a href="https://www.cnblogs.com/ivanny/p/hue_mysql_meta_dabatase.html" target="_blank" rel="external">https://www.cnblogs.com/ivanny/p/hue_mysql_meta_dabatase.html</a></p>
+
       
     </div>
 
