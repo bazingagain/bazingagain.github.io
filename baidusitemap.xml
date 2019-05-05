@@ -4,8 +4,28 @@
 
     
   <url>
+    <loc>https://pengxiaolei.com/2018/09/01/20180901-hive-udf/</loc>
+    <lastmod>2019-05-05T15:18:24.351Z</lastmod>
+    <data>
+        <display>
+        <title>Hive构建UDF（User-Defined Function）</title>
+        <pubTime>2018-09-01T06:49:52.000Z</pubTime>
+        
+        <tag>Hive</tag>
+         
+         
+           
+             
+              <breadCrumb title="Hive" url="https://pengxiaolei.com/categories/Hive/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://pengxiaolei.com/2018/07/23/20180723-hue-install/</loc>
-    <lastmod>2019-04-28T14:54:10.883Z</lastmod>
+    <lastmod>2019-04-28T14:54:51.955Z</lastmod>
     <data>
         <display>
         <title>记录一次在Mac下安装Hue的过程</title>
@@ -117,26 +137,6 @@
            
              
               <breadCrumb title="Hadoop" url="https://pengxiaolei.com/categories/Hadoop/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://pengxiaolei.com/2018/09/01/20180901-hive-udf/</loc>
-    <lastmod>2018-09-01T06:50:28.000Z</lastmod>
-    <data>
-        <display>
-        <title>Hive构建UDF（User-Defined Function）</title>
-        <pubTime>2018-09-01T06:49:52.000Z</pubTime>
-        
-        <tag>Hive</tag>
-         
-         
-           
-             
-              <breadCrumb title="Hive" url="https://pengxiaolei.com/categories/Hive/"/>
           
         </display>
     </data>

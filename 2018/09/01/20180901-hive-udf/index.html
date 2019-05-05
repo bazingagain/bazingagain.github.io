@@ -93,18 +93,18 @@
 
 
 
-<meta name="description" content="Hive提供内建的UDAF和UDTF函数供我们使用，一般而言，这些函数就已经够平常使用了，但是遇到一些特殊的场景，这些函数就不够用了。Hive提供了UDF使我们能够自己构建函数进行功能扩展。 构建UDF的步骤 使用maven创建工程HiveUDF 添加 hadoop-common-2.6.0 ， hive-exec-1.2.1 依赖 编写UDF类   123456789101112import o">
+<meta name="description" content="Hive提供内建的UDAF和UDTF函数供我们使用，一般而言，这些函数就已经够平常使用了，但是遇到一些特殊的场景，这些函数就不够用了。Hive提供了UDF使我们能够自己构建函数进行功能扩展。 构建UDF的步骤 使用maven创建工程HiveUDF 添加 hadoop-common-2.6.0 ， hive-exec-1.2.1 依赖   12345678910&amp;lt;dependency&amp;gt;">
 <meta name="keywords" content="Hive">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hive构建UDF（User-Defined Function）">
 <meta property="og:url" content="https://pengxiaolei.com/2018/09/01/20180901-hive-udf/index.html">
 <meta property="og:site_name" content="bazingagain">
-<meta property="og:description" content="Hive提供内建的UDAF和UDTF函数供我们使用，一般而言，这些函数就已经够平常使用了，但是遇到一些特殊的场景，这些函数就不够用了。Hive提供了UDF使我们能够自己构建函数进行功能扩展。 构建UDF的步骤 使用maven创建工程HiveUDF 添加 hadoop-common-2.6.0 ， hive-exec-1.2.1 依赖 编写UDF类   123456789101112import o">
+<meta property="og:description" content="Hive提供内建的UDAF和UDTF函数供我们使用，一般而言，这些函数就已经够平常使用了，但是遇到一些特殊的场景，这些函数就不够用了。Hive提供了UDF使我们能够自己构建函数进行功能扩展。 构建UDF的步骤 使用maven创建工程HiveUDF 添加 hadoop-common-2.6.0 ， hive-exec-1.2.1 依赖   12345678910&amp;lt;dependency&amp;gt;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-01T06:50:28.000Z">
+<meta property="og:updated_time" content="2019-05-05T15:18:24.351Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hive构建UDF（User-Defined Function）">
-<meta name="twitter:description" content="Hive提供内建的UDAF和UDTF函数供我们使用，一般而言，这些函数就已经够平常使用了，但是遇到一些特殊的场景，这些函数就不够用了。Hive提供了UDF使我们能够自己构建函数进行功能扩展。 构建UDF的步骤 使用maven创建工程HiveUDF 添加 hadoop-common-2.6.0 ， hive-exec-1.2.1 依赖 编写UDF类   123456789101112import o">
+<meta name="twitter:description" content="Hive提供内建的UDAF和UDTF函数供我们使用，一般而言，这些函数就已经够平常使用了，但是遇到一些特殊的场景，这些函数就不够用了。Hive提供了UDF使我们能够自己构建函数进行功能扩展。 构建UDF的步骤 使用maven创建工程HiveUDF 添加 hadoop-common-2.6.0 ， hive-exec-1.2.1 依赖   12345678910&amp;lt;dependency&amp;gt;">
 
 
 
@@ -422,7 +422,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  214
+                  280
                 </span>
               
 
@@ -460,22 +460,20 @@
         <p>Hive提供内建的UDAF和UDTF函数供我们使用，一般而言，这些函数就已经够平常使用了，但是遇到一些特殊的场景，这些函数就不够用了。Hive提供了UDF使我们能够自己构建函数进行功能扩展。</p>
 <h3 id="构建UDF的步骤"><a href="#构建UDF的步骤" class="headerlink" title="构建UDF的步骤"></a>构建UDF的步骤</h3><ul>
 <li>使用maven创建工程HiveUDF</li>
-<li>添加 <code>hadoop-common-2.6.0</code> ， <code>hive-exec-1.2.1</code> 依赖</li>
+<li><p>添加 <code>hadoop-common-2.6.0</code> ， <code>hive-exec-1.2.1</code> 依赖</p>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.hadoop<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hadoop-common<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.2.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.hive<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hive-exec<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
 <li><p>编写UDF类</p>
   <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.apache.hadoop.hive.ql.exec.UDF; </div><div class="line"><span class="keyword">import</span> org.apache.hadoop.io.Text;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReverseString</span> <span class="keyword">extends</span> <span class="title">UDF</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> Text <span class="title">evaluate</span><span class="params">(<span class="keyword">final</span> Text text)</span> </span>&#123; </div><div class="line">		<span class="keyword">if</span> (text == <span class="keyword">null</span>) &#123; <span class="keyword">return</span> <span class="keyword">null</span>; &#125; </div><div class="line">		StringBuilder stringBuilder = <span class="keyword">new</span> StringBuilder(text.toString()); 			String reverse = stringBuilder.reverse().toString(); </div><div class="line">		<span class="keyword">return</span> <span class="keyword">new</span> Text(reverse);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
-<li><p>编译打包成jar（依赖的类也要打包近jar）</p>
-</li>
-<li><p>将jar包注册到Hive中并查看</p>
-  <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">hive&gt;</span> ADD JAR /opt/myudf.jar;</div><div class="line"><span class="meta">hive&gt;</span> LIST JARS</div></pre></td></tr></table></figure>
-</li>
-<li><p>创建函数指向UDF类：</p>
-  <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;</span>hive CREATE FUCTION string_reverse AS 'com.leon.learnhive.ReverseString';</div></pre></td></tr></table></figure>
+<li><p>编译打包成jar（依赖的类也要打包进jar）</p>
 </li>
 </ul>
+<p><code>mvn clean package -DskipTests</code></p>
 <ul>
-<li><p>使用</p>
-  <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> string_reverse(<span class="string">'abcde'</span>);</div><div class="line"><span class="keyword">select</span> string_reverse(firstname) <span class="keyword">from</span> tablename;</div></pre></td></tr></table></figure></li>
+<li><p>将jar包注册到Hive中并查看</p>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">hive&gt;</span><span class="bash"> add jars /workspace/java-workspace/charlie/target/charlie-1.0-SNAPSHOT.jar;</span></div><div class="line"><span class="meta">hive&gt;</span><span class="bash"> list jars;</span></div><div class="line"><span class="meta">#</span><span class="bash"> 临时会话使用</span></div><div class="line"><span class="meta">hive&gt;</span><span class="bash"> create temporary <span class="keyword">function</span> string_reverse as <span class="string">'com.ocean.charlie.StringReverse'</span>;  </span></div><div class="line"><span class="meta">hive&gt;</span><span class="bash"> show <span class="built_in">functions</span> like <span class="string">'string_reverse'</span>;</span></div><div class="line"><span class="meta">hive&gt;</span><span class="bash"> select string_reverse(<span class="string">'我爱中国'</span>);</span></div><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash">永久使用</span></div><div class="line"><span class="meta">hive&gt;</span><span class="bash"> create <span class="keyword">function</span> default.string_reverse as <span class="string">'com.ocean.charlie.StringReverse'</span> using jar <span class="string">'hdfs:///tmp/charlie-1.0-SNAPSHOT.jar'</span>;</span></div></pre></td></tr></table></figure>
+</li>
 </ul>
 
       
